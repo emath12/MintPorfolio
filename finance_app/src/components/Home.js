@@ -1,10 +1,14 @@
+import './Home.css';
+import React from "react";
+
 function Home() {
     return (
-        <div>
-            <p>
-                Hello World!
-            </p>
+        <div className="Title">
+            <h1>
+                Portfolio Returns
+            </h1>
         </div>
+        
     );
 
 }
