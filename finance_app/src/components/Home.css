@@ -5,3 +5,22 @@
 h1 {
     text-align: center;
   }
+
+.Home {
+    align-items: center;
+    justify-content: center;
+
+}
+
+.YearBar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    margin: auto; /* set margin to auto to center horizontally */
+
+}
