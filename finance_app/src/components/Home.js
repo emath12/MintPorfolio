@@ -1,7 +1,7 @@
 import './Home.css';
 import React from "react"
 import Graph from './Graph.js';
-;
+import StockGrid from './StockGrid.js'
 
 function Home() {
     return (
@@ -11,7 +11,8 @@ function Home() {
                     Portfolio Returns
                 </h1>
             </div>
-            <Graph/>
+            <StockGrid />
+            {/* <Graph/> */}
         </div>
         
     );

@@ -12,7 +12,7 @@ h1 {
 
 }
 
-.YearBar {
+.Grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: 1fr;
@@ -21,6 +21,5 @@ h1 {
     width: 50%;
     justify-content: center;
     align-items: center;
-    margin: auto; /* set margin to auto to center horizontally */
-
+    margin: auto; 
 }
