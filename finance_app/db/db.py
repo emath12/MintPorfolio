@@ -39,6 +39,9 @@ def call_pf():
 
 @app.route('/market_dataframe')
 def call_market():
+
+    call_pf()
+
     mkt = yf.Ticker("^GSPC")
     df = pd.DataFrame()
     mkt_hist = mkt.history(start="2023-01-01")["Close"]

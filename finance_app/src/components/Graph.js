@@ -3,8 +3,12 @@ import HighchartsReact from 'highcharts-react-official';
 import React, { useState, useEffect } from 'react';
 
 function DisplayData() {
-      const [data, setData] = useState([]);
+      const [userData, setUserData] = useState([]);
+
+      const [marketData, setMarketData] = useState([]);
+
       const [xVals, setxVals] = useState([]);
+
       const [yVals, setyVals] = useState([]);
 
       useEffect(() => {
@@ -20,13 +24,30 @@ function DisplayData() {
               yVals.push(data["Vals"][i]);
 
             } 
-
-            setData(edited_data);
+            
+            setUserData(edited_data);
             setxVals(xVals);
             setyVals(yVals);
           })
+
+        fetch('http://127.0.0.1:5000/market_dataframe')
+          .then(response => response.json())
+          .then(data => {
+            var edited_data = [];
+
+            console.log(data);
+            
+            for (let i = 0; i <= data["Dates"].length - 1; i++) {
+
+              edited_data.push([data["Dates"][i], data["Vals"][i]]);
+            } 
+            
+            setMarketData(edited_data);
+          })
           .catch(error => console.error(error));
+     
       }, []);
+
 
       const options = {
 
@@ -42,15 +63,27 @@ function DisplayData() {
             selected: 1
         },
       
-        series: [{
+        series: [
+          {
             name: 'Stock Price',
-            data: data,
+            data: userData,
             type: 'area',
             threshold: null,
             tooltip: {
                 valueDecimals: 2
             }
-        }],
+          },
+
+          {
+            name: 'S&P500',
+            data: marketData,
+            type: 'area',
+            threshold: null,
+            tooltip: {
+                valueDecimals: 2
+            }
+          }
+        ],
 
         xAxis: {
           categories : xVals,
