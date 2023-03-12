@@ -5,9 +5,9 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import json
 
-
 app = Flask(__name__)
 CORS(app)
+
 
 def get_dataframe():
     # create a sample DataFrame
@@ -29,25 +29,26 @@ def call_api():
 
     df = pd.DataFrame()
 
-    df["aapl"] = 10*aapl.history(start="2023-01-01")["Close"]
-    df["msft"] = 10*msft.history(start="2023-01-01")["Close"]
-    df["amzn"] = 10*amzn.history(start="2023-01-01")["Close"]
-    df["nvda"] = 10*nvda.history(start="2023-01-01")["Close"]
-    df["brk"] = 10*brk.history(start="2023-01-01")["Close"]
+    df["aapl"] = 10 * aapl.history(start="2023-01-01")["Close"]
+    df["msft"] = 10 * msft.history(start="2023-01-01")["Close"]
+    df["amzn"] = 10 * amzn.history(start="2023-01-01")["Close"]
+    df["nvda"] = 10 * nvda.history(start="2023-01-01")["Close"]
+    df["brk"] = 10 * brk.history(start="2023-01-01")["Close"]
 
-    pf =df.sum(axis = 1)
-    pf = pf.tolist()
-    j_string = json.dumps(pf)
+    pf = pd.DataFrame()
+    pf["Dates"] = df.index
+    pf["Vals"] = df.sum(axis=1)
 
+    j_string = json.dumps(pf.values.tolist())
 
     print(pf)
     # print(df.to_dict(orient='records'))
 
     return j_string
 
+
 if __name__ == '__main__':
     app.run()
-
 
 # client = RESTClient(api_key="2h4IbRz7WN26U4Ab_9jNphPANUDZyghT")
 #
