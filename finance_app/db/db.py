@@ -36,13 +36,10 @@ def call_api():
     df["brk"] = 10 * brk.history(start="2023-01-01")["Close"]
 
     pf = pd.DataFrame()
-    pf["Dates"] = df.index
-    pf["Vals"] = df.sum(axis=1)
+    pf["Dates"] = df.index.strftime("%Y-%m-%d").tolist()  # Convert Timestamps to strings
+    pf["Vals"] = df.sum(axis=1).tolist()
 
-    j_string = json.dumps(pf.values.tolist())
-
-    print(pf)
-    # print(df.to_dict(orient='records'))
+    j_string = json.dumps(pf.to_dict(orient='list'))
 
     return j_string
 
