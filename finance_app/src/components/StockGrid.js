@@ -3,14 +3,11 @@ import React, { Component } from 'react';
 
 const StockRow = props => {
     <div>
-        <p>{props.name}</p>
-        <p>{props.long}</p>
-        <p>{props.shares}</p>
-
-
+        <input placeholder='StockRow'>{props.name}</input>
+        <input  placeholder='Long or short?'>{props.long}</input>
+        <input placeholder='# of Shares'>{props.shares}</input>
     </div>
 }
-
 
 // simply an abstraction for better state management
 function stockRowObj(company, long, shares) {
@@ -26,31 +23,42 @@ class StockGrid extends Component {
     constructor(props) {
       super(props);
 
-      this.state = [
+      this.state = {
+        objects : [],
         // state will just be an array of stockRowObjects
         // empty to start. This is the state's initial state
-      ]
+      }
     }
 
-    onSubmit = event => { 
-        // do something to the state on submit of the form!
+    createNewBlankPosition = () => {
+        // some how manipulate the state once the button is clicked, perhaps?
 
-        // hint : add to the state array in some way ?
-        // remember you must use setState
-        
-        // do some research on how to pull from the <form>, there's tons of
-        // documentation on this on the interwebs.
+        // rememember that you need to use setState()
 
         // this.setState(
         //     // something
         // )
+
+        this.setState({
+            objects : this.state.objects.push("hello")
+        })
     }
 
+    onSubmit = event => { 
+        // when the form itself is finished being created.
+
+        // iteate 
+        
+        // do some research on how to pull from the <form>, there's tons of
+        // documentation on this on the interwebs.
+
+  
+    }
 
     render() {
         return (
-        <div>
-        
+        // triggers the onSubmit event handler
+        <form onSubmit={this.onSubmit}>
             {
             // click through the state and create a StockRow component for each stock row object in the state
             
@@ -68,15 +76,9 @@ class StockGrid extends Component {
             */}
             
             <div className='ButtonRow'>
-                <form onClick={this.onSubmit}>
-                    
-                    <input placeholder='Company'></input>
-                    <input placeholder='long or short?'></input>
-                    <button>Add Position</button>
-                </form>
-                
+                <button onClick={this.createNewBlankPosition()}>Add Position</button>            
             </div>
-        </div>
+        </form>
         );
       }
 }
