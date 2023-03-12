@@ -4,11 +4,13 @@ import React, { useState, useEffect } from 'react';
 
 function DisplayData() {
       const [data, setData] = useState([]);
+
       const [xVals, setxVals] = useState([]);
+
       const [yVals, setyVals] = useState([]);
 
       useEffect(() => {
-        fetch('http://127.0.0.1:5000/pf_dataframe')
+        fetch('http://127.0.0.1:5000/dataframe')
           .then(response => response.json())
           .then(data => {
             var edited_data = [];
@@ -20,7 +22,7 @@ function DisplayData() {
               yVals.push(data["Vals"][i]);
 
             } 
-
+            
             setData(edited_data);
             setxVals(xVals);
             setyVals(yVals);
@@ -42,7 +44,8 @@ function DisplayData() {
             selected: 1
         },
       
-        series: [{
+        series: [
+          {
             name: 'Stock Price',
             data: data,
             type: 'area',
@@ -50,7 +53,8 @@ function DisplayData() {
             tooltip: {
                 valueDecimals: 2
             }
-        }],
+          }
+        ],
 
         xAxis: {
           categories : xVals,

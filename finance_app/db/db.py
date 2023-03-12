@@ -9,7 +9,6 @@ CORS(app)
 
 init_pvalue = 1
 
-
 @app.route('/pf_dataframe')
 def call_pf():
     aapl = yf.Ticker("AAPL")

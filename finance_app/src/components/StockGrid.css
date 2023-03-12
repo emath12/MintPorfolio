@@ -13,6 +13,10 @@
     background-color: limegreen;
 }
 
+.Row {
+    justify-content: center;
+}
+
 .button {
     margin-right: 10px; /* optional */
     width: 100%;  
