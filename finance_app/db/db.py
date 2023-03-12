@@ -1,5 +1,4 @@
 import pandas as pd
-from polygon import RESTClient
 import yfinance as yf
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -7,17 +6,6 @@ import json
 
 app = Flask(__name__)
 CORS(app)
-
-
-def get_dataframe():
-    # create a sample DataFrame
-    df = pd.DataFrame({
-        'name': ['Alice', 'Bob', 'Charlie'],
-        'age': [25, 30, 35]
-    })
-    # convert the DataFrame to a JSON object and return it
-    return jsonify(df.to_dict(orient='records'))
-
 
 @app.route('/dataframe')
 def call_api():

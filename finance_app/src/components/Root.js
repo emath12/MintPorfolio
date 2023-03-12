@@ -8,7 +8,7 @@ function Root() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Graph />} />
+        <Route path='/' element={<Home />} />
       </Routes>
     </Router>
   );

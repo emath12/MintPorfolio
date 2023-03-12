@@ -11,7 +11,7 @@ function Home() {
                     Portfolio Returns
                 </h1>
             </div>
-            <StockGrid />
+            <Graph />
             {/* <Graph/> */}
         </div>
         

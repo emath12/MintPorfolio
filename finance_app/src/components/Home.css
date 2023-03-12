@@ -1,15 +1,19 @@
 .Title {
     background-color: #6fc276;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin: 20px;
 }
   
 h1 {
     text-align: center;
-  }
+}
 
 .Home {
     align-items: center;
     justify-content: center;
-
 }
 
 .Grid {

@@ -4,19 +4,26 @@ import React, { useState, useEffect } from 'react';
 
 function DisplayData() {
       const [data, setData] = useState([]);
+      const [xVals, setxVals] = useState([]);
+      const [yVals, setyVals] = useState([]);
 
       useEffect(() => {
         fetch('http://127.0.0.1:5000/dataframe')
           .then(response => response.json())
           .then(data => {
-            var edited_data = []
+            var edited_data = [];
 
             for (let i = 0; i <= data["Dates"].length - 1; i++) {
-              edited_data.push([data["Dates"][i], data["Vals"][i]])
+
+              edited_data.push([data["Dates"][i], data["Vals"][i]]);
+              xVals.push(data["Dates"][i]);
+              yVals.push(data["Vals"][i]);
+
             } 
 
-            setData(edited_data)
-            console.log(edited_data)
+            setData(edited_data);
+            setxVals(xVals);
+            setyVals(yVals);
           })
           .catch(error => console.error(error));
       }, []);
@@ -28,19 +35,15 @@ function DisplayData() {
         },
       
         title: {
-            text: 'Highcharts Stock Responsive Chart'
-        },
-      
-        subtitle: {
-            text: 'Click small/large buttons or change window size to test responsiveness'
-        },
+            text: 'Stock Chart'
+        },      
       
         rangeSelector: {
             selected: 1
         },
       
         series: [{
-            name: 'AAPL Stock Price',
+            name: 'Stock Price',
             data: data,
             type: 'area',
             threshold: null,
@@ -48,6 +51,20 @@ function DisplayData() {
                 valueDecimals: 2
             }
         }],
+
+        xAxis: {
+          categories : xVals,
+
+          labels: {
+            format: '{value}'
+          }
+        },
+
+        yAxis : {
+          labels : {
+            format: '{value}'
+          }   
+        },
       
         responsive: {
             rules: [{
