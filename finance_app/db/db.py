@@ -25,7 +25,6 @@ def get_init_pvalue():
     return retval
 
 
-
 @app.route('/pf_dataframe')
 def call_pf():
     aapl = yf.Ticker("AAPL")
@@ -72,7 +71,6 @@ def call_market():
     j_string = json.dumps(pf.to_dict(orient='list'))
 
     return j_string
-
 
 
 if __name__ == '__main__':
