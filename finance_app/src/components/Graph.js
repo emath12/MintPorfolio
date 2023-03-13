@@ -58,11 +58,11 @@ function DisplayData() {
         title: {
             text: 'Stock Chart'
         },      
-      
-        rangeSelector: {
-            selected: 1
+
+        scrollbar: {
+          enabled: true,
         },
-      
+    
         series: [
           {
             name: 'Stock Price',
@@ -116,6 +116,12 @@ function DisplayData() {
                     }
                 }
             }]
+        },
+
+        rangeSelector: {
+          inputEnabled: false, // Hide the date input box
+          enabled: true,
+
         }
       };
 
