@@ -2,10 +2,10 @@ import './StockGrid.css';
 import React, { Component } from 'react';
 
 const StockRow = props => {
-    <div>
-        <input placeholder='StockRow'>{props.name}</input>
-        <input  placeholder='Long or short?'>{props.long}</input>
-        <input placeholder='# of Shares'>{props.shares}</input>
+    <div className="StockRow">
+        <input placeholder='StockRow'></input>
+        <input  placeholder='Long or short?'></input>
+        <input placeholder='# of Shares'></input>
     </div>
 }
 
@@ -74,6 +74,10 @@ class StockGrid extends Component {
                }
             </div> 
             */}
+            <div className="Stocks">
+                <StockRow/>
+                <StockRow/>
+            </div>
             
             <div className='ButtonRow'>
                 <button onClick={this.createNewBlankPosition()}>Add Position</button>            
