@@ -8,48 +8,63 @@ app = Flask(__name__)
 CORS(app)
 init_pvalue = 1
 
-<<<<<<< HEAD
+
+class User:
+    def __init__(self, name, pwd, date, port: dict):
+        self.name = name
+        self.pwd = pwd
+        self.date = date
+        self.port = port
+
+    def __str__(self):
+        return f"{self.name}, {self.date}, {self.port}"
+
+    def get_init_pvalue(self):
+        retval = 0
+        for tkr, i in self.port.items():
+            retval += i*yf.Ticker(tkr).history(start=self.date)["Close"][0]
+
+        return retval
+
+    def get_port_df(self):
+        df = pd.DataFrame()
+        for tkr, i in self.port.items():
+            df[tkr] = i*yf.Ticker(tkr).history(start=self.date)["Close"]
+
+        pf = pd.DataFrame()
+        pf["Dates"] = df.index.strftime("%Y-%m-%d").tolist()
+        pf["Vals"] = df.sum(axis=1).tolist()
+
+        return pf
+
+
+def get_user_data():
+    """
+    pulls portfolio data from frontend and stores it in portfolio object
+    :return:
+    portfolio object
+    """
+
+    name = "Joe"
+    pwd = "password"
+    date = "2023-01-01"
+    port = {"AAPL": 10, "MSFT": 10, "AMZN": 10, "NVDA": 10, "BRK-B": 10}
+
+    joe = User(name, pwd, date, port)
+    print(joe)
+    return joe
+
 def get_init_pvalue():
-    aapl = yf.Ticker("AAPL")
-    msft = yf.Ticker("MSFT")
-    amzn = yf.Ticker("AMZN")
-    nvda = yf.Ticker("NVDA")
-    brk = yf.Ticker("BRK-B")
+    u1 = get_user_data()
 
-    retval = 0
-    retval += 10*aapl.history(start="2023-01-01")["Close"][0]
-    retval += 10*msft.history(start="2023-01-01")["Close"][0]
-    retval += 10*amzn.history(start="2023-01-01")["Close"][0]
-    retval += 10*nvda.history(start="2023-01-01")["Close"][0]
-    retval += 10*brk.history(start="2023-01-01")["Close"][0]
-
-    return retval
+    return u1.get_init_pvalue()
 
 
-=======
->>>>>>> StockRow
 @app.route('/pf_dataframe')
 def call_pf():
-    aapl = yf.Ticker("AAPL")
-    msft = yf.Ticker("MSFT")
-    amzn = yf.Ticker("AMZN")
-    nvda = yf.Ticker("NVDA")
-    brk = yf.Ticker("BRK-B")
+    u1 = get_user_data()
 
-    df = pd.DataFrame()
-
-    df["aapl"] = 10 * aapl.history(start="2023-01-01")["Close"]
-    df["msft"] = 10 * msft.history(start="2023-01-01")["Close"]
-    df["amzn"] = 10 * amzn.history(start="2023-01-01")["Close"]
-    df["nvda"] = 10 * nvda.history(start="2023-01-01")["Close"]
-    df["brk"] = 10 * brk.history(start="2023-01-01")["Close"]
-
-    pf = pd.DataFrame()
-    pf["Dates"] = df.index.strftime("%Y-%m-%d").tolist()  # Convert Timestamps to strings
-    pf["Vals"] = df.sum(axis=1).tolist()
-
-    global init_pvalue
-    init_pvalue = pf["Dates"][0]
+    pf = u1.get_port_df()
 
     j_string = json.dumps(pf.to_dict(orient='list'))
 
@@ -58,8 +73,8 @@ def call_pf():
 
 @app.route('/market_dataframe')
 def call_market():
-
-    init_pvalue = get_init_pvalue()
+    u1 = get_user_data()
+    init_pvalue = u1.get_init_pvalue()
 
     mkt = yf.Ticker("^GSPC")
     df = pd.DataFrame()
