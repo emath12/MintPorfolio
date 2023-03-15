@@ -8,6 +8,7 @@ app = Flask(__name__)
 CORS(app)
 init_pvalue = 1
 
+<<<<<<< HEAD
 def get_init_pvalue():
     aapl = yf.Ticker("AAPL")
     msft = yf.Ticker("MSFT")
@@ -25,6 +26,8 @@ def get_init_pvalue():
     return retval
 
 
+=======
+>>>>>>> StockRow
 @app.route('/pf_dataframe')
 def call_pf():
     aapl = yf.Ticker("AAPL")
