@@ -12,7 +12,7 @@ function DisplayData() {
       const [yVals, setyVals] = useState([]);
 
       useEffect(() => {
-        fetch('http://127.0.0.1:5000/dataframe')
+        fetch('http://127.0.0.1:5000/pf_dataframe')
           .then(response => response.json())
           .then(data => {
             var edited_data = [];

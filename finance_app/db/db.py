@@ -8,7 +8,6 @@ app = Flask(__name__)
 CORS(app)
 init_pvalue = 1
 
-
 class User:
     def __init__(self, name, pwd, date, port: dict):
         self.name = name
@@ -56,7 +55,6 @@ def get_user_data():
 
 def get_init_pvalue():
     u1 = get_user_data()
-
     return u1.get_init_pvalue()
 
 

@@ -1,6 +1,6 @@
 import './StockGrid.css';
 import React, { Component } from 'react';
-
+import axios from "axios";
 
 class StockGrid extends Component {
     constructor(props) {
@@ -12,7 +12,6 @@ class StockGrid extends Component {
       }
 
       this.createNewBlankPosition = this.createNewBlankPosition.bind(this);
-
     }
 
     StockRow = (props) => {
@@ -27,11 +26,66 @@ class StockGrid extends Component {
             });
           };
 
+        const updateCompanyValue = (event) => {
+          let initState = this.state.objects;
+          for (let i = 0; i < initState.length; i++) {
+              if (initState[i].id == id) {
+                  initState[i].company = event.target.value;
+              }
+          }
+
+          this.setState({
+            objects : initState,
+            size : this.state.objects.size
+          });
+
+          console.log(this.state.objects);
+        }
+
+        const updateLongShort = (event) => {
+          let initState = this.state.objects;
+          for (let i = 0; i < initState.length; i++) {
+              if (initState[i].id == id) {
+                  if (event.target.value == "Long") {
+                    initState[i].long = true
+                  } else {
+                    initState[i].long = false
+                  }
+              }
+          }
+
+          this.setState({
+            objects : initState,
+            size : this.state.objects.size
+          });
+
+          console.log(this.state.objects);
+        }
+
+        const updateShareAmount = (event) => {
+          let initState = this.state.objects;
+          for (let i = 0; i < initState.length; i++) {
+              if (initState[i].id == id) {
+                  initState[i].shares = event.target.value;
+              }
+          }
+
+          this.setState({
+            objects : initState,
+            size : this.state.objects.size
+          });
+
+          console.log(this.state.objects);
+        }
+
         return (
           <div className="StockRow" key={id}>
-            <input placeholder="StockRow"></input>
-            <input placeholder="Long or short?"></input>
-            <input placeholder="# of Shares"></input>
+            <input onChange={updateCompanyValue} placeholder="StockRow"></input>
+            <select onChange={updateLongShort} name="Long/Short">
+              <option value="Long">Long</option>
+              <option value="Short">Short</option>
+            </select>
+            <input onChange={updateShareAmount} placeholder="# of Shares"></input>
             <button onClick={removeItem}>Delete</button>
           </div>
         );
@@ -43,7 +97,11 @@ class StockGrid extends Component {
         // rememember that you need to use setState()
 
         let newState = this.state.objects.concat(
-            {id: this.state.size}
+            {id: this.state.size,
+             company : '',
+             long : true,
+             shares : 0
+            }
         );
         
         this.setState({
@@ -55,12 +113,9 @@ class StockGrid extends Component {
     }
 
     onSubmit = event => { 
-        // when the form itself is finished being created.
+          
 
-        // iteate 
-        
-        // do some research on how to pull from the <form>, there's tons of
-        // documentation on this on the interwebs.
+
     }
 
     render() {
