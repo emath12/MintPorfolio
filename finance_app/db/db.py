@@ -1,6 +1,6 @@
 import pandas as pd
 import yfinance as yf
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 
@@ -88,6 +88,11 @@ def call_market():
 
     return j_string
 
+
+@app.route('/input_data', methods=['POST'])
+def receive_data():
+    print(request.json)
+    return request.json
 
 if __name__ == '__main__':
     app.run()

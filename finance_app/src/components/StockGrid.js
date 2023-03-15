@@ -89,13 +89,10 @@ class StockGrid extends Component {
             <button onClick={removeItem}>Delete</button>
           </div>
         );
-      }
+    }
 
     createNewBlankPosition = () => {
-        // some how manipulate the state once the button is clicked, perhaps?
-
-        // rememember that you need to use setState()
-
+        
         let newState = this.state.objects.concat(
             {id: this.state.size,
              company : '',
@@ -110,17 +107,16 @@ class StockGrid extends Component {
         });
 
         console.log(this.state.objects);
-    }
+    };
 
-    onSubmit = event => { 
-          
-
-
-    }
+    handleSubmit = () => { 
+        axios.post('http://127.0.0.1:5000/input_data', this.state.objects)
+          .then(response => console.log(response))
+          .then(error => console.log(error));
+    };
 
     render() {
         return (
-            // triggers the onSubmit event handler
             <div>
                 <div className="Stocks">
                     {
@@ -135,6 +131,7 @@ class StockGrid extends Component {
                 <div className='ButtonRow'>
                     <button onClick={this.createNewBlankPosition}>Add Position</button>            
                 </div>
+                <button type="submit" onClick={this.handleSubmit}>Submit</button>
             </div>
         )
       }
