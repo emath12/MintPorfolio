@@ -1,23 +1,6 @@
 import './StockGrid.css';
 import React, { Component } from 'react';
 
-const StockRow = props => {
-    <div className="StockRow">
-        <input placeholder='StockRow'></input>
-        <input  placeholder='Long or short?'></input>
-        <input placeholder='# of Shares'></input>
-    </div>
-}
-
-// simply an abstraction for better state management
-function stockRowObj(company, long, shares) {
-    this.company = company;
-    this.long = long;
-    this.shares = shares;
-}
-// create a new stockRowObj with the following syntax: 
-// let row = new stockRowObj(company, long, shares)
-
 
 class StockGrid extends Component {
     constructor(props) {
@@ -25,23 +8,53 @@ class StockGrid extends Component {
 
       this.state = {
         objects : [],
-        // state will just be an array of stockRowObjects
-        // empty to start. This is the state's initial state
+        size: 0
       }
+
+
+
+      this.createNewBlankPosition = this.createNewBlankPosition.bind(this);
+    //   this.removePosition = this.removePosition.bind(this);
+
     }
+
+    StockRow = (props) => {
+
+        const id = props.id;
+
+        const removeItem = () => {
+            const newState = this.state.objects.filter(item => item.id !== id);
+          
+            this.setState({
+              objects: newState,
+            });
+          };
+
+        return (
+          <div className="StockRow" key={id}>
+            <input placeholder="StockRow"></input>
+            <input placeholder="Long or short?"></input>
+            <input placeholder="# of Shares"></input>
+            <button onClick={removeItem}>Delete</button>
+          </div>
+        );
+      }
 
     createNewBlankPosition = () => {
         // some how manipulate the state once the button is clicked, perhaps?
 
         // rememember that you need to use setState()
 
-        // this.setState(
-        //     // something
-        // )
-
+        let newState = this.state.objects.concat(
+            {id: this.state.size}
+        );
+        
         this.setState({
-            objects : this.state.objects.push("hello")
-        })
+            objects : newState,
+            size: this.state.size + 1
+        });
+
+        console.log(this.state.objects);
     }
 
     onSubmit = event => { 
@@ -51,39 +64,27 @@ class StockGrid extends Component {
         
         // do some research on how to pull from the <form>, there's tons of
         // documentation on this on the interwebs.
-
-  
     }
 
     render() {
         return (
-        // triggers the onSubmit event handler
-        <form onSubmit={this.onSubmit}>
-            {
-            // click through the state and create a StockRow component for each stock row object in the state
-            
-            /* <div className='Stocks'>
-               {
-                this.state.map() => {
-                    <stockRowObj
-                        name=""
-                        long=""
-                        shares=""
-                    />
-                }
-               }
-            </div> 
-            */}
-            <div className="Stocks">
-                <StockRow/>
-                <StockRow/>
+            // triggers the onSubmit event handler
+            <div>
+                <div className="Stocks">
+                    {
+                        this.state.objects.map(({id}) => {
+                            return <this.StockRow 
+                                key={id}
+                                id={id}
+                            />
+                        })
+                    }
+                </div>
+                <div className='ButtonRow'>
+                    <button onClick={this.createNewBlankPosition}>Add Position</button>            
+                </div>
             </div>
-            
-            <div className='ButtonRow'>
-                <button onClick={this.createNewBlankPosition()}>Add Position</button>            
-            </div>
-        </form>
-        );
+        )
       }
 }
 

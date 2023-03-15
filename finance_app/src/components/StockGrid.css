@@ -22,3 +22,8 @@
     width: 100%;  
     flex-grow: 1;
 }
+
+.ButtonRow {
+    justify-content: center;
+    align-items: center;
+}
