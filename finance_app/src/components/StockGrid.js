@@ -11,8 +11,6 @@ class StockGrid extends Component {
         size: 0
       }
 
-
-
       this.createNewBlankPosition = this.createNewBlankPosition.bind(this);
     //   this.removePosition = this.removePosition.bind(this);
 
