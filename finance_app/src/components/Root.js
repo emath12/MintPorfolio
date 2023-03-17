@@ -10,7 +10,7 @@ function Root() {
     <Router>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/daphne' element={<StockGrid />} />
+        <Route path='/select' element={<StockGrid />} />
       </Routes>
     </Router>
   );

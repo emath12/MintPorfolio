@@ -11,6 +11,8 @@ function DisplayData() {
 
       const [yVals, setyVals] = useState([]);
 
+      // only runs when the component is rendered for the first time, perfect
+      // for an API call.
       useEffect(() => {
         fetch('http://127.0.0.1:5000/pf_dataframe')
           .then(response => response.json())
