@@ -91,6 +91,7 @@ def call_market():
 
 @app.route('/input_data', methods=['POST'])
 def receive_data():
+    print("got here!")
     print(request.json)
     return request.json
 

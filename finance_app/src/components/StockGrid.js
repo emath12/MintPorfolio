@@ -42,7 +42,7 @@ function StockRow(props) {
 
   return (
     <div className="StockRow" key={id}>
-      <input value={company} type="text" onChange={updateCompanyValue} placeholder="StockRow"></input>
+      <input value={company} type="text" onChange={updateCompanyValue} placeholder="Ticker"></input>
       <input onChange={updateShareAmount} placeholder="# of Shares"></input>
       <button onClick={removeItem}>Delete</button>
     </div>
@@ -125,7 +125,7 @@ function StockGrid() {
             <button type="submit" onClick={handleSubmit}>Submit</button>
         </div>
     )
-  }
 
+}
 
 export default StockGrid;
