@@ -57,7 +57,6 @@ def get_init_pvalue():
     u1 = get_user_data()
     return u1.get_init_pvalue()
 
-
 @app.route('/pf_dataframe')
 def call_pf():
     u1 = get_user_data()
@@ -89,10 +88,10 @@ def call_market():
     return j_string
 
 
-@app.route('/input_data', methods=['POST'])
+@app.route('/input_data')
 def receive_data():
-    print("got here!")
-    print(request.json)
+    # data is in the form of
+    #[{'id': 0, 'company': '', 'shares': 0}, {'id': 1, 'company': 'ejfn', 'long': True, 'shares': 0}, {'id': 2, 'company': 'd', 'long': True, 'shares': 0}]
     return request.json
 
 if __name__ == '__main__':

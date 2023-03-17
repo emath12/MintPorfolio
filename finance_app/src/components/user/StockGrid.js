@@ -2,6 +2,7 @@ import './StockGrid.css';
 import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import OurBar from './OurBar.js'
 
 function StockRow(props) {
 
@@ -42,9 +43,20 @@ function StockRow(props) {
 
   return (
     <div className="StockRow" key={id}>
-      <input value={company} type="text" onChange={updateCompanyValue} placeholder="Ticker"></input>
-      <input onChange={updateShareAmount} placeholder="# of Shares"></input>
-      <button onClick={removeItem}>Delete</button>
+      <input 
+          value={company} 
+          type="text" 
+          onChange={updateCompanyValue} 
+          placeholder="Ticker">
+      </input>
+      <input 
+          onChange={updateShareAmount} 
+          placeholder="# of Shares">    
+      </input>
+      <button 
+          onClick={removeItem}>
+          Delete
+      </button>
     </div>
   );
 }
@@ -101,12 +113,18 @@ function StockGrid() {
           .then(response => console.log(response))
           .then(error => console.log(error));
 
-        nav('/')
+        nav('/returns')
 
     };
 
     return (
-        <div>
+        <>
+            <OurBar />
+            <input
+              placeholder="Construction Date"
+            >
+            
+            </input>
             <div className="Stocks">
                 {
                     rows.objects.map(({id}) => {
@@ -123,7 +141,7 @@ function StockGrid() {
                 <button onClick={createNewBlankPosition}>Add Position</button>            
             </div>
             <button type="submit" onClick={handleSubmit}>Submit</button>
-        </div>
+        </>
     )
 
 }

@@ -7,10 +7,7 @@
     width: 50%;
     margin: auto;
 
-    justify-content: space-between; /* or justify-content: space-around; */
     align-items: center;
-  
-    background-color: limegreen;
 }
 
 .Row {

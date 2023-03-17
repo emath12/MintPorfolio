@@ -10,3 +10,11 @@ Install npm and react-scripts.
 
 cd finance_app
 npm start 
+
+# Packages Used
+**Backend**
+Flask, Flask-Login, Flask Cors, 
+
+**Frontend**
+Highcharts (for stock market rendering)
+React-Boostrap (https://react-bootstrap.github.io/components/navbar/)
