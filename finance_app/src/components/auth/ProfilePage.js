@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 // we will use dummy data for now, in the future, we will have to fetch this data, but Taimur hasn't finished
 // auth db yet.
 
+// imagine with have fetched this data. Now, display the positions held by this user.
 const testUser = {
     username : "investorJoe", 
     positions : [
@@ -26,7 +27,7 @@ const testUser = {
     ]
 }
 
-const ProfileCard = (/* receive the information from the profile */) => {
+const PositionCard = (/* receive the information from the profile */) => {
     
     return (
         <>
@@ -47,7 +48,7 @@ function ProfilePage() {
             {/* Display the OurBar Component*/}
             {/* 
             
-            Map through the state of the ProfilePage and display ProfileCards that have certain
+            Map through the state of the ProfilePage and display PositionCard that have certain
             types of info
             */}
             <button>Add or Edit Positions</button>
