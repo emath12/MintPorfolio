@@ -26,6 +26,7 @@ function StockRow(props) {
   };
 
   useEffect(() => {
+    // https://stackoverflow.com/questions/53446020/how-to-compare-oldvalues-and-newvalues-on-react-hooks-useeffect
     if (prevCompany.current != company || prevShares.current !== shares) {
       props.doUpdate(id, company, shares);
       prevCompany.current = company;
@@ -40,6 +41,7 @@ function StockRow(props) {
   function updateShareAmount(event) {
       setShares(event.target.value);
   }
+
 
   return (
     <div className="StockRow" key={id}>
@@ -75,6 +77,12 @@ function StockGrid() {
       size: 0
     })
 
+    const [date, setDate] = useState("");
+
+    function updateDate(event) {
+        setDate(event.target.value);
+    }
+
     function doUpdate(id, company, shares) {
       let updatedRows = rows.objects;
 
@@ -97,7 +105,6 @@ function StockGrid() {
         let newState = rows.objects.concat(
             {id: rows.size + 1,
              company : '',
-             long : true,
              shares : 0
             }
         );
@@ -109,7 +116,7 @@ function StockGrid() {
     };
 
     function handleSubmit() { 
-        axios.post('http://127.0.0.1:5000/input_data', rows.objects)
+        axios.post('http://127.0.0.1:5000/input_data', [rows.objects, date])
           .then(response => console.log(response))
           .then(error => console.log(error));
 
@@ -121,10 +128,11 @@ function StockGrid() {
         <>
             <OurBar />
             <input
+              onChange={updateDate}
               placeholder="Construction Date"
-            >
+              type="date"
+            />
             
-            </input>
             <div className="Stocks">
                 {
                     rows.objects.map(({id}) => {

@@ -18,3 +18,7 @@ Flask, Flask-Login, Flask Cors,
 **Frontend**
 Highcharts (for stock market rendering)
 React-Boostrap (https://react-bootstrap.github.io/components/navbar/)
+
+# TODO:
+
+Some way to view the graph if you are logged in?

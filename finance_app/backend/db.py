@@ -90,8 +90,11 @@ def call_market():
 
 @app.route('/input_data')
 def receive_data():
+    print(request.json)
     # data is in the form of
-    #[{'id': 0, 'company': '', 'shares': 0}, {'id': 1, 'company': 'ejfn', 'long': True, 'shares': 0}, {'id': 2, 'company': 'd', 'long': True, 'shares': 0}]
+    # [ [list of ticker objects], construction-date ]
+    #[[{'id': 0, 'company': 'dd', 'shares': 0}, {'id': 1, 'company': '', 'long': True, 'shares': 0}], '2023-03-08']
+
     return request.json
 
 if __name__ == '__main__':

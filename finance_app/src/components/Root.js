@@ -2,7 +2,7 @@ import './Root.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import StockGrid from './user/StockGrid.js';
 import Login from './auth/Login.js';
-import Profile from './auth/Profile.js';
+import ProfilePage from './auth/ProfilePage.js';
 import Logout from './auth/Logout.js';
 import PortfoilioReturns from './user/PortfolioReturns.js';
 import Home from './user/Home.js';
@@ -14,7 +14,7 @@ function Root() {
             <Route path='/' element={<Home />} />
             <Route path='/returns' element={<PortfoilioReturns />} />
             <Route path='/select' element={<StockGrid />} />
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/profile' element={<ProfilePage />} />
             <Route path='/login' element={<Login />} />
             <Route path='/logout' element={<Logout />} />
           </Routes>

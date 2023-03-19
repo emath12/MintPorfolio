@@ -17,6 +17,7 @@ function DisplayData() {
         fetch('http://127.0.0.1:5000/pf_dataframe')
           .then(response => response.json())
           .then(data => {
+
             var edited_data = [];
 
             for (let i = 0; i <= data["Dates"].length - 1; i++) {
@@ -35,9 +36,8 @@ function DisplayData() {
         fetch('http://127.0.0.1:5000/market_dataframe')
           .then(response => response.json())
           .then(data => {
-            var edited_data = [];
 
-            console.log(data);
+            var edited_data = [];
             
             for (let i = 0; i <= data["Dates"].length - 1; i++) {
 
@@ -50,17 +50,12 @@ function DisplayData() {
      
       }, []);
 
-
       const options = {
 
         chart: {
             height: 400
         },
-      
-        title: {
-            text: 'Stock Chart'
-        },      
-
+         
         scrollbar: {
           enabled: true,
         },
@@ -86,20 +81,6 @@ function DisplayData() {
             }
           }
         ],
-
-        xAxis: {
-          categories : xVals,
-
-          labels: {
-            format: '{value}'
-          }
-        },
-
-        yAxis : {
-          labels : {
-            format: '{value}'
-          }   
-        },
       
         responsive: {
             rules: [{
@@ -121,10 +102,15 @@ function DisplayData() {
         },
 
         rangeSelector: {
-          inputEnabled: false, // Hide the date input box
-          enabled: true,
-
-        }
+          selected: 4,
+          inputEnabled: false,
+          buttonTheme: {
+              visibility: 'hidden'
+          },
+          labelStyle: {
+              visibility: 'hidden'
+          }
+      }
       };
 
       return (
