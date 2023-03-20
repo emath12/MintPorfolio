@@ -6,6 +6,7 @@ import ProfilePage from './auth/ProfilePage.js';
 import Logout from './auth/Logout.js';
 import PortfoilioReturns from './user/PortfolioReturns.js';
 import Home from './user/Home.js';
+import CreateAccount from "./auth/CreateAccount.js"
 
 function Root() {
     return (
@@ -17,6 +18,7 @@ function Root() {
             <Route path='/profile' element={<ProfilePage />} />
             <Route path='/login' element={<Login />} />
             <Route path='/logout' element={<Logout />} />
+            <Route path='/create-account' element={<CreateAccount />}/>
           </Routes>
       </Router>
     );

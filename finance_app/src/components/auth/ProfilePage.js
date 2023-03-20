@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 // access this export at /profile on the localhost 
 
-// TODO : DISPLAY THE POSITIONS HELD BY A PARTICULAR USER
+// TODO : DISPLAY THE POSITIONS HELD BY A PARTICULAR USER. Work on branch ProfileFrontend
 
 // BETA FUTURE PLANS
 // - Able to edit posiitons right here?
@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 // we will use dummy data for now, in the future, we will have to fetch this data, but Taimur hasn't finished
 // auth db yet.
 
-// imagine with have fetched this data. Now, display the positions held by this user.
+// imagine we have fetched this data. Now, display the positions held by this user.
 const testUser = {
     username : "investorJoe", 
     positions : [
