@@ -67,10 +67,9 @@ function ProfilePage() {
                 <OurBar />
                 {
                     profile.positions.map((position) => 
-                    {console.log(profile.positions);
-                        <PositionCard
-                            ticker={position[0][0]}
-                            numShares={position[0][1]}
+                    {return <PositionCard
+                            ticker={position[0]}
+                            numShares={position[1]}
                         />
                     })
                 }
