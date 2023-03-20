@@ -1,9 +1,6 @@
-// import OurBar and have it display on our page.
-
-// these are all the other imports you should need:
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import OurBar from '../user/OurBar.js'
 // access this export at /profile on the localhost 
 
 // TODO : DISPLAY THE POSITIONS HELD BY A PARTICULAR USER. Work on branch ProfileFrontend
@@ -19,44 +16,70 @@ import { useNavigate } from 'react-router-dom';
 const testUser = {
     username : "investorJoe", 
     positions : [
-        {"AAPL": 10}, 
-        {"MSFT": 10}, 
-        {"AMZN": 10}, 
-        {"NVDA": 10}, 
-        {"BRK-B": 10}
+        ["AAPL", 10], 
+        ["MSFT", 10], 
+        ["AMZN", 10], 
+        ["NVDA", 10], 
+        ["BRK-B", 10]
     ]
 }
 
-const PositionCard = (/* receive the information from the profile */) => {
-    
+const PositionCard = (props) => {
     return (
-        <>
-        {/* display the information in a nice way*/}
-        </>
-    )
+        <div>
+            <h2 className='ticker'>{props.ticker}</h2>
+            <h3 className='numShares'>{props.numShares}</h3>
+            <p>"Hi</p>
+        </div>
+    );
     
 }
 
 function ProfilePage() {
 
-    // const [] = ()
+    const nav = useNavigate();
+
+    const [profile, setProfile] = useState({
+        username : "investorJoe", 
+        positions : [
+            ["AAPL", 1], 
+            ["MSFT", 2], 
+            ["AMZN", 3], 
+            ["NVDA", 4], 
+            ["BRK-B", 10]
+        ]
+    })
+
+    // now inform child component what to do 
+    // each pos card has ticker + #
+    // testUser
+
     // define a react hook whose state is a struct with the current user information
     // and an array of tickers name and share tuples
 
+    // job of profile is to tell the cards how they should display and how many to display
+    // should rely on state to do this
+    // use .map()!! 
+    
     return (
         <>
-            {/* Display the OurBar Component*/}
-            {/* 
-            
-            Map through the state of the ProfilePage and display PositionCard that have certain
-            types of info
-            */}
+            <div>
+                <OurBar />
+                {
+                    profile.positions.map((position) => 
+                    {console.log(profile.positions);
+                        <PositionCard
+                            ticker={position[0][0]}
+                            numShares={position[0][1]}
+                        />
+                    })
+                }
+            </div>
             <button>Add or Edit Positions</button>
             {/* have this button navigate back to the page where you can add positions when clicked*/}
         </>
-    )
+    );
 }
-
 
 
 export default ProfilePage
