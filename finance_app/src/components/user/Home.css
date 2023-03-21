@@ -1,5 +1,9 @@
+.HomePage {
+  background-color: #CDE4D5
+
+}
 .Name {
-    
+  
 }
 
 .Split {
@@ -11,9 +15,9 @@
 }
 
 .navbar {
-    background-color: #00693e; /* set the background color of the Navbar */
+    background-color: #22522C; /* set the background color of the Navbar */
   }
   
   .navbar .nav-link {
-    color: #fff !important; 
+    color: #f9f9e2 !important; 
   }

@@ -11,7 +11,7 @@ import OurBar from './OurBar.js'
 
 function Home() {
     return (
-        <>
+        <div className='HomePage'>
             <OurBar />
             <div className='Split'>
                 <div className='Name'>
@@ -21,7 +21,7 @@ function Home() {
                     <h2>Obama</h2>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

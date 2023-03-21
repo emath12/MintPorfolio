@@ -2,7 +2,6 @@ import './ProfilePage.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OurBar from '../user/OurBar.js';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 // access this export at /profile on the localhost 
@@ -11,12 +10,13 @@ import Card from 'react-bootstrap/Card';
 
 // BETA FUTURE PLANS
 // - Able to edit posiitons right here?
-// - 
+// - card images match associated companies
+// - cards contain additional information about holding such as purchase date
 
 // we will use dummy data for now, in the future, we will have to fetch this data, but Taimur hasn't finished
 // auth db yet.
 
-// imagine we have fetched this data. Now, display the positions held by this user.
+// dummy data
 const testUser = {
     username : "investorJoe", 
     positions : [
@@ -30,15 +30,21 @@ const testUser = {
 
 const PositionCard = (props) => {
     return (
-        <div className="card">
+        <div className="card w-auto">
             <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="https://www.logodesign.net/logo-new/owl-on-scale-legal-icon-6854ld.png" />
+            <Card.Header>
+            <Card.Img variant="top" object_fit="cover" height="auto%" src="https://www.davidgutierrez.co.uk/uploads/4/1/0/3/4103332/london-london-photographer-1295_orig.jpg" />
+            </Card.Header>
             <Card.Body>
-                <Card.Title>{props.ticker}</Card.Title>
-                <Card.Text>
-                Total shares: {props.numShares}
-                </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
+                <Card.Body>
+                    <Card.Title>
+                        {props.ticker}
+                    </Card.Title>
+                    <Card.Text>
+                    Total shares: {props.numShares}
+                    </Card.Text>
+                </Card.Body>
+                <button className="ExternalButton">Go somewhere</button>
             </Card.Body>
         </Card>
         </div>
@@ -66,18 +72,24 @@ function ProfilePage() {
     return (
         <>
             <OurBar />
-            
-            <div className='Positions'>
-                {
-                    profile.positions.map((position) => 
-                    {return <PositionCard
-                            ticker={position[0]}
-                            numShares={position[1]}
-                        />
-                    })
-                }
+            <div className="page">
+                <h1 className='username'> 
+                    {profile.username}'s Profile
+                </h1>
+                <br></br>
+                <div className='Positions'>
+                    {
+                        profile.positions.map((position) => 
+                        {return <PositionCard
+                                ticker={position[0]}
+                                numShares={position[1]}
+                            />
+                        })
+                    }
+                </div>
             </div>
-            <button onClick={OurBar.navSelect}>Add or Edit Positions</button>
+            <br></br>
+            <button>Add or Edit Positions</button>
             {/* have this button navigate back to the page where you can add positions when clicked*/}
         </>
     );

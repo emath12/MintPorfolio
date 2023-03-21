@@ -23,7 +23,11 @@ function OurBar(props) {
         nav("/profile")
     }
 
-    // TODO : fix the left aign, dunno why its not working
+    function navGettingStarted() {
+        nav("/getting-started")
+    }
+
+    // TODO : fix the left align, dunno why its not working
 
     return (
         <>
@@ -34,11 +38,11 @@ function OurBar(props) {
             <Nav>
                 <Nav.Link onClick={navHome}>Home</Nav.Link>
                 <Nav.Link onClick={navSelect}>Build Porfolio</Nav.Link>
-                <Nav.Link onClick={navSelect}>How to Use</Nav.Link>
+                <Nav.Link onClick={navGettingStarted}>How to Use</Nav.Link>
             </Nav>
 
             <Nav> 
-                <Nav.Link onClick={navProfile}>Account</Nav.Link>
+                <Nav.Link onclick={navProfile}>Account</Nav.Link>
             </Nav>
         
           </Container>

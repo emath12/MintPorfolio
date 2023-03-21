@@ -2,15 +2,26 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
     width: full;
     justify-content: center;
     justify-items: center;
     align-content: center;
     align-items: center;
+    
 }
 
-.ticker {
-    
+.username {
+    background-color: #CDE4D5;
+}
+
+.ExternalButton {
+    background-color: #f9f9e2;
+}
+
+.button {
+    margin-right: 10px; 
+    width: 100%;  
+    flex-grow: 1;
 }
