@@ -18,6 +18,10 @@ function OurBar(props) {
     function navHome () {
         nav("/");
     }
+    
+    function navProfile() {
+        nav("/profile")
+    }
 
     // TODO : fix the left aign, dunno why its not working
 
@@ -34,7 +38,7 @@ function OurBar(props) {
             </Nav>
 
             <Nav> 
-                <Nav.Link className='ml-auto'>Account</Nav.Link>
+                <Nav.Link onClick={navProfile}>Account</Nav.Link>
             </Nav>
         
           </Container>

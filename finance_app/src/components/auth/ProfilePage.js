@@ -1,6 +1,10 @@
+import './ProfilePage.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import OurBar from '../user/OurBar.js'
+import OurBar from '../user/OurBar.js';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+
 // access this export at /profile on the localhost 
 
 // TODO : DISPLAY THE POSITIONS HELD BY A PARTICULAR USER. Work on branch ProfileFrontend
@@ -16,20 +20,27 @@ import OurBar from '../user/OurBar.js'
 const testUser = {
     username : "investorJoe", 
     positions : [
-        ["AAPL", 10], 
-        ["MSFT", 10], 
-        ["AMZN", 10], 
-        ["NVDA", 10], 
+        ["AAPL", 1], 
+        ["MSFT", 2], 
+        ["AMZN", 3], 
+        ["NVDA", 4], 
         ["BRK-B", 10]
     ]
 }
 
 const PositionCard = (props) => {
     return (
-        <div>
-            <h2 className='ticker'>{props.ticker}</h2>
-            <h3 className='numShares'>{props.numShares}</h3>
-            <p>"Hi</p>
+        <div className="card">
+            <Card style={{ width: '18rem' }}>
+            <Card.Img variant="top" src="https://www.logodesign.net/logo-new/owl-on-scale-legal-icon-6854ld.png" />
+            <Card.Body>
+                <Card.Title>{props.ticker}</Card.Title>
+                <Card.Text>
+                Total shares: {props.numShares}
+                </Card.Text>
+                <Button variant="primary">Go somewhere</Button>
+            </Card.Body>
+        </Card>
         </div>
     );
     
@@ -39,16 +50,7 @@ function ProfilePage() {
 
     const nav = useNavigate();
 
-    const [profile, setProfile] = useState({
-        username : "investorJoe", 
-        positions : [
-            ["AAPL", 1], 
-            ["MSFT", 2], 
-            ["AMZN", 3], 
-            ["NVDA", 4], 
-            ["BRK-B", 10]
-        ]
-    })
+    const [profile, setProfile] = useState(testUser)
 
     // now inform child component what to do 
     // each pos card has ticker + #
@@ -63,8 +65,9 @@ function ProfilePage() {
     
     return (
         <>
-            <div>
-                <OurBar />
+            <OurBar />
+            
+            <div className='Positions'>
                 {
                     profile.positions.map((position) => 
                     {return <PositionCard
@@ -74,7 +77,7 @@ function ProfilePage() {
                     })
                 }
             </div>
-            <button>Add or Edit Positions</button>
+            <button onClick={OurBar.navSelect}>Add or Edit Positions</button>
             {/* have this button navigate back to the page where you can add positions when clicked*/}
         </>
     );
