@@ -24,7 +24,7 @@
     margin-right: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 30%;
+    width: 40%;
     position: relative;
     justify-content: left;
     display: 'flex';
@@ -53,6 +53,12 @@
     cursor: pointer;
 }
 
+.ExternalButton:hover {
+    background-color: #74A44C;
+    color: #f9f9e2;
+    cursor: pointer;
+}
+
 .AddButton {
     background-color: #f9f9e2;
     color: #22522C;
@@ -68,7 +74,7 @@
  }
 
 .AddButton:hover {
-    background-color: #22522C;
+    background-color: #74A44C;
     color: #f9f9e2;
     cursor: pointer;
   }

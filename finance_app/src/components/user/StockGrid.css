@@ -6,7 +6,6 @@
     grid-row-gap: 0px;
     width: 50%;
     margin: auto;
-
     align-items: center;
 }
 
@@ -14,10 +13,33 @@
     justify-content: center;
 }
 
-.button {
+.deleteButton {
     margin-right: 10px; 
     width: 100%;  
     flex-grow: 1;
+    
+}
+.deleteButton:hover {
+    background-color: #74A44C;
+    color: #f9f9e2;
+    cursor: pointer;
+}
+
+.date {
+    margin-left: 25px;
+}
+
+.toggle {
+    background-color: #f9f9e2 ;
+    color: #22522C;
+    margin-left: 25px;
+    margin-bottom: 10px;
+}
+
+.toggle:hover {
+    background-color: #74A44C;
+    color: #f9f9e2;
+    cursor: pointer;
 }
 
 .ButtonRow {
@@ -27,4 +49,5 @@
 
 .page {
     background-color: #CDE4D5;
+    
 }
