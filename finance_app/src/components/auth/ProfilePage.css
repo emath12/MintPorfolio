@@ -9,8 +9,25 @@
     
 }
 
-.div {
-    background-color:#CDE4D5;
+.Top {
+    display: flex;
+    position: relative;
+}
+
+.Username {
+    background-color: #f9f9e2;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 30%;
+    position: relative;
+    justify-content: left;
+    display: 'flex';
 }
 
 .Positions {
@@ -26,20 +43,6 @@
     align-items: center;
 }
 
-.username {
-    background-color: #f9f9e2;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 30px;
-    margin-right: 30px;
-    padding: 15px;
-    width: full;
-}
-
 .ExternalButton {
     background-color: #22522C;
     color: #f9f9e2;
@@ -51,19 +54,21 @@
 }
 
 .AddButton {
-    align-self: 'stretch';
-    background-color: #22522C;
-    color: #f9f9e2;
+    background-color: #f9f9e2;
+    color: #22522C;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    padding: 5px;
-    width: '100%';
+    margin: 20px;
+    display: 'flex';
+    position: absolute;
+    right: 0;
+    width: 20%;
  }
 
 .AddButton:hover {
-    background-color: #f9f9e2;
-    color: #22522C;
+    background-color: #22522C;
+    color: #f9f9e2;
     cursor: pointer;
   }
