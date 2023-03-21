@@ -15,6 +15,7 @@
 }
 
 .Username {
+    color: #3D5044;
     background-color: #f9f9e2;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -24,9 +25,9 @@
     margin-right: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 40%;
+    width: 50%;
     position: relative;
-    justify-content: left;
+    justify-content: center;
     display: 'flex';
 }
 
@@ -44,7 +45,8 @@
 }
 
 .ExternalButton {
-    background-color: #22522C;
+    
+    background-color: #74A44C;
     color: #f9f9e2;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -54,14 +56,14 @@
 }
 
 .ExternalButton:hover {
-    background-color: #74A44C;
+    background-color: #22522C;
     color: #f9f9e2;
     cursor: pointer;
 }
 
 .AddButton {
-    background-color: #f9f9e2;
-    color: #22522C;
+    background-color: #22522C;
+    color: #f9f9e2;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -74,7 +76,7 @@
  }
 
 .AddButton:hover {
-    background-color: #74A44C;
-    color: #f9f9e2;
+    background-color: #f9f9e2;
+    color: #22522C;
     cursor: pointer;
   }
