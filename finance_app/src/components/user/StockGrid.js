@@ -147,10 +147,11 @@ function StockGrid() {
                       })  
                   }
               </div>
+              <br></br>
               <div className='ButtonRow'>
-                  <button className="toggle" onClick={createNewBlankPosition}>Add Position</button>            
+                  <button className="toggleAdd" onClick={createNewBlankPosition}>Add Position</button>            
               </div>
-              <button className="toggle" type="submit" onClick={handleSubmit}>Submit</button>
+              <button className="toggleSubmit" type="submit" onClick={handleSubmit}>Submit</button>
             </div>
         </>
     )
