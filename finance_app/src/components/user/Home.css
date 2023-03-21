@@ -1,5 +1,5 @@
 .HomePage {
-  background-color: #CDE4D5
+  background-color: #CDE4D5;
 
 }
 .Name {
@@ -13,6 +13,7 @@
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     background-color: #CDE4D5;
+
 }
 
 .navbar {
