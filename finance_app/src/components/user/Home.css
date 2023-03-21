@@ -9,13 +9,15 @@
 .Split {
     display: grid;
     grid-template-columns: 1fr .5fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: 10fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
+    background-color: #CDE4D5;
 }
 
 .navbar {
     background-color: #22522C; /* set the background color of the Navbar */
+    margin: 0px;
   }
   
   .navbar .nav-link {

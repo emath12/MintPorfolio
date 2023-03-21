@@ -31,7 +31,7 @@ const testUser = {
 const PositionCard = (props) => {
     return (
         <div className="card w-auto">
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: '18rpm' }}>
             <Card.Header>
             <Card.Img variant="top" object_fit="cover" height="auto%" src="https://www.davidgutierrez.co.uk/uploads/4/1/0/3/4103332/london-london-photographer-1295_orig.jpg" />
             </Card.Header>
@@ -71,8 +71,8 @@ function ProfilePage() {
     
     return (
         <>
+            <div className="ProfPage">
             <OurBar />
-            <div className="page">
                 <h1 className='username'> 
                     {profile.username}'s Profile
                 </h1>
@@ -89,7 +89,7 @@ function ProfilePage() {
                 </div>
             </div>
             <br></br>
-            <button>Add or Edit Positions</button>
+            <button className='BuildButton'>Add or Edit Positions</button>
             {/* have this button navigate back to the page where you can add positions when clicked*/}
         </>
     );
