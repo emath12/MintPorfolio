@@ -1,11 +1,11 @@
 import pandas as pd
 import yfinance as yf
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 import json
+from flask_session import Session
 
-app = Flask(__name__)
-CORS(app)
+
 init_pvalue = 1
 
 class User:
@@ -57,6 +57,13 @@ def get_init_pvalue():
     u1 = get_user_data()
     return u1.get_init_pvalue()
 
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'some_random_secret_key'
+
+CORS(app)
+
+Session(app)
+
 @app.route('/pf_dataframe')
 def call_pf():
     u1 = get_user_data()
@@ -87,19 +94,34 @@ def call_market():
 
     return j_string
 
+data = None
 
-@app.route('/input_data')
+@app.route('/input_data', methods=['GET', 'POST'])
 def receive_data():
+    global data
 
-    date = request.json[1]
-    port = {}
-    for trio in request.json[0]:
-        port[trio["company"]] = trio["shares"]
+    if (request.method == 'POST'):
+        data = request.json 
+        print("the data")
+        print(data)
+        return 'success'
 
-    u1 = User(None, None, date, port)
-    pf = u1.get_port_df()
-    j_string = json.dumps(pf.to_dict(orient='list'))
-    return j_string
+    elif (request.method == 'GET'): # GET
+        print(data)
+
+        if data is None:
+            return "No data"
+
+        date = data[1]
+        port = {}
+        for trio in data[0]:
+            port[trio["company"]] = trio["shares"]
+
+        u1 = User(None, None, date, port)
+        pf = u1.get_port_df()
+        j_string = json.dumps(pf.to_dict(orient='list'))
+
+        return j_string
 
 
     # print(request.json)

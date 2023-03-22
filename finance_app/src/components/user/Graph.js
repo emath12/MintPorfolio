@@ -14,12 +14,12 @@ function DisplayData() {
       // only runs when the component is rendered for the first time, perfect
       // for an API call.
       useEffect(() => {
-        fetch('http://127.0.0.1:5000/pf_dataframe')
+        fetch('http://127.0.0.1:5000/input_data')
           .then(response => response.json())
           .then(data => {
 
             var edited_data = [];
-
+            
             for (let i = 0; i <= data["Dates"].length - 1; i++) {
 
               edited_data.push([data["Dates"][i], data["Vals"][i]]);
