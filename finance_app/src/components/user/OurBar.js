@@ -31,9 +31,9 @@ function OurBar(props) {
 
     return (
         <>
-        <Navbar>
+        <Navbar >
           <Container>
-            <Navbar.Brand>PortfolioBuilder</Navbar.Brand>
+            <Navbar.Brand >PortfolioBuilder</Navbar.Brand>
 
             <Nav>
                 <Nav.Link onClick={navHome}>Home</Nav.Link>

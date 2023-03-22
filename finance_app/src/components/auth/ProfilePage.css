@@ -15,8 +15,6 @@
 }
 
 .Username {
-    color: #3D5044;
-    background-color: #f9f9e2;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -25,9 +23,10 @@
     margin-right: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 50%;
+    width: 100%;
     position: relative;
-    justify-content: center;
+
+    justify-content: right;
     display: 'flex';
 }
 
@@ -71,7 +70,7 @@
     margin: 20px;
     display: 'flex';
     position: absolute;
-    right: 0;
+    right: auto;
     width: 20%;
  }
 

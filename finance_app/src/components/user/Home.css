@@ -1,7 +1,7 @@
 .HomePage {
   background-color: #CDE4D5;
-
 }
+
 .Name {
   
 }
@@ -18,9 +18,14 @@
 
 .navbar {
     background-color: #22522C; /* set the background color of the Navbar */
+    color: #f9f9e2;
     margin: 0px;
   }
   
   .navbar .nav-link {
     color: #f9f9e2 !important; 
   }
+
+.navbar .nav-brand {
+    color: #f9f9e2
+}
