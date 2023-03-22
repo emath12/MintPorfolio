@@ -90,12 +90,22 @@ def call_market():
 
 @app.route('/input_data')
 def receive_data():
-    print(request.json)
+
+    date = request.json[0][1]
+    port = {}
+    for trio in request.json[0][0]:
+        port[trio["company"]] = trio["shares"]
+
+    u1 = User(None, None, date, port)
+    pf = u1.get_port_df()
+    j_string = json.dumps(pf.to_dict(orient='list'))
+    return j_string
+
+
+    # print(request.json)
     # data is in the form of
     # [ [list of ticker objects], construction-date ]
-    #[[{'id': 0, 'company': 'dd', 'shares': 0}, {'id': 1, 'company': '', 'long': True, 'shares': 0}], '2023-03-08']
-
-    return request.json
+    # [[{'id': 0, 'company': 'dd', 'shares': 0}, {'id': 1, 'company': '', 'long': True, 'shares': 0}], '2023-03-08']
 
 if __name__ == '__main__':
     app.run()
