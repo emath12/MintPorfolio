@@ -33,7 +33,6 @@ const PositionCard = (props) => {
         <div className="card w-auto">
             <Card style={{ width: '18rem' }}>
             <Card.Header>
-            <Card.Img variant="top" object_fit="cover" height="auto%" src="https://www.davidgutierrez.co.uk/uploads/4/1/0/3/4103332/london-london-photographer-1295_orig.jpg" />
             </Card.Header>
             <Card.Body>
                 <Card.Body>
@@ -44,7 +43,6 @@ const PositionCard = (props) => {
                     Total shares: {props.numShares}
                     </Card.Text>
                 </Card.Body>
-                <button className="ExternalButton">Go somewhere</button>
             </Card.Body>
         </Card>
         </div>
@@ -68,6 +66,10 @@ function ProfilePage() {
     // job of profile is to tell the cards how they should display and how many to display
     // should rely on state to do this
     // use .map()!! 
+
+    function navSelect () {
+        nav("/select");
+    }
     
     return (
         <>
@@ -89,7 +91,7 @@ function ProfilePage() {
                 </div>
             </div>
             <br></br>
-            <button>Add or Edit Positions</button>
+            <button onClick={navSelect}>Add or Edit Positions</button>
             {/* have this button navigate back to the page where you can add positions when clicked*/}
         </>
     );
