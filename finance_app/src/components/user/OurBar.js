@@ -18,23 +18,31 @@ function OurBar(props) {
     function navHome () {
         nav("/");
     }
+    
+    function navProfile() {
+        nav("/profile")
+    }
 
-    // TODO : fix the left aign, dunno why its not working
+    function navGettingStarted() {
+        nav("/")
+    }
+
+    // TODO : fix the left align, dunno why its not working
 
     return (
         <>
-        <Navbar>
+        <Navbar >
           <Container>
-            <Navbar.Brand>PortfolioBuilder</Navbar.Brand>
+            <Navbar.Brand >PortfolioBuilder</Navbar.Brand>
 
             <Nav>
                 <Nav.Link onClick={navHome}>Home</Nav.Link>
                 <Nav.Link onClick={navSelect}>Build Porfolio</Nav.Link>
-                <Nav.Link onClick={navSelect}>How to Use</Nav.Link>
+                <Nav.Link onClick={navGettingStarted}>How to Use</Nav.Link>
             </Nav>
 
             <Nav> 
-                <Nav.Link className='ml-auto'>Account</Nav.Link>
+                <Nav.Link onClick={navProfile}>Account</Nav.Link>
             </Nav>
         
           </Container>

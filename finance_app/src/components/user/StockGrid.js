@@ -55,7 +55,7 @@ function StockRow(props) {
           onChange={updateShareAmount} 
           placeholder="# of Shares">    
       </input>
-      <button 
+      <button className="deleteButton"
           onClick={removeItem}>
           Delete
       </button>
@@ -126,29 +126,33 @@ function StockGrid() {
 
     return (
         <>
-            <OurBar />
-            <input
-              onChange={updateDate}
-              placeholder="Construction Date"
-              type="date"
-            />
-            
-            <div className="Stocks">
-                {
-                    rows.objects.map(({id}) => {
-                        return <StockRow 
-                            key={id}
-                            id={id}
-                            doUpdate={doUpdate}
-                            rows={[rows, setRows]}
-                        />
-                    })  
-                }
+            <div className="page">
+              <OurBar />
+              <input
+                className='date'
+                onChange={updateDate}
+                placeholder="Construction Date"
+                type="date"
+              />
+              
+              <div className="Stocks">
+                  {
+                      rows.objects.map(({id}) => {
+                          return <StockRow 
+                              key={id}
+                              id={id}
+                              doUpdate={doUpdate}
+                              rows={[rows, setRows]}
+                          />
+                      })  
+                  }
+              </div>
+              <br></br>
+              <div className='ButtonRow'>
+                  <button className="toggleAdd" onClick={createNewBlankPosition}>Add Position</button>            
+              </div>
+              <button className="toggleSubmit" type="submit" onClick={handleSubmit}>Submit</button>
             </div>
-            <div className='ButtonRow'>
-                <button onClick={createNewBlankPosition}>Add Position</button>            
-            </div>
-            <button type="submit" onClick={handleSubmit}>Submit</button>
         </>
     )
 

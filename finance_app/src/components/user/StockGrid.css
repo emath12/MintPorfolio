@@ -6,7 +6,6 @@
     grid-row-gap: 0px;
     width: 50%;
     margin: auto;
-
     align-items: center;
 }
 
@@ -14,13 +13,64 @@
     justify-content: center;
 }
 
-.button {
+.deleteButton {
     margin-right: 10px; 
     width: 100%;  
     flex-grow: 1;
+    background-color: #f9f9e2 ;
+    color: #22522C;
+    
+}
+.deleteButton:hover {
+    background-color: #74A44C;
+    color: #f9f9e2;
+    cursor: pointer;
+}
+
+.date {
+    margin-left: 25px;
+}
+
+.toggleAdd {
+    background-color: #f9f9e2 ;
+    color: #22522C;
+    margin-left: 25px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.toggleAdd:hover {
+    background-color: #74A44C;
+    color: #f9f9e2;
+    cursor: pointer;
+}
+
+.toggleSubmit {
+    background-color: #22522C ;
+    color: #f9f9e2;
+    margin-left: 25px;
+    margin-bottom: 25px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.toggleSubmit:hover {
+    color: #f9f9e2 ;
+    background-color: #74A44C;
 }
 
 .ButtonRow {
     justify-content: center;
     align-items: center;
+}
+
+.page {
+    background-color: #CDE4D5;
+    
 }

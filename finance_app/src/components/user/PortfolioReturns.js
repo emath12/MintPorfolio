@@ -1,10 +1,17 @@
 import './PortfolioReturns.css';
 import React from "react"
 import Graph from './Graph.js';
-import StockGrid from './StockGrid.js'
-import OurBar from './OurBar.js'
+import OurBar from './OurBar.js';
+import {
+    MDBIcon,
+    MDBTabs,
+    MDBTabsItem,
+    MDBTabsLink,
+    MDBTabsContent,
+    MDBTabsPane
+  } from 'mdb-react-ui-kit';
 
-function PortfoilioReturns() {
+function PortfolioReturns() {
     return (
         <>
             <OurBar />
@@ -22,4 +29,4 @@ function PortfoilioReturns() {
 
 }
 
-export default PortfoilioReturns 
+export default PortfolioReturns

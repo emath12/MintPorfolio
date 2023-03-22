@@ -68,7 +68,8 @@ function DisplayData() {
             threshold: null,
             tooltip: {
                 valueDecimals: 2
-            }
+            },
+            
           },
 
           {
@@ -78,7 +79,8 @@ function DisplayData() {
             threshold: null,
             tooltip: {
                 valueDecimals: 2
-            }
+            },
+            
           }
         ],
       
@@ -111,6 +113,7 @@ function DisplayData() {
               visibility: 'hidden'
           }
       }
+        
       };
 
       return (
