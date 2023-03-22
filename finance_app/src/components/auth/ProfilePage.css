@@ -45,8 +45,8 @@
 
 .ExternalButton {
     
-    background-color: #74A44C;
-    color: #f9f9e2;
+    background-color: #f9f9e2;
+    color: #22522C;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -55,8 +55,8 @@
 }
 
 .ExternalButton:hover {
-    background-color: #22522C;
-    color: #f9f9e2;
+    color: #f9f9e2 ;
+    background-color: #74A44C;
     cursor: pointer;
 }
 
