@@ -91,9 +91,9 @@ def call_market():
 @app.route('/input_data')
 def receive_data():
 
-    date = request.json[0][1]
+    date = request.json[1]
     port = {}
-    for trio in request.json[0][0]:
+    for trio in request.json[0]:
         port[trio["company"]] = trio["shares"]
 
     u1 = User(None, None, date, port)
