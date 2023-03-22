@@ -55,7 +55,7 @@ function StockRow(props) {
           onChange={updateShareAmount} 
           placeholder="# of Shares">    
       </input>
-      <button 
+      <button className="deleteButton"
           onClick={removeItem}>
           Delete
       </button>
@@ -129,6 +129,7 @@ function StockGrid() {
             <div className="page">
               <OurBar />
               <input
+                className='date'
                 onChange={updateDate}
                 placeholder="Construction Date"
                 type="date"
@@ -146,10 +147,11 @@ function StockGrid() {
                       })  
                   }
               </div>
+              <br></br>
               <div className='ButtonRow'>
-                  <button onClick={createNewBlankPosition}>Add Position</button>            
+                  <button className="toggleAdd" onClick={createNewBlankPosition}>Add Position</button>            
               </div>
-              <button type="submit" onClick={handleSubmit}>Submit</button>
+              <button className="toggleSubmit" type="submit" onClick={handleSubmit}>Submit</button>
             </div>
         </>
     )

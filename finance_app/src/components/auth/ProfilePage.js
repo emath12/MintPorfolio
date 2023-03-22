@@ -1,6 +1,6 @@
 import './ProfilePage.css';
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {Link, NavLink, useNavigate } from 'react-router-dom';
 import OurBar from '../user/OurBar.js';
 import Card from 'react-bootstrap/Card';
 
@@ -29,10 +29,18 @@ const testUser = {
 }
 
 const PositionCard = (props) => {
+
+    const nav = useNavigate();
+
+    const navStockInfo = (props) => {
+        nav("https://cdn.britannica.com/89/164789-050-D6B5E2C7/Barack-Obama-2012.jpg")
+    }
+
     return (
         <div className="card w-auto">
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: '18rpm' }}>
             <Card.Header>
+            <Card.Img variant="top" object_fit="cover" height="auto%" src="https://www.davidgutierrez.co.uk/uploads/4/1/0/3/4103332/london-london-photographer-1295_orig.jpg" />
             </Card.Header>
             <Card.Body>
                 <Card.Body>
@@ -43,6 +51,9 @@ const PositionCard = (props) => {
                     Total shares: {props.numShares}
                     </Card.Text>
                 </Card.Body>
+                <Link to="https://cdn.britannica.com/89/164789-050-D6B5E2C7/Barack-Obama-2012.jpg">
+                    <button className="ExternalButton">Go somewhere</button>
+                </Link>
             </Card.Body>
         </Card>
         </div>
@@ -55,43 +66,34 @@ function ProfilePage() {
     const nav = useNavigate();
 
     const [profile, setProfile] = useState(testUser)
-
-    // now inform child component what to do 
-    // each pos card has ticker + #
-    // testUser
-
-    // define a react hook whose state is a struct with the current user information
-    // and an array of tickers name and share tuples
-
-    // job of profile is to tell the cards how they should display and how many to display
-    // should rely on state to do this
-    // use .map()!! 
-
-    function navSelect () {
+    
+    const navBuildPorfolio = (props) => {
         nav("/select");
     }
     
     return (
         <>
-            <OurBar />
-            <div className="page">
-                <h1 className='username'> 
-                    {profile.username}'s Profile
-                </h1>
-                <br></br>
-                <div className='Positions'>
-                    {
-                        profile.positions.map((position) => 
-                        {return <PositionCard
-                                ticker={position[0]}
-                                numShares={position[1]}
-                            />
-                        })
-                    }
-                </div>
+            <div className="ProfPage">
+                <OurBar />
+                    <br></br>
+                    <div className='Top'>
+                        <h1 className='Username'> 
+                            {profile.username}'s Profile
+                        </h1>
+                        <button className="AddButton" onClick={navBuildPorfolio}>Add or Edit Positions</button>
+                    </div>
+                    <div className='Positions'>
+                        {
+                            profile.positions.map((position) => 
+                            {return <PositionCard
+                                    ticker={position[0]}
+                                    numShares={position[1]}
+                                />
+                            })
+                        }
+                    </div>
+                    <br></br>
             </div>
-            <br></br>
-            <button onClick={navSelect}>Add or Edit Positions</button>
             {/* have this button navigate back to the page where you can add positions when clicked*/}
         </>
     );
