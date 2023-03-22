@@ -78,7 +78,7 @@ function ProfilePage() {
                     <br></br>
                     <div className='Top'>
                         <h1 className='Username'> 
-                            {profile.username}'s Profile
+                            <u>{profile.username}'s Profile</u>
                         </h1>
                         <button className="AddButton" onClick={navBuildPorfolio}>Add or Edit Positions</button>
                     </div>
@@ -94,7 +94,6 @@ function ProfilePage() {
                     </div>
                     <br></br>
             </div>
-            {/* have this button navigate back to the page where you can add positions when clicked*/}
         </>
     );
 }
