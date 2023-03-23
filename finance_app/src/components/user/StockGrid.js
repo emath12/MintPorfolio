@@ -16,7 +16,10 @@ function StockRow(props) {
   const id = props.id;
 
   function removeItem() {
-      const newState = rows.objects.filter(item => item.id !== id);
+    
+      const newState = rows.objects.filter(item => 
+          item.id !== id
+      );
     
       setRows({
         objects: newState,
