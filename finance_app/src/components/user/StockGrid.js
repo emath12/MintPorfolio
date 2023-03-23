@@ -116,12 +116,13 @@ function StockGrid() {
     };
 
     function handleSubmit() { 
+        console.log("hello");
+
         axios.post('http://127.0.0.1:5000/input_data', [rows.objects, date])
           .then(response => console.log(response))
           .then(error => console.log(error));
 
         nav('/returns')
-
     };
 
     return (

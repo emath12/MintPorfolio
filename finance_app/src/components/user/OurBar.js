@@ -27,18 +27,22 @@ function OurBar(props) {
         nav("/")
     }
 
+    function navPortfolio() {
+        nav("/returns")
+    }
+
     // TODO : fix the left align, dunno why its not working
 
     return (
         <>
         <Navbar >
           <Container>
-            <Navbar.Brand >PortfolioBuilder</Navbar.Brand>
+            <Navbar.Brand onClick={navHome} >PortfolioBuilder</Navbar.Brand>
 
             <Nav>
-                <Nav.Link onClick={navHome}>Home</Nav.Link>
-                <Nav.Link onClick={navSelect}>Build Porfolio</Nav.Link>
                 <Nav.Link onClick={navGettingStarted}>How to Use</Nav.Link>
+                <Nav.Link onClick={navSelect}>Build Porfolio</Nav.Link>
+                <Nav.Link onClick={navPortfolio}>View Portfolio</Nav.Link>
             </Nav>
 
             <Nav> 
