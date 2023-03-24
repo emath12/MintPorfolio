@@ -7,7 +7,13 @@ function Login() {
 
     const nav = useNavigate();
 
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
     function handleClick() {
+
+        // dump the [username, password]
+
         nav('/select');
     }
 
@@ -17,10 +23,10 @@ function Login() {
         <div className="center">
             <div>
                 <h1>Login</h1>
-                <input placeholder="Username"></input>
+                <input onClick={e => setUsername(e.target.value)} placeholder="Username"></input>
                 <br></br>
                 <br></br>
-                <input placeholder="Password"></input>
+                <input onClick={e => setPassword(e.target.value)} placeholder="Password"></input>
                 <br></br>
                 <button onClick={handleClick}>Submit</button>
             </div>
