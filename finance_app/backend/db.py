@@ -1,18 +1,17 @@
 import pandas as pd
 import yfinance as yf
 from flask import Flask, jsonify, request, session
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import json
 from flask_session import Session
 
 app = Flask(__name__)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 CORS(app)
 # seems to work somewhat randomly?
 
-data = None
-curr_user = None
-
+init_pvalue = 1
 
 class User:
     def __init__(self, name, pwd, date, port: dict):
@@ -89,27 +88,38 @@ def call_pf():
 
 
 @app.route('/market_dataframe')
+@cross_origin()
 def call_market():
-    receive_data()
-    pf = curr_user.get_market_df()
+    u1 = get_user_data()
+    init_pvalue = u1.get_init_pvalue()
+
+    mkt = yf.Ticker("^GSPC")
+    df = pd.DataFrame()
+    mkt_hist = mkt.history(start="2023-01-01")["Close"]
+
+    df["mkt"] = (init_pvalue / mkt_hist[0]) * mkt_hist
+
+    pf = pd.DataFrame()
+    pf["Dates"] = df.index.strftime("%Y-%m-%d").tolist()
+    pf["Vals"] = df.sum(axis=1).tolist()
+
     j_string = json.dumps(pf.to_dict(orient='list'))
 
     return j_string
 
-
+data = None
 
 @app.route('/input_data', methods=['GET', 'POST'])
+@cross_origin()
 def receive_data():
     global data
-    global curr_user
 
     if (request.method == 'POST'):
         data = request.json 
         return 'success'
 
     elif (request.method == 'GET'): # GET
-        print("getting")
-
+    
         if data is None:
             return "No data"
 
@@ -120,8 +130,8 @@ def receive_data():
             port[trio["company"]] = trio["shares"]
             print(port)
 
+
         u1 = User(None, None, date, port)
-        curr_user = u1
         pf = u1.get_port_df()
         j_string = json.dumps(pf.to_dict(orient='list'))
         
