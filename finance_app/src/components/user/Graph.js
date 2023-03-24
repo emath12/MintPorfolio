@@ -16,45 +16,51 @@ function DisplayData() {
       // only runs when the component is rendered for the first time, perfect
       // for an API call.
       useEffect(() => {
-        axios.get('http://127.0.0.1:5000/input_data')
-          .then(response => {
+        
+        axios.all([
+          axios.get('http://127.0.0.1:5000/input_data'),
+          axios.get('http://127.0.0.1:5000/market_dataframe')
+        ])
 
-            let data = response.data
+        .then(axios.spread((user, market) => {
 
-            console.log("Received stuff" + data);
+          console.log("vals" + user.data["Vals"].length);
+          console.log(market.data["Vals"].length);
 
-            var edited_data = [];
-            
-            for (let i = 0; i <= data["Dates"].length - 1; i++) {
+          let userdata = user.data
 
-              edited_data.push([data["Dates"][i], data["Vals"][i]]);
-              xVals.push(data["Dates"][i]);
-              yVals.push(data["Vals"][i]);
+          var edited_user_data = [];
+          
+          for (let i = 0; i <= userdata["Dates"].length - 1; i++) {
 
-            } 
-            
-            setUserData(edited_data);
-            setxVals(xVals);
-            setyVals(yVals);
-          })
+            edited_user_data.push([userdata["Dates"][i], userdata["Vals"][i]]);
+            xVals.push(userdata["Dates"][i]);
+            yVals.push(userdata["Vals"][i]);
 
-        axios.get('http://127.0.0.1:5000/market_dataframe')
-          .then(response => {
+          }
+          
+          setxVals(xVals);
 
-            let data = response.data
+          setUserData(edited_user_data);
 
-            var edited_data = [];
-            
-            for (let i = 0; i <= data["Dates"].length - 1; i++) {
+          let marketdata = market.data
 
-              edited_data.push([data["Dates"][i], data["Vals"][i]]);
-            } 
-            
-            setMarketData(edited_data);
-          })
-          .catch(error => console.error(error));
-     
-        }, []);
+          var edited_market_data = [];
+          
+          for (let i = 0; i <= marketdata["Dates"].length - 1; i++) {
+
+            edited_market_data.push([marketdata["Dates"][i], marketdata["Vals"][i]]);
+          } 
+          
+          console.log("market" + edited_market_data);
+          setMarketData(edited_market_data);
+
+          console.log("finish" + edited_market_data.length)
+          console.log(edited_user_data.length);
+
+        })).catch(error => console.error(error));
+    
+      }, []);
 
       const options = {
 
@@ -85,8 +91,7 @@ function DisplayData() {
             threshold: null,
             tooltip: {
                 valueDecimals: 2
-            },
-            
+            },            
           }
 
         ],
@@ -110,6 +115,10 @@ function DisplayData() {
             }]
         },
 
+        xAxis: {
+          categories : xVals,
+        },
+
         rangeSelector: {
           selected: 4,
           inputEnabled: false,
@@ -119,7 +128,8 @@ function DisplayData() {
           labelStyle: {
               visibility: 'hidden'
           }
-      }
+      },
+
         
       };
 
