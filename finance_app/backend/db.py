@@ -3,14 +3,14 @@ import yfinance as yf
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 import json
+from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
+from . import create_app
 
-app = Flask(__name__)
-
-CORS(app)
 # seems to work somewhat randomly?
+app = create_app()
+# Auth Configuration stuff
 
-init_pvalue = 1
 
 class User:
     def __init__(self, name, pwd, date, port: dict):
@@ -40,6 +40,7 @@ class User:
         pf["Vals"] = df.sum(axis=1).tolist()
 
         return pf
+
 
 # def get_user_data():
 #     """
@@ -93,15 +94,16 @@ class User:
 
 data = None
 
+
 @app.route('/input_data', methods=['GET', 'POST'])
 def receive_data():
     global data
 
-    if (request.method == 'POST'):
-        data = request.json 
+    if request.method == 'POST':
+        data = request.json
         return 'success'
 
-    elif (request.method == 'GET'): # GET
+    elif request.method == 'GET':  # GET
         print(data)
 
         if data is None:
@@ -114,18 +116,17 @@ def receive_data():
             port[trio["company"]] = trio["shares"]
             print(port)
 
-
         u1 = User(None, None, date, port)
         pf = u1.get_port_df()
         j_string = json.dumps(pf.to_dict(orient='list'))
-        
-        return j_string
 
+        return j_string
 
     # print(request.json)
     # data is in the form of
     # [ [list of ticker objects], construction-date ]
     # [[{'id': 0, 'company': 'dd', 'shares': 0}, {'id': 1, 'company': '', 'long': True, 'shares': 0}], '2023-03-08']
+
 
 if __name__ == '__main__':
     app.run()
