@@ -1,6 +1,8 @@
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
+
 
 function DisplayData() {
       const [userData, setUserData] = useState([]);
@@ -14,9 +16,12 @@ function DisplayData() {
       // only runs when the component is rendered for the first time, perfect
       // for an API call.
       useEffect(() => {
-        fetch('http://127.0.0.1:5000/input_data')
-          .then(response => response.json())
-          .then(data => {
+        axios.get('http://127.0.0.1:5000/input_data')
+          .then(response => {
+
+            let data = response.data
+
+            console.log("Received stuff" + data);
 
             var edited_data = [];
             
@@ -33,9 +38,10 @@ function DisplayData() {
             setyVals(yVals);
           })
 
-        fetch('http://127.0.0.1:5000/market_dataframe')
-          .then(response => response.json())
-          .then(data => {
+        axios.get('http://127.0.0.1:5000/market_dataframe')
+          .then(response => {
+
+            let data = response.data
 
             var edited_data = [];
             
@@ -48,7 +54,7 @@ function DisplayData() {
           })
           .catch(error => console.error(error));
      
-      }, []);
+        }, []);
 
       const options = {
 
@@ -82,6 +88,7 @@ function DisplayData() {
             },
             
           }
+
         ],
       
         responsive: {

@@ -24,8 +24,12 @@ function CreateAccount() {
 
     useEffect(() => {
         if (equal) {
+            
+            // dump [username, password]
+
             nav('/select');
         }
+        
     }, [equal])
     
     return (
