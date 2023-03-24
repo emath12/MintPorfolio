@@ -17,8 +17,7 @@ def create_app():
 
 
     return app
-
-
+    
 def create_database(app):
     if not path.exists('backend/' + DB_NAME):
         db.create_all(app)

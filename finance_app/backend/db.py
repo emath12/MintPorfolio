@@ -1,18 +1,17 @@
 import pandas as pd
 import yfinance as yf
 from flask import Flask, jsonify, request, session
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import json
 from flask_session import Session
 
 app = Flask(__name__)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 CORS(app)
 # seems to work somewhat randomly?
 
-data = None
-curr_user = None
-
+init_pvalue = 1
 
 class User:
     def __init__(self, name, pwd, date, port: dict):
@@ -21,41 +20,27 @@ class User:
         self.date = date
         self.port = port
 
-        # Set initial portfolio value
-        self.init_pvalue = 0
-        for tkr, i in self.port.items():
-            self.init_pvalue += int(i) * yf.Ticker(tkr).history(start=self.date)["Close"][0]
+    def __str__(self):
+        return f"{self.name}, {self.date}, {self.port}"
 
-        # make dataframe of time series for portfolio
+    def get_init_pvalue(self):
+        retval = 0
+        for tkr, i in self.port.items():
+            retval += int(i) * yf.Ticker(tkr).history(start=self.date)["Close"][0]
+
+        return retval
+
+    def get_port_df(self):
         df = pd.DataFrame()
         for tkr, i in self.port.items():
             print(i)
             df[tkr] = int(i) * yf.Ticker(tkr).history(start=self.date)["Close"]
 
-        self.df = pd.DataFrame()
-        self.df["Dates"] = df.index.strftime("%Y-%m-%d").tolist()
-        self.df["Vals"] = df.sum(axis=1).tolist()
+        pf = pd.DataFrame()
+        pf["Dates"] = df.index.strftime("%Y-%m-%d").tolist()
+        pf["Vals"] = df.sum(axis=1).tolist()
 
-        # make dataframe of time series for market
-        mkt = yf.Ticker("^GSPC")
-        df = pd.DataFrame()
-        mkt_hist = mkt.history(start=self.date)["Close"]
-        df["mkt"] = (self.init_pvalue / mkt_hist[0]) * mkt_hist
-        self.market = pd.DataFrame()
-        self.market["Dates"] = df.index.strftime("%Y-%m-%d").tolist()  # Convert Timestamps to strings
-        self.market["Vals"] = df.sum(axis=1).tolist()
-
-    def __str__(self):
-        return f"{self.name}, {self.date}, {self.port}"
-
-    def get_init_pvalue(self):
-        return self.init_pvalue
-
-    def get_port_df(self):
-        return self.df
-
-    def get_market_df(self):
-        return self.market
+        return pf
 
 def get_user_data():
     """
@@ -89,26 +74,38 @@ def call_pf():
 
 
 @app.route('/market_dataframe')
+@cross_origin()
 def call_market():
-    receive_data()
-    pf = curr_user.get_market_df()
+    u1 = get_user_data()
+    init_pvalue = u1.get_init_pvalue()
+
+    mkt = yf.Ticker("^GSPC")
+    df = pd.DataFrame()
+    mkt_hist = mkt.history(start="2023-01-01")["Close"]
+
+    df["mkt"] = (init_pvalue / mkt_hist[0]) * mkt_hist
+
+    pf = pd.DataFrame()
+    pf["Dates"] = df.index.strftime("%Y-%m-%d").tolist()
+    pf["Vals"] = df.sum(axis=1).tolist()
+
     j_string = json.dumps(pf.to_dict(orient='list'))
 
     return j_string
 
-
+data = None
 
 @app.route('/input_data', methods=['GET', 'POST'])
+@cross_origin()
 def receive_data():
     global data
-    global curr_user
 
     if (request.method == 'POST'):
         data = request.json 
         return 'success'
 
     elif (request.method == 'GET'): # GET
-        print("getting")
+    
 
         if data is None:
             return "No data"
@@ -120,8 +117,8 @@ def receive_data():
             port[trio["company"]] = trio["shares"]
             print(port)
 
+
         u1 = User(None, None, date, port)
-        curr_user = u1
         pf = u1.get_port_df()
         j_string = json.dumps(pf.to_dict(orient='list'))
         
