@@ -13,6 +13,18 @@
     justify-content: center;
 }
 
+.SharesInput {
+    text-align: left;
+    text-indent: 20px;
+    line-height: 150%;
+}
+
+.TickerSelect {
+    width: 200px;
+    text-align: left;
+    text-indent: 20px;
+}
+
 .deleteButton {
     margin-right: 10px; 
     width: 100%;  

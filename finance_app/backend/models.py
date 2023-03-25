@@ -1,10 +1,12 @@
-# from . import db
+from . import db
 import yfinance as yf
 import pandas as pd
+import numpy as np
 
+from sklearn.linear_model import LinearRegression
 
 class Portfolio:
-    def __init__(self, pwd=None, date=None, port: dict = None):
+    def __init__(self, pwd=None , date=None, port: dict=None):
         self.stats = None
         self.pwd = pwd
         self.date = date
@@ -18,7 +20,6 @@ class Portfolio:
         # make dataframe of time series for portfolio
         df = pd.DataFrame()
         for tkr, i in self.port.items():
-            print(i)
             df[tkr] = int(i) * yf.Ticker(tkr).history(start=self.date)["Close"]
 
         self.df = pd.DataFrame()
@@ -62,8 +63,19 @@ class Portfolio:
             return self.stats
 
 
-class User:
-    def __init__(self, user=None, password=None, port=None):
-        self.user = user
-        self.password = password
-        self.port = port
+# class PortfolioStore(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     port = db.Column(db.String(10000))
+#     date = db.Column(db.DateTime(timezone=True), default=func.now())
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # user.primary_key
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(150), unique=True)
+    password = db.Column(db.String(150))
+
+def init_db():
+    db.create_all()
+
+if __name__ == '__main__':
+    init_db()

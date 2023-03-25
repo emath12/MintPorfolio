@@ -1,5 +1,6 @@
 import './StockGrid.css';
 import React, { useState, useEffect, useRef } from 'react';
+import Select from 'react-select';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import OurBar from './OurBar.js'
@@ -14,6 +15,11 @@ function StockRow(props) {
   const prevShares = useRef(shares);
 
   const id = props.id;
+  const [isClearable, setIsClearable] = useState(true);
+  const [isSearchable, setIsSearchable] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRtl, setIsRtl] = useState(false);
 
   function removeItem() {
     
@@ -48,20 +54,46 @@ function StockRow(props) {
 
   return (
     <div className="StockRow" key={id}>
-      <input 
-          value={company} 
-          type="text" 
-          onChange={updateCompanyValue} 
-          placeholder="Ticker">
-      </input>
-      <input 
-          onChange={updateShareAmount} 
-          placeholder="# of Shares">    
-      </input>
-      <button className="deleteButton"
-          onClick={removeItem}>
-          Delete
-      </button>
+      <label className="TickerSelect">
+        Ticker
+        <Select
+          className="basic-single"
+          classNamePrefix="select"
+          isDisabled={isDisabled}
+          isLoading={isLoading}
+          isClearable={isClearable}
+          isRtl={isRtl}
+          isSearchable={isSearchable}
+          name="color"
+          options={[{value : "aapl", label : "AAPL"}, 
+                    {value : "msft", label : "MSFT"}, 
+                    {value : "amzn", label : "AMZN"}, 
+                    {value : "nvda", label : "NVDA"},
+                    {value : "brk-b", label : "BRK-B"}]}
+        />
+      </label>
+      <label className="SharesInput">
+        # of Shares
+        <input 
+            type="number" 
+            pattern="[0-9]*"
+            value={shares}
+            name="Number of Shares"
+            // TO DO
+            // ETHAN: How to make this button accept ONLY integer values? Currently not accepting values.
+            onChange={(e) =>
+              updateShareAmount((v) => (e.target.validity.valid ? e.target.value : v))
+            }
+            placeholder="# of Shares">    
+        </input>
+      </label>
+      <label>
+        <br></br>
+        <button className="deleteButton"
+            onClick={removeItem}>
+            Delete
+        </button>
+      </label>
     </div>
   );
 }
