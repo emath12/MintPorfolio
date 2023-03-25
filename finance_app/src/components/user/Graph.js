@@ -18,7 +18,7 @@ function DisplayData() {
       useEffect(() => {
         
         axios.all([
-          axios.get('http://127.0.0.1:5000/input_data'),
+          axios.get('http://127.0.0.1:5000/current_portfolio'),
           axios.get('http://127.0.0.1:5000/market_dataframe')
         ])
 

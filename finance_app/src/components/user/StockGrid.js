@@ -119,9 +119,14 @@ function StockGrid() {
     };
 
     function handleSubmit() { 
-        console.log("hello");
+        console.log("data dubmitted!");
 
-        axios.post('http://127.0.0.1:5000/input_data', [rows.objects, date])
+          axios.post('http://127.0.0.1:5000/current_portfolio', [rows.objects, date],
+          {
+            headers: {
+              'Access-Control-Allow-Origin': 'http://localhost:3000',
+            }
+          })
           .then(response => console.log(response))
           .then(error => console.log(error));
 
