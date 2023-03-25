@@ -2,8 +2,9 @@
 import yfinance as yf
 import pandas as pd
 
+
 class Portfolio:
-    def __init__(self, pwd=None , date=None, port: dict=None):
+    def __init__(self, pwd=None, date=None, port: dict = None):
         self.stats = None
         self.pwd = pwd
         self.date = date
@@ -21,7 +22,7 @@ class Portfolio:
             df[tkr] = int(i) * yf.Ticker(tkr).history(start=self.date)["Close"]
 
         self.df = pd.DataFrame()
-        self.df["Dates"] = df.index.strftime("%Y-%m-%d").tolist()
+        self.df["Dates"] = df.index.astype(np.int64) / int(1e6)
         self.df["Vals"] = df.sum(axis=1).tolist()
 
         # make dataframe of time series for market
@@ -30,7 +31,7 @@ class Portfolio:
         mkt_hist = mkt.history(start=self.date)["Close"]
         df["mkt"] = (self.init_pvalue / mkt_hist[0]) * mkt_hist
         self.market = pd.DataFrame()
-        self.market["Dates"] = df.index.strftime("%Y-%m-%d").tolist()  # Convert Timestamps to strings
+        self.market["Dates"] = df.index.astype(np.int64) / int(1e6)  # Convert Timestamps to strings
         self.market["Vals"] = df.sum(axis=1).tolist()
 
     def __str__(self):
@@ -66,4 +67,3 @@ class User:
         self.user = user
         self.password = password
         self.port = port
-

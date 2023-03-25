@@ -5,13 +5,14 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+
 def create_app():
     app = Flask(__name__)
 
     app.config['SECRET KEY'] = 'dsdkfwfjfjk'
     app.secret_key = 'dsdkfwfjfjk!'
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI')\
-        or 'sqlite:///' + os.path.join(basedir, 'app.db')
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI') \
+                                            or 'sqlite:///' + os.path.join(basedir, 'app.db')
 
     CORS(app)
 
@@ -24,7 +25,4 @@ def create_app():
     from backend.auth import auth_bp as the_auth_bp
     app.register_blueprint(the_auth_bp)
 
-
-
-    return app 
-
+    return app
