@@ -1,17 +1,44 @@
-# HOW TO INIT 
+# <span style="color:skyblue"> BULLdog MARKET </span>
+## Yale CPSC 419
+### Project Group 14
+* Taimur Moolji
+* Ethan Mathieu
+* Daphne Raskin
+* Kenan Collignon
 
-Pip install yfinance, pandas, flask, flask_cors if not already.
 
-1) python3 db/db.py
+## Project Overview
+Due to lack of subject knowledge, individual investors
+are unable to access certain metrics regarding the strength
+and performance of their portfolios that many institutional 
+investors have quick access to. This vastly reduces the
+potential success of individuals who would like to invest
+actively, rather than placing their money in indices 
+and mutual funds. This project is provides an easy-to-use
+interface through which individuals can evaluate their
+portfolio’s performance against that of the market and
+see where their various risk exposures lie.
 
-Install npm and react-scripts.
+## How To Initialize + Run
+*Steps 1 and 2 only need to be completed the first time*
 
-2)
+1) Make the following installations via pip:
+   1) yfinance
+   2) pandas
+   3) numpy
+   4) flask
+   5) flask_cors
+   6) SQLAlchemy
+   7) Sklearn
+   8) flask_login
+   
+2) Make the following installations via npm
+   1) highcharts
+   2) reactbootstrap
+3) From inside the finance_app directory, run "flask run"
 
-cd finance_app
-npm start 
 
-# Packages Used
+## Packages Used
 **Backend**
 Flask, Flask-Login, Flask Cors, 
 
@@ -19,6 +46,13 @@ Flask, Flask-Login, Flask Cors,
 Highcharts (for stock market rendering)
 React-Boostrap (https://react-bootstrap.github.io/components/navbar/)
 
-# TODO:
+## Versions
 
-Some way to view the graph if you are logged in?
+### MVP
+Graphed static portfolio consisting of 10 shares each AAPL, MSFT,
+BRK.B, NVDA, and AMZN constructed on 01/01/2023 vs market return
+over the same time period
+
+### Alpha
+Allowed for user input of portfolio data (date created, tickers,
+number of shares), and calculated portfolio key metrics.
