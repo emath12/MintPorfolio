@@ -49,11 +49,7 @@ function DisplayData() {
             edited_market_data.push([marketdata["Dates"][i], marketdata["Vals"][i]]);
           } 
           
-          console.log("market" + edited_market_data);
-          setMarketData(edited_market_data);
-
-          console.log("finish" + edited_market_data.length)
-          console.log(edited_user_data.length);
+          setMarketData(edited_market_data);          
 
         })).catch(error => console.error(error));
     
@@ -141,11 +137,45 @@ function DisplayData() {
       );
   }
 
+function DisplayStats() {
+
+    const [stats, setStats] = useState("");
+  
+    useEffect(() => {
+          
+      axios.get('http://127.0.0.1:5000/stats')
+      .then(response => {
+        console.log("response" + response);
+        setStats(response.data);
+      }).catch(error => console.error(error));
+
+    }, []);
+
+
+    return (
+      <>
+        <h1>Performance Metrics:</h1>
+        <center>
+          <h4>Alpha: {stats.alpha}</h4>
+          <h4>Beta: {stats.beta}</h4>
+          <h4>Sharpe: {stats.sharpe}</h4>
+          <h4>Ret: {stats.ret}</h4>
+        </center>
+      
+      </>
+
+    )
+
+}
+
+
+
 function Graph() {
   return (
-    <div>
+    <>
       <DisplayData/>
-    </div>
+      <DisplayStats/>
+    </>
   )
 }
 
