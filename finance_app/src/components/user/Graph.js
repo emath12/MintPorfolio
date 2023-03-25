@@ -49,7 +49,10 @@ function DisplayData() {
             edited_market_data.push([marketdata["Dates"][i], marketdata["Vals"][i]]);
           } 
           
-          setMarketData(edited_market_data);          
+          setMarketData(edited_market_data);   
+          
+          console.log(edited_market_data);
+          console.log(edited_user_data);
 
         })).catch(error => console.error(error));
     
