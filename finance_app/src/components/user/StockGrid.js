@@ -36,7 +36,7 @@ function TickerSelectButton() {
         isRtl={isRtl}
         isSearchable={isSearchable}
         name="ticker"
-        // TO DO: IMPORT FILE CONTAINING ALL TICKER VALUES 
+        // TO DO: IMPORT FILE CONTAINING ALL TICKER VALUES and reset options
         options={[{value : "aapl", label : "AAPL"}, 
                   {value : "msft", label : "MSFT"}, 
                   {value : "amzn", label : "AMZN"}, 
@@ -44,6 +44,20 @@ function TickerSelectButton() {
                   {value : "brk-b", label : "BRK-B"}]}
       />
     </div>
+  );
+}
+
+function NumberInputButton() {
+  return (
+    <input 
+      type="number" min="0"
+      style={{ height: 38}}
+      pattern="[0-9]*"
+      value={shares}
+      name="Number of Shares"
+      onChange={updateShareAmount}
+      placeholder="# of Shares">    
+  </input>
   )
 }
 
@@ -93,16 +107,7 @@ function StockRow(props) {
     <>
     <div className="StockRow" key={id}>
       <TickerSelectButton />
-
-      <input 
-          type="number" min="0"
-          style={{ height: 38}}
-          pattern="[0-9]*"
-          value={shares}
-          name="Number of Shares"
-          onChange={updateShareAmount}
-          placeholder="# of Shares">    
-      </input>
+      <NumberInputButton />
         <button className="deleteButton"
             style={{ height: 38}}
             onClick={removeItem}>
