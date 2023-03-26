@@ -18,48 +18,7 @@ function StockGridHeader() {
   );
 }
 
-function TickerSelectButton() {
-  const [isClearable, setIsClearable] = useState(true);
-  const [isSearchable, setIsSearchable] = useState(true);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isRtl, setIsRtl] = useState(false);
 
-  return (
-    <div className="TickerSelect">
-      <Select
-        className="basic-single"
-        classNamePrefix="select"
-        isDisabled={isDisabled}
-        isLoading={isLoading}
-        isClearable={isClearable}
-        isRtl={isRtl}
-        isSearchable={isSearchable}
-        name="ticker"
-        // TO DO: IMPORT FILE CONTAINING ALL TICKER VALUES and reset options
-        options={[{value : "aapl", label : "AAPL"}, 
-                  {value : "msft", label : "MSFT"}, 
-                  {value : "amzn", label : "AMZN"}, 
-                  {value : "nvda", label : "NVDA"},
-                  {value : "brk-b", label : "BRK-B"}]}
-      />
-    </div>
-  );
-}
-
-function NumberInputButton() {
-  return (
-    <input 
-      type="number" min="0"
-      style={{ height: 38}}
-      pattern="[0-9]*"
-      value={shares}
-      name="Number of Shares"
-      onChange={updateShareAmount}
-      placeholder="# of Shares">    
-  </input>
-  )
-}
 
 function StockRow(props) {
 
@@ -84,6 +43,58 @@ function StockRow(props) {
       });
 
   };
+
+  function NumberInputButton() {
+    return (
+      <input 
+        type="number" min="0"
+        style={{ height: 38}}
+        pattern="[0-9]*"
+        value={shares}
+        name="Number of Shares"
+        onChange={updateShareAmount}
+        placeholder="# of Shares">    
+    </input>
+    )
+  }
+
+  function TickerSelectButton() {
+    const [isClearable, setIsClearable] = useState(true);
+    const [isSearchable, setIsSearchable] = useState(true);
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isRtl, setIsRtl] = useState(false);
+
+    const [curSelect, setCurSelect] = useState({value : "aapl", label : "AAPL"})
+
+    function updateCompany (selectedOption) {
+      setCompany(selectedOption);
+    }
+  
+    return (
+      <div className="TickerSelect">
+        <Select
+          value={company}
+          onChange={updateCompany}
+          className="basic-single"
+          classNamePrefix="select"
+          isDisabled={isDisabled}
+          isLoading={isLoading}
+          isClearable={isClearable}
+          isRtl={isRtl}
+          isSearchable={isSearchable}
+          name="ticker"
+          // TO DO: IMPORT FILE CONTAINING ALL TICKER VALUES and reset options
+          options={[{value : "aapl", label : "AAPL"}, 
+                    {value : "msft", label : "MSFT"}, 
+                    {value : "amzn", label : "AMZN"}, 
+                    {value : "nvda", label : "NVDA"},
+                    {value : "brk-b", label : "BRK-B"}]}
+        />
+      </div>
+    );
+  }
+  
 
   useEffect(() => {
     // https://stackoverflow.com/questions/53446020/how-to-compare-oldvalues-and-newvalues-on-react-hooks-useeffect
@@ -143,7 +154,7 @@ function StockGrid() {
 
       for (let i = 0; i < updatedRows.length; i++) {
           if (updatedRows[i].id == id) {
-            updatedRows[i].company = company;
+            updatedRows[i].company = company.label;
             updatedRows[i].shares = shares;
           }
       }
@@ -171,7 +182,8 @@ function StockGrid() {
     };
 
     function handleSubmit() { 
-        console.log("data dubmitted!");
+        console.log("data submitted!");
+        console.log([rows.objects, date]);
 
           axios.post('http://127.0.0.1:5000/current_portfolio', [rows.objects, date],
           {
@@ -182,7 +194,9 @@ function StockGrid() {
           .then(response => console.log(response))
           .then(error => console.log(error));
 
-        nav('/returns')
+        nav('/returns');
+
+        window.location.reload(false);
     };
 
     return (
