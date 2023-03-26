@@ -5,6 +5,48 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import OurBar from './OurBar.js'
 
+function StockGridHeader() {
+  return (
+    <div className="StockRow">
+      <label className="TickerSelect">
+        Ticker
+      </label>
+      <label className= "TickerSelect">
+        # of shares
+      </label>
+    </div>
+  );
+}
+
+function TickerSelectButton() {
+  const [isClearable, setIsClearable] = useState(true);
+  const [isSearchable, setIsSearchable] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRtl, setIsRtl] = useState(false);
+
+  return (
+    <div className="TickerSelect">
+      <Select
+        className="basic-single"
+        classNamePrefix="select"
+        isDisabled={isDisabled}
+        isLoading={isLoading}
+        isClearable={isClearable}
+        isRtl={isRtl}
+        isSearchable={isSearchable}
+        name="ticker"
+        // TO DO: IMPORT FILE CONTAINING ALL TICKER VALUES 
+        options={[{value : "aapl", label : "AAPL"}, 
+                  {value : "msft", label : "MSFT"}, 
+                  {value : "amzn", label : "AMZN"}, 
+                  {value : "nvda", label : "NVDA"},
+                  {value : "brk-b", label : "BRK-B"}]}
+      />
+    </div>
+  )
+}
+
 function StockRow(props) {
 
   const [company, setCompany] = useState("");
@@ -15,11 +57,6 @@ function StockRow(props) {
   const prevShares = useRef(shares);
 
   const id = props.id;
-  const [isClearable, setIsClearable] = useState(true);
-  const [isSearchable, setIsSearchable] = useState(true);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isRtl, setIsRtl] = useState(false);
 
   function removeItem() {
     
@@ -53,48 +90,26 @@ function StockRow(props) {
 
 
   return (
+    <>
     <div className="StockRow" key={id}>
-      <label className="TickerSelect">
-        Ticker
-        <Select
-          className="basic-single"
-          classNamePrefix="select"
-          isDisabled={isDisabled}
-          isLoading={isLoading}
-          isClearable={isClearable}
-          isRtl={isRtl}
-          isSearchable={isSearchable}
-          name="color"
-          options={[{value : "aapl", label : "AAPL"}, 
-                    {value : "msft", label : "MSFT"}, 
-                    {value : "amzn", label : "AMZN"}, 
-                    {value : "nvda", label : "NVDA"},
-                    {value : "brk-b", label : "BRK-B"}]}
-        />
-      </label>
-      <label className="SharesInput">
-        # of Shares
-        <input 
-            type="number" 
-            pattern="[0-9]*"
-            value={shares}
-            name="Number of Shares"
-            // TO DO
-            // ETHAN: How to make this button accept ONLY integer values? Currently not accepting values.
-            onChange={(e) =>
-              updateShareAmount((v) => (e.target.validity.valid ? e.target.value : v))
-            }
-            placeholder="# of Shares">    
-        </input>
-      </label>
-      <label>
-        <br></br>
+      <TickerSelectButton />
+
+      <input 
+          type="number" min="0"
+          style={{ height: 38}}
+          pattern="[0-9]*"
+          value={shares}
+          name="Number of Shares"
+          onChange={updateShareAmount}
+          placeholder="# of Shares">    
+      </input>
         <button className="deleteButton"
+            style={{ height: 38}}
             onClick={removeItem}>
             Delete
         </button>
-      </label>
     </div>
+    </>
   );
 }
 
@@ -175,7 +190,7 @@ function StockGrid() {
                 placeholder="Construction Date"
                 type="date"
               />
-              
+              <StockGridHeader />
               <div className="Stocks">
                   {
                       rows.objects.map(({id}) => {
@@ -199,4 +214,4 @@ function StockGrid() {
 
 }
 
-export default StockGrid;
+export default StockGrid
