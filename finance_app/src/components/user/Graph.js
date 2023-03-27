@@ -112,7 +112,8 @@ function DisplayData() {
         },
 
         xAxis: {
-          categories : xVals,
+          type: 'datetime',
+          tickInterval: 10 * 30 * 24 * 3600 * 1000,
         },
 
         rangeSelector: {
