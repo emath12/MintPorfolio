@@ -24,11 +24,12 @@ def call_market():
 
 @port_bp.route('/stats', methods=['GET', 'POST'])
 def call_stats():
-    update_user()
     if current_user is not None:
         j_string = json.dumps(current_user.get_stats())
         
         return j_string
+    
+    return "no stats!"
 
 @port_bp.route('/current_portfolio', methods=['GET', 'POST'])
 @cross_origin()
