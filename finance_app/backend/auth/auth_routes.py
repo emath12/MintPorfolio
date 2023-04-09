@@ -23,7 +23,6 @@ def login():
         if user:
             if check_password_hash(user.password,
                                    password):  # user is a struct, remember. Hashes password and checks it agaisnt 2nd password
-                flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:

@@ -1,12 +1,12 @@
 import './PortfolioReturns.css';
 import React from "react"
 import Graph from './Graph.js';
-import OurBar from './OurBar.js';
+import Header from './Header.js';
 
 function PortfolioReturns() {
     return (
         <>
-            <OurBar />
+            <Header />
             <div className="Home">
                 <div className="Title">
                     <h1>
@@ -16,9 +16,7 @@ function PortfolioReturns() {
                 <Graph />
             </div>
         </>
-        
     );
-
 }
 
 export default PortfolioReturns

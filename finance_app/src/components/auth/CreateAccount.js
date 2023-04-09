@@ -1,7 +1,7 @@
 
 import './Auth.css'
 
-import OurBar from "../user/OurBar"
+import Header from "../user/Header"
 import {useNavigate} from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
@@ -43,7 +43,7 @@ function CreateAccount() {
     
     return (
         <>
-        <OurBar />
+        <Header />
         <div className="center">
             <div>
                 <h1>Create Account</h1>

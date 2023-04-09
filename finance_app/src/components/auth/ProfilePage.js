@@ -1,7 +1,7 @@
 import './ProfilePage.css';
 import React, { useState, useEffect, useRef } from 'react';
 import {Link, NavLink, useNavigate } from 'react-router-dom';
-import OurBar from '../user/OurBar.js';
+import Header from '../user/Header.js';
 import Card from 'react-bootstrap/Card';
 
 // access this export at /profile on the localhost 
@@ -66,7 +66,7 @@ function ProfilePage() {
     return (
         <>
             <div className="ProfPage">
-                <OurBar />
+                <Header />
                     <div className='Top'>
                         <h1 className='Username'> 
                             <u>{profile.username}'s Profile</u>

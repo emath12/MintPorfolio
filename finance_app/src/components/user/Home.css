@@ -1,9 +1,34 @@
-.HomePage {
-  background-color: #CDE4D5;
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
 }
 
-.Name {
-  
+.HomePage {
+  background-color: #CDE4D5;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-center {
+    text-align: right;
+    margin-right: 5vh;
+    }
+
+.left-center {
+    text-align: left;
+    margin-left: 5vh;
+}
+
+.left-center > h2 {
+    font-size: 80px;
+}
+
+.white {
+    background-color: white;
 }
 
 .Split {
@@ -15,12 +40,14 @@
     background-color: #CDE4D5;
 }
 
-.split-color {
-  width: 100%;
+.square {
+    width: 100%;
+    height: 100%;
+    background-color: darkgreen;
 }
 
 .navbar {
-    background-color: #00693e;
+    background-color: #0e7048;
     color: #f9f9e2;
     margin: 0px;
   }

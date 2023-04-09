@@ -19,7 +19,7 @@ interface through which individuals can evaluate their
 portfolio’s performance against that of the market and
 see where their various risk exposures lie.
 
-## How To Initialize + Run
+## Quickstart
 *Steps 1 and 2 only need to be completed the first time*
 
 1) Make the following installations via pip:
@@ -35,7 +35,8 @@ see where their various risk exposures lie.
 2) Make the following installations via npm
    1) highcharts
    2) reactbootstrap
-3) From inside the finance_app directory, run "flask run"
+3) From inside the finance_app directory, run "flask run".
+4) From inside the finace_app directory, run "npm start".
 
 
 ## Packages Used

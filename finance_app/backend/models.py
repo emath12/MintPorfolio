@@ -62,7 +62,6 @@ class Portfolio:
         else:
             return self.stats
 
-
 # class PortfolioStore(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     port = db.Column(db.String(10000))

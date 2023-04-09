@@ -1,7 +1,7 @@
 import "./Auth.css"
 import {useNavigate} from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
-import OurBar from "../user/OurBar";
+import Header from "../user/Header";
 
 function Login() {
 
@@ -19,7 +19,7 @@ function Login() {
 
     return (
         <>
-        <OurBar />
+        <Header />
         <div className="center">
             <div>
                 <h1>Login</h1>

@@ -26,7 +26,7 @@ function DisplayData() {
 
           let userdata = user.data
 
-          var edited_user_data = [];
+          let edited_user_data = [];
           
           for (let i = 0; i <= userdata["Dates"].length - 1; i++) {
 
@@ -42,7 +42,7 @@ function DisplayData() {
 
           let marketdata = market.data
 
-          var edited_market_data = [];
+          let edited_market_data = [];
           
           for (let i = 0; i <= marketdata["Dates"].length - 1; i++) {
 
@@ -154,7 +154,6 @@ function DisplayStats() {
       }).catch(error => console.error(error));
 
     }, []);
-
 
     return (
       <>

@@ -3,7 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import OurBar from './OurBar.js'
+import Header from './Header.js'
+import Footer from './Footer.js'
 
 function StockGridHeader() {
   return (
@@ -44,28 +45,12 @@ function StockRow(props) {
 
   };
 
-  function NumberInputButton() {
-    return (
-      <input 
-        type="number" min="0"
-        style={{ height: 38}}
-        pattern="[0-9]*"
-        value={shares}
-        name="Number of Shares"
-        onChange={updateShareAmount}
-        placeholder="# of Shares">    
-    </input>
-    )
-  }
-
   function TickerSelectButton() {
     const [isClearable, setIsClearable] = useState(true);
     const [isSearchable, setIsSearchable] = useState(true);
     const [isDisabled, setIsDisabled] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isRtl, setIsRtl] = useState(false);
-
-    const [curSelect, setCurSelect] = useState({value : "aapl", label : "AAPL"})
 
     function updateCompany (selectedOption) {
       setCompany(selectedOption);
@@ -105,26 +90,33 @@ function StockRow(props) {
     }
   }, [company, shares]);
 
-  function updateCompanyValue(event) {
-      setCompany(event.target.value);
-  }
-
   function updateShareAmount(event) {
       setShares(event.target.value);
   }
 
-
   return (
     <>
-    <div className="StockRow" key={id}>
-      <TickerSelectButton />
-      <NumberInputButton />
-        <button className="deleteButton"
-            style={{ height: 38}}
-            onClick={removeItem}>
-            Delete
-        </button>
-    </div>
+        <div className="StockRow" key={id}>
+            <TickerSelectButton />
+
+            <input
+                type={"number"} 
+                min={"0"}
+                style={{ height: 38}}
+                pattern={"[0-9]*"}
+                value={shares}
+                name={"Number of Shares"}
+                onChange={updateShareAmount}
+                placeholder={"# of Shares"}
+            />
+
+            <button className="deleteButton"
+                style={{ height: 38}}
+                onClick={removeItem}>
+                Delete
+            </button>
+            
+        </div>
     </>
   );
 }
@@ -202,7 +194,7 @@ function StockGrid() {
     return (
         <>
             <div className="page">
-              <OurBar />
+              <Header />
               <input
                 className='date'
                 onChange={updateDate}
@@ -228,6 +220,7 @@ function StockGrid() {
               </div>
               <button className="toggleSubmit" type="submit" onClick={handleSubmit}>Submit</button>
             </div>
+            <Footer />
         </>
     )
 
