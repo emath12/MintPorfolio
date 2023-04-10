@@ -18,17 +18,13 @@ def login():
         username = login_details[0]
         password = login_details[1]
 
-        user = User.query.filter_by(name=username).first()  # returns the first found entry
+        print(username)
+        print(password)
 
-        if user:
-            if check_password_hash(user.password,
-                                   password):  # user is a struct, remember. Hashes password and checks it agaisnt 2nd password
-                login_user(user, remember=True)
-                return redirect(url_for('views.home'))
-            else:
-                flash('Incorrect password, try again!', category='error')
-        else:
-            flash('Email does not exist', category='error')
+        # some sort of db query HERE
+        # user = User.query.filter_by(name=username).first()  # returns the first found entry
+
+
 
 
 @auth_bp.route('/sign-up', methods=['GET', 'POST'])
@@ -37,19 +33,18 @@ def the_signup():
 
     login_details = request.json
 
-    print(login_details)
-
     if request.method == 'POST':
         user = login_details[0]
         password = login_details[1]
-
-        print(user)
-        print(password)
 
         new_user = User\
             (user=user,
              password=generate_password_hash(password, method='sha256'))
 
-        db.session.add(new_user) # add the new user to the db
-        db.session.commit() # commit these changes to the database
+        # add the new_user to the database
+
+        # db.session.add(new_user) # add the new user to the db
+        # db.session.commit() # commit these changes to the database
+
+        return "success"
 
