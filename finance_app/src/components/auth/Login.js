@@ -2,6 +2,7 @@ import "./Auth.css"
 import {useNavigate} from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
 import Header from "../user/Header";
+import axios from "axios";
 
 function Login() {
 
@@ -12,9 +13,11 @@ function Login() {
 
     function handleClick() {
 
-        // dump the [username, password]
+        axios.post('http://127.0.0.1:5000/login', [username, password])
+            .then(response => console.log(response))
+            .then(error => console.log(error));
 
-        nav('/select');
+            nav('/select');
     }
 
     return (

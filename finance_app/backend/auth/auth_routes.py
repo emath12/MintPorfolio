@@ -9,7 +9,7 @@ from backend import db
 from backend.db import User
 
 
-@auth_bp.route('/login-details', methods=['GET', 'POST'])
+@auth_bp.route('/login', methods=['GET', 'POST'])
 @cross_origin()
 def login():
     login_details = request.json
@@ -21,9 +21,14 @@ def login():
         print(username)
         print(password)
 
+        return "success"
+
         # some sort of db query HERE
         # user = User.query.filter_by(name=username).first()  # returns the first found entry
 
+@auth_bp.route('/logout', methods=['POST'])
+def the_logout():
+    pass
 
 
 
