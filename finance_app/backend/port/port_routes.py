@@ -1,8 +1,6 @@
 import json
 
 from flask import request
-
-from backend.models import User, Portfolio
 from backend.port import port_bp
 from flask_cors import CORS, cross_origin
 

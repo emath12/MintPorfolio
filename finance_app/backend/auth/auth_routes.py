@@ -4,9 +4,9 @@ from flask import request
 from flask_cors import CORS, cross_origin
 
 from backend.auth import auth_bp
-from backend.models import User, Portfolio
 from werkzeug.security import generate_password_hash, check_password_hash
-from backend.db import db
+from backend import db
+from backend.db import User
 
 
 @auth_bp.route('/login-details', methods=['GET', 'POST'])
@@ -37,14 +37,20 @@ def the_signup():
         user = login_details[0]
         password = login_details[1]
 
-        new_user = User\
+        user = User.query.filter_by(username=user).first()
+
+        if user:
+            print("user already exists!")
+            return
+
+        new_user = User \
             (user=user,
              password=generate_password_hash(password, method='sha256'))
 
         # add the new_user to the database
 
-        # db.session.add(new_user) # add the new user to the db
-        # db.session.commit() # commit these changes to the database
+        db.session.add(new_user) # add the new user to the db
+        db.session.commit() # commit these changes to the database
 
         return "success"
 

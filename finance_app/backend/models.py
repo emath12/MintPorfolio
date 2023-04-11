@@ -5,7 +5,7 @@ import numpy as np
 
 from sklearn.linear_model import LinearRegression
 
-class Portfolio:
+class DynamicPortfolio:
     def __init__(self, pwd=None , date=None, port: dict=None):
         self.stats = None
         self.pwd = pwd
@@ -61,20 +61,3 @@ class Portfolio:
             return self.stats
         else:
             return self.stats
-
-# class PortfolioStore(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     port = db.Column(db.String(10000))
-#     date = db.Column(db.DateTime(timezone=True), default=func.now())
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # user.primary_key
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user = db.Column(db.String(150), unique=True)
-    password = db.Column(db.String(150))
-
-def init_db():
-    db.create_all()
-
-if __name__ == '__main__':
-    init_db()

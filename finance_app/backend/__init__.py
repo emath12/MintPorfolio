@@ -1,10 +1,11 @@
 from flask import Flask, Blueprint
 from flask_cors import CORS, cross_origin
-from backend.db import db
 import os
+from flask_sqlalchemy import SQLAlchemy
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
