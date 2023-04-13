@@ -24,7 +24,8 @@ function DisplayData() {
 
         .then(axios.spread((user, market) => {
 
-          let userdata = user.data
+          let userdata = user.data;
+          console.log(userdata);
 
           let edited_user_data = [];
           

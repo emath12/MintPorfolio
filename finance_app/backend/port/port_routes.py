@@ -3,7 +3,7 @@ import json
 from flask import request
 from backend.port import port_bp
 from flask_cors import CORS, cross_origin
-
+from backend.models import DynamicPortfolio
 
 data = None
 current_user = None
@@ -16,7 +16,9 @@ def call_market():
         return "no data"
 
     pf = current_user.get_market_df()
+    print(pf.to_dict(orient='list'))
     j_string = json.dumps(pf.to_dict(orient='list'))
+
 
     return j_string
 
@@ -44,7 +46,7 @@ def update_user():
         for trio in data[0]:
             port[trio["company"]] = trio["shares"]
 
-        current_user = Portfolio(date=date, port=port)
+        current_user = DynamicPortfolio(date=date, port=port)
 
         return 'success'
 
