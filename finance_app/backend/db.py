@@ -4,15 +4,15 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Float, Date
 from sqlalchemy.orm import relationship, backref
 from flask_login import UserMixin
 from . import db
-
+import sqlalchemy as alc
 
 Base = declarative_base()
 # Base.query = db.query_property()
 
 class User(Base, db.Model, UserMixin):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
     id = db.Column(Integer, primary_key=True)
-    username = db.Column(String, unique=True)
+    user = db.Column(String, unique=True)
     password = db.Column(String)
     portfolios = db.relationship("Portfolio", back_populates="user")
 
@@ -24,7 +24,7 @@ class User(Base, db.Model, UserMixin):
 class Portfolio(Base):
     __tablename__ = 'portfolios'
     id = db.Column(Integer, primary_key=True)
-    user_id = db.Column(Integer, ForeignKey('users.id'))
+    user_id = db.Column(Integer, ForeignKey(User.id))
     user = db.relationship("User", back_populates="portfolios")
     date = db.Column(Date)
     positions = db.relationship("Position", back_populates="portfolio")
