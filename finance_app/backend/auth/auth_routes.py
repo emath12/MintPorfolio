@@ -6,11 +6,13 @@ from backend.auth import auth_bp
 from werkzeug.security import generate_password_hash, check_password_hash
 from backend import db
 from backend.db import User, Portfolio, Position
-
-
+from flask_login import current_user, login_user, LoginManager
+from backend import login_manager
+@login_manager.user_loader
 @auth_bp.route('/login', methods=['GET', 'POST'])
 @cross_origin()
 def login():
+
     login_details = request.json
 
     if request.method == 'POST':
@@ -18,19 +20,21 @@ def login():
         password = login_details[1]
 
         user = User.query.filter_by(user=username, password=password).first()
+
         if user:
+            print("login-trigger")
+            login_user(user)
             return "success"
-        print(username)
-        print(password)
 
+    print("login did not trigger")
 
-        # some sort of db query HERE
-        # user = User.query.filter_by(name=username).first()  # returns the first found entry
+    return "fail"
 
 @auth_bp.route('/logout', methods=['POST'])
 def the_logout():
-    pass
-
+    print("received logout request")
+    print(current_user)
+    return "success"
 
 
 @auth_bp.route('/sign-up', methods=['GET', 'POST'])

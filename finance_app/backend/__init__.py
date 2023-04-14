@@ -2,10 +2,13 @@ from flask import Flask, Blueprint
 from flask_cors import CORS, cross_origin
 import os
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import current_user, login_user, LoginManager
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 db = SQLAlchemy()
+login_manager = LoginManager()
+
 
 def create_app():
     app = Flask(__name__)
@@ -16,6 +19,8 @@ def create_app():
                                             or 'sqlite:///' + os.path.join(basedir, 'app.db')
 
     CORS(app)
+
+    login_manager.init_app(app)
 
     db.init_app(app)
 

@@ -7,7 +7,6 @@ from . import db
 import sqlalchemy as alc
 
 Base = declarative_base()
-# Base.query = db.query_property()
 
 class User(Base, db.Model, UserMixin):
     __tablename__ = 'user'
