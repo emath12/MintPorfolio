@@ -47,8 +47,6 @@ class User(Base, db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-
-
 class Portfolio(Base):
     __tablename__ = 'portfolios'
     id = Column(Integer, primary_key=True)
@@ -59,7 +57,6 @@ class Portfolio(Base):
 
     def get_id(self):
         return self.id
-
 
 class Position(Base):
     __tablename__ = 'positions'
@@ -127,12 +124,10 @@ class DynamicPortfolio:
             return self.stats
 
 login_manager = LoginManager()
-
 def create_app():
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = 'dsdkfwfjfjk'
-    app.secret_key = 'dsdkfwfjfjk!'
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI') \
                                             or 'sqlite:///' + os.path.join(basedir, 'application.db')
 

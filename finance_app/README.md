@@ -57,3 +57,12 @@ over the same time period
 ### Alpha
 Allowed for user input of portfolio data (date created, tickers,
 number of shares), and calculated portfolio key metrics.
+
+### Beta
+Added db side for userauth, which allows users to create profiles and
+portfolios associated with those profiles. Login between sessions is 
+functional, but somewhat buggy. Look in the root.js file for the frontend
+portion of db auth/ login. The frontend for db auth not been hooked up yet.
+All of these issues are what remain to be solved by the final product.
+Also, we are aware there are some reduncies with the flask app the model code,
+we are trying to debug the issue with auth, so are demodularizing some of the code.
