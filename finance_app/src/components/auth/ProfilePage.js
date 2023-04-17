@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {Link, NavLink, useNavigate } from 'react-router-dom';
 import Header from '../user/Header.js';
 import Card from 'react-bootstrap/Card';
+import axios from "axios";
 
 // access this export at /profile on the localhost 
 
@@ -61,7 +62,21 @@ function ProfilePage() {
     
     const navBuildPorfolio = () => {
         nav("/select");
+
     }
+
+    useEffect(() => {
+        async function fetchData() {
+          try {
+            const response = await axios.get('http://127.0.0.1:5000/profile');
+            console.log(response.data);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+
+        fetchData();
+  }, []);
     
     return (
         <>
