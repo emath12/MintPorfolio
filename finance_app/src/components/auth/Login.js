@@ -26,10 +26,10 @@ function Login() {
         <div className="center">
             <div>
                 <h1>Login</h1>
-                <input onClick={e => setUsername(e.target.value)} placeholder="Username"></input>
+                <input onChange={e => setUsername(e.target.value)} placeholder="Username"></input>
                 <br></br>
                 <br></br>
-                <input onClick={e => setPassword(e.target.value)} placeholder="Password"></input>
+                <input onChange={e => setPassword(e.target.value)} placeholder="Password"></input>
                 <br></br>
                 <button onClick={handleClick}>Submit</button>
             </div>

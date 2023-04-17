@@ -16,7 +16,7 @@ def create_app():
     app.config['SECRET KEY'] = 'dsdkfwfjfjk'
     app.secret_key = 'dsdkfwfjfjk!'
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI') \
-                                            or 'sqlite:///' + os.path.join(basedir, 'app.db')
+                                            or 'sqlite:///' + os.path.join(basedir, 'application.db')
 
     CORS(app)
 
