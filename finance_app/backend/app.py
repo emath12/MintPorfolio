@@ -1,13 +1,12 @@
-from flask import Flask, Blueprint
-from flask_session import Session
-from flask_cors import CORS, cross_origin
-import os
+from flask import Flask, request, jsonify
+import json
+from datetime import datetime, timedelta, timezone
+from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
+                               unset_jwt_cookies, jwt_required, JWTManager
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import current_user, login_user, LoginManager
 import json
 from flask import request, session
 from flask_cors import CORS, cross_origin
-from backend.auth import auth_bp
 from flask_login import current_user, login_user, LoginManager, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 import yfinance as yf
@@ -28,6 +27,11 @@ user = None
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 db = SQLAlchemy()
+
+app = Flask(__name__)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 class User(Base, db.Model, UserMixin):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
@@ -35,6 +39,11 @@ class User(Base, db.Model, UserMixin):
     password = Column(String)
     portfolios = relationship("Portfolio", back_populates="user")
 
+    @login_manager.user_loader
+    def load_user(user_id):
+        # Load a user from the database based on the user ID
+        # Return None if the user does not exist
+        return User.query.get(int(user_id))
     def get_id(self):
         return self.id
 
@@ -46,7 +55,6 @@ class User(Base, db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
-
 class Portfolio(Base):
     __tablename__ = 'portfolios'
     id = Column(Integer, primary_key=True)
@@ -123,28 +131,11 @@ class DynamicPortfolio:
         else:
             return self.stats
 
-login_manager = LoginManager()
-def create_app():
-    app = Flask(__name__)
+app.config['SECRET_KEY'] = 'dsdkfwfjfjk'
 
-    app.config['SECRET_KEY'] = 'dsdkfwfjfjk'
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI') \
-                                            or 'sqlite:///' + os.path.join(basedir, 'application.db')
-
-    CORS(app)
-
-    db.init_app(app)
-
-    login_manager.init_app(app)
-
-    return app
-
-app = create_app()
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get_id(User.id == user_id)
-
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI') \
+                                        or 'sqlite:///' + os.path.join(basedir, 'application.db')
+db.init_app(app)
 @app.route('/login', methods=['GET', 'POST'])
 @cross_origin()
 def login():
@@ -155,16 +146,16 @@ def login():
         username = login_details[0]
         password = login_details[1]
 
-        user = User.query.filter_by(user=username).first()
+        logged_in_user = User.query.filter_by(user=username).first()
 
-        if user:
+        if logged_in_user:
             print("login-trigger")
-            login_user(user)
+            login_user(logged_in_user)
             print("cur user")
             print(current_user)
-            session["user_id"] = current_user.get_id()
-            print(session["user_id"])
-            return "success"
+
+            return jsonify(detail="Login successful"), 200
+            return response
 
     print("login did not trigger")
 
@@ -203,12 +194,17 @@ def the_signup():
         login_user(new_user, remember=True)
         print(current_user)
 
-        return "success"
+        response = jsonify({'success': True})
+        response.set_cookie("user_id", str(new_user.id))
+        return response
 
+    return "Invalid request method"
 
 @app.route('/profile', methods=['GET'])
 def profile():
     print(current_user)
+    cookie = request.cookies.get("user_id")
+    print(cookie)
     return "success"
 
 @app.route('/market_dataframe')
@@ -222,7 +218,6 @@ def call_market():
     j_string = json.dumps(pf.to_dict(orient='list'))
 
     return j_string
-
 
 @app.route('/stats', methods=['GET', 'POST'])
 def call_stats():
