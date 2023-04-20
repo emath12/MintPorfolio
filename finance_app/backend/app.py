@@ -30,10 +30,15 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 db = SQLAlchemy()
 
 app = Flask(__name__)
+
 CORS(app, supports_credentials=True)
+
 app.config["SECRET_KEY"] = 'dsdkfwfjfjk'
+app.secret_key = 'dsdkfwfjfjk'
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI') \
                                         or 'sqlite:///' + os.path.join(basedir, 'application.db')
+app.config['SESSION_TYPE'] = 'filesystem'
+
 server_session = Session(app)
 db.init_app(app)
 
