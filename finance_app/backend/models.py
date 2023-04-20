@@ -36,7 +36,7 @@ class DynamicPortfolio:
         self.market["Vals"] = df.sum(axis=1).tolist()
 
     def __str__(self):
-        return f"{self.name}, {self.date}, {self.port}"
+        return f"{self.stats}, {self.pwd}, {self.date}, {self.port}"
 
     def get_init_pvalue(self):
         return self.init_pvalue

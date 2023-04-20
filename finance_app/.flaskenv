@@ -1,2 +1,2 @@
-FLASK_APP=backend
+FLASK_APP=backend.app
 FLASK_DEBUG=True
