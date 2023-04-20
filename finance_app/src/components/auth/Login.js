@@ -1,7 +1,8 @@
-import "./Auth.css"
+import './Login.css'
 import {useNavigate} from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
 import Header from "../user/Header";
+import Footer from "../user/Footer"
 import axios from "axios";
 
 function Login() {
@@ -22,17 +23,29 @@ function Login() {
 
     return (
         <>
-        <Header />
-        <div className="center">
-            <div>
-                <h1>Login</h1>
-                <input onChange={e => setUsername(e.target.value)} placeholder="Username"></input>
-                <br></br>
-                <br></br>
-                <input onChange={e => setPassword(e.target.value)} placeholder="Password"></input>
-                <br></br>
-                <button onClick={handleClick}>Submit</button>
+        <div className="LoginPage">
+            <Header />
+            <div className="center">
+                <div>
+                    <h1>Login</h1>
+                    <input onChange={e => setUsername(e.target.value)} placeholder="Username"></input>
+                    <br></br>
+                    <input onChange={e => setPassword(e.target.value)} placeholder="Password"></input>
+                    <br></br>
+                    <button onClick={handleClick}>Submit</button>
+                </div>
             </div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <Footer class="mb-0"></Footer>
         </div>
         </>
     )

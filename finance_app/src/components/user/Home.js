@@ -1,4 +1,5 @@
 import './Home.css'
+import {useNavigate} from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
 import Footer from './Footer.js'
 import Header from './Header.js'
@@ -7,6 +8,12 @@ import {Container, Row, Col, Image, Button, Card} from 'react-bootstrap'
 
 
 function Home() {
+    const nav = useNavigate();
+
+    function navLogin () {
+        nav("/login");
+    }
+
     return (
         <>
             <div className={'HomePage'}>
@@ -24,9 +31,9 @@ function Home() {
                         <Col sm={5}>
                             <h1 class="font-weigh-light">Welcome to Mint Portfolio.</h1>    
                             <p class="mt-4"> We are your center for calculating your personal financial portfolio's performance. Become a better investor, one ticker at a time.</p>
-                            <Button variant="outline-primary">Get Started</Button>
+                            <Button variant="outline-primary" href = '/login'> Get Started</Button>
                         </Col>
-                        
+
                     </Row>
                     <Row className="my-5">
                         <Col>
@@ -68,12 +75,9 @@ function Home() {
                     </Row>
                     </Container>
                 </main>
-                <footer class="py-5 my-5 bg-secondary text-center">
-                    <Container className="px-4">
-                        <p class="text-center text-white">
-                            Copyright &copy; Mint Portfolio 2023</p>
-                    </Container>
-                </footer>
+                <div className="FooterParent">
+                    <Footer class="Footer"></Footer>
+                </div>
             </div>
         </>)
 }

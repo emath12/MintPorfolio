@@ -13,6 +13,17 @@ body,
   flex-direction: column;
 }
 
+.FooterParent {
+  position: relative;
+  width:"100%";
+  right:0px;
+  left:0px;
+  bottom: 0px;
+}
+.Footer {
+  position: absolute;
+}
+
 .navbar {
     background-color: #0e7048;
     color: #f9f9e2;
@@ -34,6 +45,11 @@ body,
     transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
 padding: 5px 5px 5px 5px;
 cursor: pointer;
+}
+
+.button {
+  padding:5px 5px 5px 5px;
+  margin: 5px;
 }
 
 .card:hover{
