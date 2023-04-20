@@ -2,6 +2,7 @@ import './StockGrid.css';
 import { myVariable } from './Options.js';
 import React, { useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
+import {Container} from 'react-bootstrap';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import Header from './Header.js'
@@ -93,7 +94,6 @@ function StockRow(props) {
 
   return (
     <>
-      <div className="SelectPage">
         <div className="StockRow" key={id}>
             <TickerSelectButton />
 
@@ -115,7 +115,6 @@ function StockRow(props) {
             </button>
             
         </div>
-      </div>
     </>
   );
 }
@@ -191,16 +190,12 @@ function StockGrid() {
     };
 
     return (
-        <>
+      <>
         <div className="SelectPage">
+          <div className="center">
             <div className="page">
               <Header />
-              <input
-                className='date'
-                onChange={updateDate}
-                placeholder="Construction Date"
-                type="date"
-              />
+              <br></br>
               <StockGridHeader />
               <div className="Stocks">
                   {
@@ -212,21 +207,40 @@ function StockGrid() {
                               rows={[rows, setRows]}
                           />
                       })  
-                  }
-              </div>
+                  }</div>
               <br></br>
+              
+              <Container>
               <div className='ButtonRow'>
+                <p className="date">Purchase date: 
+                <input
+                  className='date'
+                  onChange={updateDate}
+                  inline="True"
+                  placeholder="Construction Date"
+                  type="date"
+                /> 
+                </p>
                   <button className="toggleAdd" onClick={createNewBlankPosition}>Add Position</button>            
               </div>
               <button className="toggleSubmit" type="submit" onClick={handleSubmit}>Submit</button>
+              </Container>
             </div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
             <div className="Footer Parent">
               <Footer class="Footer"></Footer>
             </div>
+          </div>
         </div>
-        </>
+      </>
     )
-
 }
 
 export default StockGrid
