@@ -249,7 +249,6 @@ def call_stats():
 
 @app.route('/current_portfolio', methods=['GET', 'POST'])
 @cross_origin()
-@jwt_required()
 def update_user():
     global data
     global user
