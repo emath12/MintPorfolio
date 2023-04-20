@@ -1,4 +1,5 @@
 import './StockGrid.css';
+import { myVariable } from './Options.js';
 import React, { useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
 import axios from "axios";
@@ -70,11 +71,7 @@ function StockRow(props) {
           isSearchable={isSearchable}
           name="ticker"
           // TO DO: IMPORT FILE CONTAINING ALL TICKER VALUES and reset options
-          options={[{value : "aapl", label : "AAPL"}, 
-                    {value : "msft", label : "MSFT"}, 
-                    {value : "amzn", label : "AMZN"}, 
-                    {value : "nvda", label : "NVDA"},
-                    {value : "brk-b", label : "BRK-B"}]}
+          options={myVariable}
         />
       </div>
     );
