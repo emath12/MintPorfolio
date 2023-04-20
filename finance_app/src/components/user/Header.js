@@ -22,10 +22,6 @@ function Header(props) {
         nav("/profile")
     }
 
-    function navGettingStarted() {
-        nav("/")
-    }
-
     function navPortfolio() {
         nav("/returns")
     }
@@ -37,7 +33,6 @@ function Header(props) {
             <Navbar.Brand onClick={navHome} >PortfolioBuilder</Navbar.Brand>
 
             <Nav>
-                <Nav.Link onClick={navGettingStarted}>How to Use</Nav.Link>
                 <Nav.Link onClick={navSelect}>Build Porfolio</Nav.Link>
                 <Nav.Link onClick={navPortfolio}>View Portfolio</Nav.Link>
             </Nav>
