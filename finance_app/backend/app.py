@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
+from flask_session import Session
 import json
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
@@ -29,6 +30,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 db = SQLAlchemy()
 
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
+app.config["SECRET_KEY"] = 'dsdkfwfjfjk'
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI') \
+                                        or 'sqlite:///' + os.path.join(basedir, 'application.db')
+server_session = Session(app)
+db.init_app(app)
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -131,11 +139,18 @@ class DynamicPortfolio:
         else:
             return self.stats
 
-app.config['SECRET_KEY'] = 'dsdkfwfjfjk'
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI') \
-                                        or 'sqlite:///' + os.path.join(basedir, 'application.db')
-db.init_app(app)
+@app.route('/get_user', methods=['GET'])
+def get_user():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return "error"
+    
+    user = User.query.filter_by(id=user_id).first()
+    return jsonify({"id": user.id, "user": user.user})
+
+
 @app.route('/login', methods=['GET', 'POST'])
 @cross_origin()
 def login():
@@ -152,10 +167,8 @@ def login():
             print("login-trigger")
             login_user(logged_in_user)
             print("cur user")
-            print(current_user)
-
-            return jsonify(detail="Login successful"), 200
-            return response
+            session["user_id"] = logged_in_user.id
+            return jsonify({"id": logged_in_user.id})
 
     print("login did not trigger")
 
@@ -231,6 +244,7 @@ def call_stats():
 
 @app.route('/current_portfolio', methods=['GET', 'POST'])
 @cross_origin()
+@jwt_required()
 def update_user():
     global data
     global user
@@ -240,6 +254,7 @@ def update_user():
         data = request.json
 
         current_user_id = current_user.get_id()
+        print("current user:")
         print(current_user_id)
 
         date = data[1]
@@ -274,3 +289,7 @@ def update_user():
         j_string = json.dumps(pf.to_dict(orient='list'))
 
         return j_string
+    
+@app.route('/login_status')
+def login_status():
+    return jsonify({'logged_in': session.get('logged_in', False)})

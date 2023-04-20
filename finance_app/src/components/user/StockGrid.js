@@ -19,13 +19,12 @@ function StockGridHeader() {
   );
 }
 
-
-
 function StockRow(props) {
 
   const [company, setCompany] = useState("");
   const [shares, setShares] = useState(0);
   const [rows, setRows] = props.rows;
+  const [user, setUser] = useState("");
 
   const prevCompany = useRef(company);
   const prevShares = useRef(shares);
@@ -80,6 +79,16 @@ function StockRow(props) {
     );
   }
   
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/get_user');
+        setUser(response.data);
+      } catch (error) {
+        console.log("Not logged in.");
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     // https://stackoverflow.com/questions/53446020/how-to-compare-oldvalues-and-newvalues-on-react-hooks-useeffect
@@ -176,6 +185,7 @@ function StockGrid() {
     function handleSubmit() { 
         console.log("data submitted!");
         console.log([rows.objects, date]);
+
 
           axios.post('http://127.0.0.1:5000/current_portfolio', [rows.objects, date],
           {
