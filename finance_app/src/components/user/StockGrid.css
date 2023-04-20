@@ -5,6 +5,28 @@ body,
   margin: 0;
 }
 
+.SelectPage {
+    background-color: #CDE4D5;
+    width: "100%";
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.FooterParent {
+    position: relative;
+    width:"100%";
+    right:0px;
+    left:0px;
+    bottom: 0px;
+}
+.Footer {
+    position: absolute;
+    bottom:0px;
+    right:0px;
+    left:0px;
+}
+
 .Stocks {
     justify-content: center;
     align-items: center;

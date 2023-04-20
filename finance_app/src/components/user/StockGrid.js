@@ -9,14 +9,14 @@ import Footer from './Footer.js'
 
 function StockGridHeader() {
   return (
-    <div className="StockRow">
-      <label className="TickerSelect">
-        Ticker
-      </label>
-      <label className= "TickerSelect">
-        # of shares
-      </label>
-    </div>
+      <div className="StockRow">
+        <label className="TickerSelect">
+          Ticker
+        </label>
+        <label className= "TickerSelect">
+          # of shares
+        </label>
+      </div>
   );
 }
 
@@ -93,6 +93,7 @@ function StockRow(props) {
 
   return (
     <>
+      <div className="SelectPage">
         <div className="StockRow" key={id}>
             <TickerSelectButton />
 
@@ -114,6 +115,7 @@ function StockRow(props) {
             </button>
             
         </div>
+      </div>
     </>
   );
 }
@@ -190,6 +192,7 @@ function StockGrid() {
 
     return (
         <>
+        <div className="SelectPage">
             <div className="page">
               <Header />
               <input
@@ -217,7 +220,10 @@ function StockGrid() {
               </div>
               <button className="toggleSubmit" type="submit" onClick={handleSubmit}>Submit</button>
             </div>
-            <Footer />
+            <div className="Footer Parent">
+              <Footer class="Footer"></Footer>
+            </div>
+        </div>
         </>
     )
 
