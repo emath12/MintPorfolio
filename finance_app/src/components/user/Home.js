@@ -40,7 +40,7 @@ function Home() {
                             <Card style={{ width: '18rem' }}>
                                 
                                 <Card.Body>
-                                    <Card.Title>Build</Card.Title>
+                                    <Card.Title style={{textAlign: 'center'}}>Build</Card.Title>
                                     <Card.Text>
                                     Build and maintain your portfolio by inputting the stock tickers, number of shares, and dates of all of your past purchases. We take care of the rest.
                                     </Card.Text>
@@ -52,7 +52,7 @@ function Home() {
                             <Card style={{ width: '18rem' }}>
                                 
                                 <Card.Body>
-                                    <Card.Title>Track</Card.Title>
+                                    <Card.Title style={{textAlign: 'center'}}>Track</Card.Title>
                                     <Card.Text>
                                     Understand your portfolio's performance with personalized and up-to-date financial metrics and beautiful graphs.
                                     </Card.Text>
@@ -64,7 +64,7 @@ function Home() {
                             <Card style={{ width: '18rem' }}>
                                 
                                 <Card.Body>
-                                    <Card.Title >Refine</Card.Title>
+                                    <Card.Title style={{textAlign: 'center'}}>Refine</Card.Title>
                                     <Card.Text>
                                     Our state-of-the-art tools will allow you the financial insights and freedom required to strategically grow your holdings.
                                     </Card.Text>
