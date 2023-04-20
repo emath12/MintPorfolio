@@ -1,7 +1,6 @@
 import './Home.css'
-
+import { Jumbotron } from 'react-bootstrap'
 import React, { useState, useEffect, useRef } from 'react';
-
 import Footer from './Footer.js'
 import Header from './Header.js'
 

@@ -5,7 +5,7 @@ import json
 TickerFetch.py was used to select S&P 500 tickers and format them into a well-formatted dictionary to be used in the bootstrap filter select element in /select
 '''
 
-csv_filename = 'githubtickers.csv'
+csv_filename = 'SP500tickers.csv'
 
 options = []
 
