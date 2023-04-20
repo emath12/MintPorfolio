@@ -68,4 +68,4 @@ Also, we are aware there are some reduncies with the flask app the model code,
 we are trying to debug the issue with auth, so are demodularizing some of the code.
 
 ### Final
-Added error-handling for user-inputted tickers. Currently filter-select button contains 503 S&P 500 tickers; the Yahoo Finance API has 100000+ valid tickers, so future iterations of the project may redesign filter-select to have much greater drop-down menu capacity.
+Added error-handling for user-inputted tickers. Currently filter-select button contains 503 S&P 500 tickers; the Yahoo Finance API has 100000+ valid tickers (accessible in "user/YahooFinanceTickers.csv"), so future iterations of the project may redesign filter-select to have much greater drop-down menu capacity.
