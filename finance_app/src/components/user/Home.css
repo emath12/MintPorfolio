@@ -7,43 +7,10 @@ body,
 
 .HomePage {
   background-color: #CDE4D5;
-  width: 100%;
-  height: 100%;
+  width: "100%";
+  height: "100%";
   display: flex;
   flex-direction: column;
-}
-
-.right-center {
-    text-align: right;
-    margin-right: 5vh;
-    }
-
-.left-center {
-    text-align: left;
-    margin-left: 5vh;
-}
-
-.left-center > h2 {
-    font-size: 80px;
-}
-
-.white {
-    background-color: white;
-}
-
-.Split {
-    display: grid;
-    grid-template-columns: 1fr .5fr;
-    grid-template-rows: 10fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    background-color: #CDE4D5;
-}
-
-.square {
-    width: 100%;
-    height: 100%;
-    background-color: darkgreen;
 }
 
 .navbar {
@@ -58,4 +25,18 @@ body,
 
 .navbar .nav-brand {
     color: #f9f9e2
+}
+
+.card{
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+padding: 5px 5px 5px 5px;
+cursor: pointer;
+}
+
+.card:hover{
+   transform: scale(1.05);
+box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 }

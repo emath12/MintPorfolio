@@ -7,6 +7,7 @@ import Logout from './auth/Logout.js';
 import PortfoilioReturns from './user/PortfolioReturns.js';
 import Home from './user/Home.js';
 import CreateAccount from "./auth/CreateAccount.js"
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Root() {
     return (

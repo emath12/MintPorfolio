@@ -30,7 +30,7 @@ function Header(props) {
         <>
         <Navbar >
           <Container>
-            <Navbar.Brand onClick={navHome} >PortfolioBuilder</Navbar.Brand>
+            <Navbar.Brand onClick={navHome} >Mint Portfolio</Navbar.Brand>
 
             <Nav>
                 <Nav.Link onClick={navSelect}>Build Porfolio</Nav.Link>
