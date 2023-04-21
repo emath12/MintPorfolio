@@ -2,6 +2,7 @@ import './ProfilePage.css';
 import React, { useState, useEffect, useRef } from 'react';
 import {Link, NavLink, useNavigate } from 'react-router-dom';
 import Header from '../user/Header.js';
+import Footer from '../user/Footer.js'
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
 
@@ -80,8 +81,9 @@ function ProfilePage() {
     
     return (
         <>
-            <div className="ProfPage">
+            <div className="ProfilePage">
                 <Header />
+                
                     <div className='Top'>
                         <h1 className='Username'> 
                             <u>{profile.username}'s Profile</u>
@@ -101,6 +103,7 @@ function ProfilePage() {
                         }
                     </div>
                     <br></br>
+                <Footer></Footer>
             </div>
             <center>
             </center>

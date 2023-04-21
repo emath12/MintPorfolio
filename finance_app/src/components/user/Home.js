@@ -68,7 +68,7 @@ function Home() {
                                     <Card.Text>
                                     Our state-of-the-art tools will allow you the financial insights and freedom required to strategically grow your holdings.
                                     </Card.Text>
-                                <Card.Img variant="top" src="https://www.yankodesign.com/images/design_news/2022/12/scalar-architecture-cabin/scalar_architecture_metal_cabin_yanko_design_03.jpg" />
+                                <Card.Img variant="top" src="https://cdn.homedit.com/wp-content/uploads/2020/03/Villas-Jonc-Swiss-Christian-von-D%C3%BCring-design.jpg" />
                                 </Card.Body>
                             </Card>
                         </Col>
