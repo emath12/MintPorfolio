@@ -148,6 +148,8 @@ class DynamicPortfolio:
 @app.route('/get_user', methods=['GET'])
 def get_user():
     user_id = session.get("user_id")
+    print("get user")
+    print(user_id)
 
     if not user_id:
         return "error"
@@ -256,8 +258,9 @@ def update_user():
     if request.method == 'POST':
         print("post made")
         data = request.json
+        print(data)
 
-        current_user_id = current_user.get_id()
+        current_user_id = session.get("user_id")
         print("current user:")
         print(current_user_id)
 
