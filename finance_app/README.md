@@ -69,3 +69,10 @@ we are trying to debug the issue with auth, so are demodularizing some of the co
 
 ### Final
 Added error-handling for user-inputted tickers. Currently filter-select button contains 503 S&P 500 tickers; the Yahoo Finance API has 100000+ valid tickers (accessible in "user/YahooFinanceTickers.csv"), so future iterations of the project may redesign filter-select to have much greater drop-down menu capacity.
+
+### Sources of Images Used in Project
+(1) Landing Page
+   (1) Title Image: https://shop.bauhaus-movement.com/phaidon-ezra-stoller
+   (2) "Build" Bootstrap Card: https://architizer.com/blog/inspiration/collections/yellow/
+   (3) "Track" Bootstrap Card: https://www.internationaltaxreview.com/article/2a6aafin5m44msddnn11c/the-quest-for-net-zero-and-the-role-of-the-uk-tax-system
+   (4) "Refine" Bootstrap Card: https://www.homedit.com/modern-houses-in-switzerland/
