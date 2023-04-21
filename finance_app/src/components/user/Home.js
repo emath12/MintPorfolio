@@ -66,7 +66,7 @@ function Home() {
                                 <Card.Body>
                                     <Card.Title style={{textAlign: 'center'}}>Refine</Card.Title>
                                     <Card.Text>
-                                    Our state-of-the-art tools will allow you the financial insights and freedom required to strategically grow your holdings.
+                                    Our state-of-the-art tools will provide you with the financial insights required to strategically grow your holdings.
                                     </Card.Text>
                                 <Card.Img variant="top" src="https://cdn.homedit.com/wp-content/uploads/2020/03/Villas-Jonc-Swiss-Christian-von-D%C3%BCring-design.jpg" />
                                 </Card.Body>
