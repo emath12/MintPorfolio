@@ -26,5 +26,4 @@ function useToken() {
   }
 
 }
-
 export default useToken;

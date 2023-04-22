@@ -3,72 +3,62 @@ from flask_session import Session
 import json
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
-                               unset_jwt_cookies, jwt_required, JWTManager
+                               unset_jwt_cookies, jwt_required, JWTManager, verify_jwt_in_request
+
 from flask_sqlalchemy import SQLAlchemy
 import json
 from flask import request, session
 from flask_cors import CORS, cross_origin
-from flask_login import current_user, login_user, LoginManager, login_required
-from werkzeug.security import generate_password_hash, check_password_hash
-import yfinance as yf
-import pandas as pd
-import numpy as np
+import os
+
+from backend.models import DynamicPortfolio
+
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
-import os
-from sklearn.linear_model import LinearRegression
-
-Base = declarative_base()
 
 data = None
 user = None
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-db = SQLAlchemy()
 
 app = Flask(__name__)
-
-CORS(app, supports_credentials=True)
 
 app.config["SECRET_KEY"] = 'dsdkfwfjfjk'
 app.secret_key = 'dsdkfwfjfjk'
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI') \
                                         or 'sqlite:///' + os.path.join(basedir, 'application.db')
+
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config["JWT_SECRET_KEY"] = "please-remember-to-change-me"
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+app.config['JWT_ERROR_MESSAGE_KEY'] = None  # disable automatic 401 error
 
-server_session = Session(app)
-db.init_app(app)
 
+db = SQLAlchemy(app)
 
-login_manager = LoginManager()
-login_manager.init_app(app)
+Base = declarative_base()
+
 class User(Base, db.Model, UserMixin):
-    __tablename__ = 'user'
+    __tablename__ = "user"
     id = Column(Integer, primary_key=True)
     user = Column(String, unique=True)
+    token = Column(String, unique=True)
     password = Column(String)
     portfolios = relationship("Portfolio", back_populates="user")
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        # Load a user from the database based on the user ID
-        # Return None if the user does not exist
-        return User.query.get(int(user_id))
     def get_id(self):
         return self.id
 
     def get_username(self):
         return self.username
 
-    def set_password(self, password):
-        self.password = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password, password)
-class Portfolio(Base):
+    # def set_password(self, password):
+    #     self.password = generate_password_hash(password)
+    #
+    # def check_password(self, password):
+    #     return check_password_hash(self.password, password)
+class Portfolio(Base, UserMixin):
     __tablename__ = 'portfolios'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey(User.id))
@@ -79,6 +69,10 @@ class Portfolio(Base):
     def get_id(self):
         return self.id
 
+    @classmethod
+    def get_by_name(cls, name):
+        return cls.query.filter_by(name=name).first()
+
 class Position(Base):
     __tablename__ = 'positions'
     id = Column(Integer, primary_key=True)
@@ -87,104 +81,76 @@ class Position(Base):
     ticker = Column(String)
     amount = Column(Float)
 
-class DynamicPortfolio:
-    def __init__(self, pwd=None , date=None, port: dict=None):
-        self.stats = None
-        self.pwd = pwd
-        self.date = date
-        self.port = port
+with app.app_context():
+    db.create_all()
 
-        # Set initial portfolio value
-        self.init_pvalue = 0
-        for tkr, i in self.port.items():
-            self.init_pvalue += int(i) * yf.Ticker(tkr).history(start=self.date)["Close"][0]
+CORS(app, supports_credentials=True)
 
-        # make dataframe of time series for portfolio
-        df = pd.DataFrame()
-        for tkr, i in self.port.items():
-            df[tkr] = int(i) * yf.Ticker(tkr).history(start=self.date)["Close"]
-
-        self.df = pd.DataFrame()
-        self.df["Dates"] = df.index.astype(np.int64) / int(1e6)
-        self.df["Vals"] = df.sum(axis=1).tolist()
-
-        # make dataframe of time series for market
-        mkt = yf.Ticker("^GSPC")
-        df = pd.DataFrame()
-        mkt_hist = mkt.history(start=self.date)["Close"]
-        df["mkt"] = (self.init_pvalue / mkt_hist[0]) * mkt_hist
-        self.market = pd.DataFrame()
-        self.market["Dates"] = df.index.astype(np.int64) / int(1e6)  # Convert Timestamps to strings
-        self.market["Vals"] = df.sum(axis=1).tolist()
-
-    def __str__(self):
-        return f"{self.stats}, {self.pwd}, {self.date}, {self.port}"
-
-    def get_init_pvalue(self):
-        return self.init_pvalue
-
-    def get_port_df(self):
-        return self.df
-
-    def get_market_df(self):
-        return self.market
-
-    def get_stats(self):
-        if self.stats is None:
-            self.stats = {}
-            returns = self.df["Vals"].pct_change().dropna()
-            mkt_returns = self.market["Vals"].pct_change().dropna()
-            model = LinearRegression()
-            model.fit(mkt_returns.to_numpy().reshape(-1, 1), returns)
-            self.stats["alpha"] = model.intercept_
-            self.stats["beta"] = model.coef_[0]
-            self.stats["sharpe"] = returns.mean() / returns.std()
-            self.stats["ret"] = (self.df["Vals"].iloc[len(self.df) - 1] - self.df["Vals"][0]) / self.df["Vals"][0]
-            return self.stats
-        else:
-            return self.stats
-
-
-@app.route('/get_user', methods=['GET'])
-def get_user():
-    user_id = session.get("user_id")
-    print("get user")
-    print(user_id)
-
-    if not user_id:
-        return "error"
-    
-    user = User.query.filter_by(id=user_id).first()
-    return jsonify({"id": user.id, "user": user.user})
-
+jwt = JWTManager(app)
+def refresh_expiring_jwts(response):
+    try:
+        exp_timestamp = get_jwt()["exp"]
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        if target_timestamp > exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            data = response.get_json()
+            if type(data) is dict:
+                data["access_token"] = access_token
+                response.data = json.dumps(data)
+        return response
+    except (RuntimeError, KeyError):
+        # Case where there is not a valid JWT. Just return the original respone
+        return response
 
 @app.route('/login', methods=['GET', 'POST'])
 @cross_origin()
 def login():
-    login_details = request.json
 
     if request.method == 'POST':
 
-        username = login_details[0]
-        password = login_details[1]
+        print("login triggered")
+
+        username = request.json.get("username")
+        password = request.json.get("password")
 
         logged_in_user = User.query.filter_by(user=username).first()
+        print(logged_in_user)
 
-        if logged_in_user:
-            print("login-trigger")
-            login_user(logged_in_user)
-            print("cur user")
-            session["user_id"] = logged_in_user.id
-            return jsonify({"id": logged_in_user.id})
+        if not logged_in_user:
+            print("login failed")
+            return "user does not exist! Create an account", 405
+
+        if password == logged_in_user.password:
+
+            access_token = create_access_token(identity=username)
+
+            response = jsonify(
+                {
+                    "success": True,
+                    "access_token": access_token,
+                }
+            )
+
+            print("login successful")
+
+            return response
+
+        else:
+
+            print("login failed")
+            return "incorrect password!", 405
+
 
     print("login did not trigger")
 
-    return "fail"
-@app.route('/logout', methods=['POST'])
-def the_logout():
-    print("received logout request")
-    print(current_user)
-    return "success"
+    return "login did not trigger", 404
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    response = jsonify({"msg": "logout successful"})
+    unset_jwt_cookies(response)
+    return response
 
 
 @app.route('/sign-up', methods=['GET', 'POST'])
@@ -198,34 +164,82 @@ def the_signup():
 
         already_exists = User.query.filter_by(user=username).first()
 
-        print(already_exists)
-
         if already_exists:
             print("user already exists!")
-            exit(1)
+            return "user already exists", 404
+
+        access_token = create_access_token(identity=username)
 
         new_user = User(user=username,
-                        password=generate_password_hash(password))
-        print(new_user)
+                        password=password,
+                        token=access_token
+        )
 
         db.session.add(new_user)
         db.session.commit()
 
-        login_user(new_user, remember=True)
-        print(current_user)
+        response = jsonify(
+            {
+                "success": True,
+                "access_token": access_token,
+            }
+        )
 
-        response = jsonify({'success': True})
-        response.set_cookie("user_id", str(new_user.id))
+        return response, 200
+
+    return "Error", 404
+
+@app.route('/profile')
+@jwt_required(optional=True)
+@cross_origin()
+def my_profile():
+
+    verify_jwt_in_request()
+
+    current_user = get_jwt_identity()
+
+    current_user = User.query.filter_by(user=current_user).first()
+
+    print(current_user)
+
+    print(current_user.id)
+
+    return "success", 200
+
+@app.route("/logged_in_check", methods=['GET', 'POST'])
+@cross_origin()
+@jwt_required(optional=True)
+def log_in_check():
+
+    print("here")
+
+    verify_jwt_in_request()
+
+    print(get_jwt_identity())
+
+    if get_jwt_identity():
+
+        print("true")
+
+        response = jsonify(
+            {
+                "logged_in" : True
+            }
+        )
+
         return response
 
-    return "Invalid request method"
+    else:
 
-@app.route('/profile', methods=['GET'])
-def profile():
-    print(current_user)
-    cookie = request.cookies.get("user_id")
-    print(cookie)
-    return "success"
+        print("false")
+
+        response = jsonify(
+            {
+                "logged_in": False
+            }
+        )
+
+        return response
 
 @app.route('/market_dataframe')
 @cross_origin()
@@ -296,7 +310,35 @@ def update_user():
         j_string = json.dumps(pf.to_dict(orient='list'))
 
         return j_string
-    
-@app.route('/login_status')
-def login_status():
-    return jsonify({'logged_in': session.get('logged_in', False)})
+@app.errorhandler(401)
+def custom_401(error):
+
+    print("custom 401")
+    print(error)
+
+    response = jsonify(
+        {
+            "logged_in": False,
+        }
+    )
+
+    return response
+
+@jwt.expired_token_loader
+def handle_expired_token_error(expired_token):
+    print("lol")
+    return jsonify({
+        'status': 401,
+        'sub_status': 'expired_token',
+        'message': 'The token has expired'
+    }), 401
+
+@jwt.invalid_token_loader
+def handle_invalid_token_error(error_string):
+    print("lol")
+    return jsonify({
+        'status': 401,
+        'sub_status': 'invalid_token',
+        'message': 'The token is invalid'
+    }), 401
+

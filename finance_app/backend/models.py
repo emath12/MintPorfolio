@@ -1,9 +1,8 @@
-from . import db
 import yfinance as yf
 import pandas as pd
 import numpy as np
-
 from sklearn.linear_model import LinearRegression
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class DynamicPortfolio:
     def __init__(self, pwd=None , date=None, port: dict=None):

@@ -175,12 +175,8 @@ function StockGrid() {
 
         console.log("data submitted!");
         console.log([rows.objects, date]);
-        fetch('http://127.0.0.1:5000/get_user').then;
-        console.log("user")
-        console.log(user)
 
-
-          axios.post('http://127.0.0.1:5000/current_portfolio', [rows.objects, date, user],
+          axios.post('http://127.0.0.1:5000/current_portfolio', [rows.objects, date],
           {
             headers: {
               'Access-Control-Allow-Origin': 'http://localhost:3000',

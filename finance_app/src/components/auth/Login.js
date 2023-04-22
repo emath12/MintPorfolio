@@ -1,41 +1,65 @@
-import "./Auth.css"
-import {useNavigate} from "react-router-dom";
-import React, { useState, useEffect, useRef } from 'react';
-import Header from "../user/Header";
+import { useState } from 'react';
 import axios from "axios";
 
-function Login() {
+function Login(props) {
 
-    const nav = useNavigate();
+    const [loginForm, setloginForm] = useState({
+      username: "",
+      password: ""
+    })
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    function logMeIn(event) {
+      axios ({
+            method: "POST",
+            url:"http://127.0.0.1:5000/login",
+            data: {
+                  username: loginForm.username,
+                  password: loginForm.password
+            }
+      }).then((response) => {
+        props.setToken(response.data.access_token)
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+          }
+      })
 
-    function handleClick() {
+      setloginForm(({
+        username: "",
+        password: ""}))
 
-        axios.post('http://127.0.0.1:5000/login', [username, password])
-            .then(response => console.log(response))
-            .then(error => console.log(error));
-
-            nav('/select');
+      event.preventDefault()
     }
 
+    function handleChange(event) {
+      const {value, name} = event.target
+
+      setloginForm(prevNote => ({
+          ...prevNote, [name]: value})
+      )}
+
     return (
-        <>
-        <Header />
-        <div className="center">
-            <div>
-                <h1>Login</h1>
-                <input onChange={e => setUsername(e.target.value)} placeholder="Username"></input>
-                <br></br>
-                <br></br>
-                <input onChange={e => setPassword(e.target.value)} placeholder="Password"></input>
-                <br></br>
-                <button onClick={handleClick}>Submit</button>
-            </div>
-        </div>
-        </>
-    )
+      <div>
+        <h1>Login</h1>
+          <form className="login">
+            <input onChange={handleChange}
+                  text={loginForm.username}
+                  name="username"
+                  placeholder="Username"
+                  value={loginForm.username} />
+            <input onChange={handleChange}
+                  type="password"
+                  text={loginForm.password}
+                  name="password"
+                  placeholder="Password"
+                  value={loginForm.password} />
+
+          <button onClick={logMeIn}>Submit</button>
+        </form>
+      </div>
+    );
 }
 
 export default Login;
