@@ -21,7 +21,7 @@ function Header(props) {
     
     function navProfile() {
 
-        axios.get('http://127.0.0.1:5000/logged_in_check')
+        axios.get('http://127.0.0.1:5000/profile')
 
             .then(response => {
                 if (response.data.logged_in) {
@@ -32,6 +32,7 @@ function Header(props) {
             })
 
             .then(error => {
+                nav("/create-account")
                 console.log(error)
                 console.log("erroeed")
 
@@ -46,16 +47,32 @@ function Header(props) {
         nav("/returns")
     }
 
+    function updatePortfolio() {
+          axios.post('http://127.0.0.1:5000/update_portfolio', {}, {
+              headers: {
+                Authorization: 'Bearer ' + props.token
+              }
+            })
+            .then(response => {
+              // handle the response
+            })
+            .catch(error => {
+              console.log(error)
+            });
+    }
+
+
     return (
         <>
         <Navbar >
           <Container>
-            <Navbar.Brand onClick={navHome} >PortfolioBuilder</Navbar.Brand>
+            <Navbar.Brand onClick={navHome}>PortfolioBuilder</Navbar.Brand>
 
             <Nav>
                 <Nav.Link onClick={navGettingStarted}>How to Use</Nav.Link>
                 <Nav.Link onClick={navSelect}>Build Porfolio</Nav.Link>
                 <Nav.Link onClick={navPortfolio}>View Portfolio</Nav.Link>
+                <Nav.Link onClick={updatePortfolio}>Update</Nav.Link>
             </Nav>
 
             <Nav> 

@@ -16,9 +16,9 @@ function Root() {
     return (
       <Router>
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/returns' element={<PortfoilioReturns />} />
-            <Route path='/select' element={<StockGrid />} />
+            <Route path='/' element={<Home token={token}/>} />
+            <Route path='/returns' element={<PortfoilioReturns token={token} />} />
+            <Route path='/select' element={<StockGrid token={token}/>} />
             <Route path='/profile' element={<ProfilePage token={token} setToken={setToken}/>} />
             <Route path='/login' element={<Login setToken={setToken}/>} />
             <Route path='/logout' element={<Logout />} />

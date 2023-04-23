@@ -3,7 +3,7 @@ import React from "react"
 import Graph from './Graph.js';
 import Header from './Header.js';
 
-function PortfolioReturns() {
+function PortfolioReturns(props) {
     return (
         <>
             <Header />
@@ -13,7 +13,9 @@ function PortfolioReturns() {
                         Portfolio Returns
                     </h1>
                 </div>
-                <Graph />
+                <Graph
+                    token={props.token}
+                />
             </div>
         </>
     );

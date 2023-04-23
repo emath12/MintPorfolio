@@ -5,12 +5,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import Footer from './Footer.js'
 import Header from './Header.js'
 
-function Home() {
+function Home(props) {
     return (
         <>
             <div className={'HomePage'}>
 
-                <Header />
+                <Header
+                    token={props.token}
+                />
 
                 <div className={'left-center'}>
                     <strong><h2>

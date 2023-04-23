@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify, session
-from flask_session import Session
 import json
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
@@ -14,14 +13,10 @@ import os
 from backend.models import DynamicPortfolio
 
 from sqlalchemy.orm import declarative_base, relationship
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, ARRAY
 from flask_login import UserMixin
 
-data = None
-user = None
-
 basedir = os.path.abspath(os.path.dirname(__file__))
-
 
 app = Flask(__name__)
 
@@ -46,7 +41,8 @@ class User(Base, db.Model, UserMixin):
     user = Column(String, unique=True)
     token = Column(String, unique=True)
     password = Column(String)
-    portfolios = relationship("Portfolio", back_populates="user")
+    portfolios = Column(String)
+    shares = Column(String)
     def get_id(self):
         return self.id
 
@@ -58,28 +54,6 @@ class User(Base, db.Model, UserMixin):
     #
     # def check_password(self, password):
     #     return check_password_hash(self.password, password)
-class Portfolio(Base, UserMixin):
-    __tablename__ = 'portfolios'
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey(User.id))
-    user = relationship("User", back_populates="portfolios")
-    date = Column(String)
-    positions = relationship("Position", back_populates="portfolio")
-
-    def get_id(self):
-        return self.id
-
-    @classmethod
-    def get_by_name(cls, name):
-        return cls.query.filter_by(name=name).first()
-
-class Position(Base):
-    __tablename__ = 'positions'
-    id = Column(Integer, primary_key=True)
-    portfolio_id = Column(Integer, ForeignKey('portfolios.id'))
-    portfolio = relationship("Portfolio", back_populates="positions")
-    ticker = Column(String)
-    amount = Column(Float)
 
 with app.app_context():
     db.create_all()
@@ -87,6 +61,7 @@ with app.app_context():
 CORS(app, supports_credentials=True)
 
 jwt = JWTManager(app)
+
 def refresh_expiring_jwts(response):
     try:
         exp_timestamp = get_jwt()["exp"]
@@ -109,16 +84,12 @@ def login():
 
     if request.method == 'POST':
 
-        print("login triggered")
-
         username = request.json.get("username")
         password = request.json.get("password")
 
         logged_in_user = User.query.filter_by(user=username).first()
-        print(logged_in_user)
 
         if not logged_in_user:
-            print("login failed")
             return "user does not exist! Create an account", 405
 
         if password == logged_in_user.password:
@@ -162,6 +133,7 @@ def the_signup():
         username = login_details[0]
         password = login_details[1]
 
+
         already_exists = User.query.filter_by(user=username).first()
 
         if already_exists:
@@ -189,6 +161,48 @@ def the_signup():
 
     return "Error", 404
 
+
+
+@app.route("/update_portfolio", methods=['POST'])
+@jwt_required()
+@cross_origin()
+def update_portfolio():
+    tickers = request.json["tickers"]
+    shares_amounts = request.json["share_amounts"]
+
+    current_user = get_jwt_identity()
+    current_user = User.query.filter_by(user=current_user).first()
+
+    for i, ticker in enumerate(tickers):
+        new_ticker = ticker + ","
+        new_share_amount = str(shares_amounts[i]) + ','
+
+        if current_user.portfolios is None:
+            current_user.portfolios = "start,"
+
+        if current_user.shares is None:
+            current_user.shares = "start,"
+
+        cur_port_list = current_user.portfolios.split(",")
+        cur_shares_list = current_user.shares.split(",")
+
+        print(cur_shares_list)
+
+        if ticker in cur_port_list:
+            ticker_index = cur_port_list.index(ticker)
+            cur_shares_list[ticker_index] = shares_amounts[i]
+            current_user.shares = ",".join(cur_shares_list)
+
+        else:
+            current_user.portfolios += new_ticker
+            current_user.shares += new_share_amount
+
+        print(current_user.portfolios)
+        print(current_user.shares)
+
+    db.session.commit()
+    return "success"
+
 @app.route('/profile')
 @jwt_required(optional=True)
 @cross_origin()
@@ -200,18 +214,12 @@ def my_profile():
 
     current_user = User.query.filter_by(user=current_user).first()
 
-    print(current_user)
-
-    print(current_user.id)
-
     return "success", 200
 
 @app.route("/logged_in_check", methods=['GET', 'POST'])
 @cross_origin()
 @jwt_required(optional=True)
 def log_in_check():
-
-    print("here")
 
     verify_jwt_in_request()
 
@@ -243,78 +251,70 @@ def log_in_check():
 
 @app.route('/market_dataframe')
 @cross_origin()
+@jwt_required()
 def call_market():
-    if user is None:
-        return "no data"
 
-    pf = user.get_market_df()
-    print(pf.to_dict(orient='list'))
+    current_user = get_jwt_identity()
+    print(current_user)
+    current_user = User.query.filter_by(user=current_user).first()
+
+    cur_user_ports = current_user.portfolios.split(",")
+    cur_user_shares = current_user.shares.split(",")
+
+    port = {}
+
+    for i, user_port in enumerate(cur_user_ports):
+        if not user_port == "start" and not user_port == "":
+            port[user_port] = cur_user_shares[i]
+
+    print(port)
+
+    dyn_port = DynamicPortfolio(date="", port=port)
+
+    pf = dyn_port.get_market_df()
     j_string = json.dumps(pf.to_dict(orient='list'))
 
     return j_string
 
 @app.route('/stats', methods=['GET', 'POST'])
 def call_stats():
-    if user is not None:
-        j_string = json.dumps(user.get_stats())
-
-        return j_string
+    # if user is not None:
+    #     j_string = json.dumps(user.get_stats())
+    #
+    #     return j_string
 
     return "no stats!"
 
-
-@app.route('/current_portfolio', methods=['GET', 'POST'])
+@app.route('/current_portfolio', methods=['GET'])
 @cross_origin()
-def update_user():
-    global data
-    global user
+@jwt_required()
+def push_portfolio_data():
 
-    if request.method == 'POST':
-        print("post made")
-        data = request.json
-        print(data)
+    if request.method == 'GET':
 
-        current_user_id = session.get("user_id")
-        print("current user:")
-        print(current_user_id)
+        current_user = get_jwt_identity()
+        current_user = User.query.filter_by(user=current_user).first()
+        print(current_user)
 
-        date = data[1]
+        cur_user_ports = current_user.portfolios.split(",")
+        cur_user_shares = current_user.shares.split(",")
+
         port = {}
 
-        new_portfolio = Portfolio(user_id=current_user_id,
-                                  user=User.query.filter_by(id=current_user_id).first(),
-                                  date=date)
+        for i, user_port in enumerate(cur_user_ports):
+            if not user_port == "start" and not user_port == "":
+                port[user_port] = cur_user_shares[i]
 
-        for trio in data[0]:
-            port[trio["company"]] = trio["shares"]
-            new_position = Position(portfolio_id=new_portfolio.id,
-                                    ticker=trio['company'],
-                                    amount=trio['shares'])
-            db.session.add(new_position)
+        print(port)
 
-        db.session.add(new_portfolio)
-        db.session.commit()
+        dyn_port = DynamicPortfolio(date="", port=port)
 
-        user = DynamicPortfolio(date=date, port=port)
-        print(user)
-
-        return 'success'
-
-    elif request.method == 'GET':  # GET
-        print("get made")
-
-        if data is None or user is None:
-            return "No data"
-
-        pf = user.get_port_df()
+        pf = dyn_port.get_port_df()
         j_string = json.dumps(pf.to_dict(orient='list'))
 
         return j_string
 @app.errorhandler(401)
 def custom_401(error):
-
-    print("custom 401")
-    print(error)
 
     response = jsonify(
         {
@@ -326,19 +326,16 @@ def custom_401(error):
 
 @jwt.expired_token_loader
 def handle_expired_token_error(expired_token):
-    print("lol")
+    print("token expired")
     return jsonify({
-        'status': 401,
-        'sub_status': 'expired_token',
-        'message': 'The token has expired'
-    }), 401
+        'logged_in': False,
+    }), 200
 
 @jwt.invalid_token_loader
 def handle_invalid_token_error(error_string):
-    print("lol")
+    print("invalid token")
     return jsonify({
-        'status': 401,
-        'sub_status': 'invalid_token',
-        'message': 'The token is invalid'
-    }), 401
+        'logged_in': False,
+    }), 200
+
 

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
 
-function DisplayData() {
+function DisplayData(props) {
       const [userData, setUserData] = useState([]);
 
       const [marketData, setMarketData] = useState([]);
@@ -17,15 +17,21 @@ function DisplayData() {
       // for an API call.
       useEffect(() => {
         
-        axios.all([
-          axios.get('http://127.0.0.1:5000/current_portfolio'),
-          axios.get('http://127.0.0.1:5000/market_dataframe')
-        ])
-
-        .then(axios.spread((user, market) => {
+   axios.all([
+          axios.get('http://127.0.0.1:5000/current_portfolio', {
+            headers: {
+              Authorization: 'Bearer ' + props.token
+            }
+          }),
+          axios.get('http://127.0.0.1:5000/market_dataframe', {
+            headers: {
+              Authorization: 'Bearer ' + props.token
+            }
+          })
+        ]).then(axios.spread((user, market) => {
 
           let userdata = user.data;
-          console.log(userdata);
+          console.log("the_user_date" + userdata);
 
           let edited_user_data = [];
           
@@ -174,10 +180,12 @@ function DisplayStats() {
 
 
 
-function Graph() {
+function Graph(props) {
   return (
     <>
-      <DisplayData/>
+      <DisplayData
+        token={props.token}
+      />
       <DisplayStats/>
     </>
   )
