@@ -25,27 +25,19 @@ function Header(props) {
     }
     
     function navProfile() {
-
-        axios.get('http://127.0.0.1:5000/profile')
-
-            .then(response => {
-                if (response.data.logged_in) {
-                    nav("/profile")
-                } else {
-                    nav("/create-account")
-                }
-            })
-
-            .then(error => {
-                nav("/create-account")
-                console.log(error)
-                console.log("erroeed")
-
-            });
+        nav("/profile")
     }
 
     function navPortfolio() {
         nav("/returns")
+    }
+
+    function navCreateAccount() {
+        nav("/create-account")
+    }
+
+    function navLogin() {
+        nav("/login")
     }
 
     function navLogout() {
@@ -55,8 +47,8 @@ function Header(props) {
         axios.post('http://127.0.0.1:5000/logout', [])
             .then(response => console.log(response))
             .then(error => console.log(error));
-
             nav('/');
+            window.location.reload();
     }
 
 
@@ -80,8 +72,8 @@ function Header(props) {
                     </>
                   ) : (
                     <>
-                      <NavDropdown.Item onClick={navProfile}>Create Account</NavDropdown.Item>
-                      <NavDropdown.Item onClick={navProfile}>Login</NavDropdown.Item>
+                      <NavDropdown.Item onClick={navCreateAccount}>Create Account</NavDropdown.Item>
+                      <NavDropdown.Item onClick={navLogin}>Login</NavDropdown.Item>
                     </>
                   )}
             </NavDropdown>

@@ -43,6 +43,7 @@ class User(Base, db.Model, UserMixin):
     password = Column(String)
     portfolios = Column(String)
     shares = Column(String)
+    construct_date = Column(String)
     def get_id(self):
         return self.id
 
@@ -90,7 +91,10 @@ def login():
         logged_in_user = User.query.filter_by(user=username).first()
 
         if not logged_in_user:
-            return "user does not exist! Create an account", 405
+            return jsonify({
+                "type": "error",
+                "message": "User does not exist! Create an Account!"
+            }), 200
 
         if password == logged_in_user.password:
 
@@ -98,7 +102,7 @@ def login():
 
             response = jsonify(
                 {
-                    "success": True,
+                    "type": "success",
                     "access_token": access_token,
                 }
             )
@@ -109,9 +113,12 @@ def login():
 
         else:
 
-            print("login failed")
-            return "incorrect password!", 405
+            print("incorrect password")
 
+            return jsonify({
+                "type": "error",
+                "message": "Incorrect Password!"
+            }), 200
 
     print("login did not trigger")
 
@@ -123,6 +130,29 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
+@app.route("/get_user", methods=["GET"])
+@jwt_required()
+def get_user():
+    current_user = get_jwt_identity()
+    current_user = User.query.filter_by(user=current_user).first()
+
+    cur_user_ports = current_user.portfolios.split(",")
+    cur_user_shares = current_user.shares.split(",")
+
+    positions = []
+
+    for i, user_port in enumerate(cur_user_ports):
+        if not user_port == "start" and not user_port == "":
+            positions.append([user_port, cur_user_shares[i]])
+
+    response = jsonify(
+        {
+            "username": current_user.user,
+            "positions": positions
+        }
+    )
+
+    return response
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 @cross_origin()
@@ -138,7 +168,10 @@ def the_signup():
 
         if already_exists:
             print("user already exists!")
-            return "user already exists", 404
+            return jsonify({
+                "type" : "error",
+                "message" : "User already exists!"
+            }), 200
 
         access_token = create_access_token(identity=username)
 
@@ -152,7 +185,7 @@ def the_signup():
 
         response = jsonify(
             {
-                "success": True,
+                "type": "success",
                 "access_token": access_token,
             }
         )
@@ -197,8 +230,11 @@ def update_portfolio():
             current_user.portfolios += new_ticker
             current_user.shares += new_share_amount
 
+        current_user.construct_date = request.json["construct_date"]
+
         print(current_user.portfolios)
         print(current_user.shares)
+        print(current_user.construct_date)
 
     db.session.commit()
     return "success"
@@ -269,7 +305,7 @@ def call_market():
 
     print(port)
 
-    dyn_port = DynamicPortfolio(date="", port=port)
+    dyn_port = DynamicPortfolio(date=current_user.construct_date, port=port)
 
     pf = dyn_port.get_market_df()
     j_string = json.dumps(pf.to_dict(orient='list'))
@@ -327,7 +363,7 @@ def push_portfolio_data():
 
         print(port)
 
-        dyn_port = DynamicPortfolio(date="", port=port)
+        dyn_port = DynamicPortfolio(date=current_user.construct_date, port=port)
 
         pf = dyn_port.get_port_df()
         j_string = json.dumps(pf.to_dict(orient='list'))
@@ -344,18 +380,18 @@ def custom_401(error):
 
     return response
 
-@jwt.expired_token_loader
-def handle_expired_token_error(expired_token):
-    print("token expired")
-    return jsonify({
-        'logged_in': False,
-    }), 200
-
-@jwt.invalid_token_loader
-def handle_invalid_token_error(error_string):
-    print("invalid token")
-    return jsonify({
-        'logged_in': False,
-    }), 200
+# @jwt.expired_token_loader
+# def handle_expired_token_error(expired_token):
+#     print("token expired")
+#     return jsonify({
+#         'logged_in': False,
+#     }), 200
+#
+# @jwt.invalid_token_loader
+# def handle_invalid_token_error(error_string):
+#     print("invalid token")
+#     return jsonify({
+#         'logged_in': False,
+#     }), 200
 
 

@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import Header from './Header.js'
 import Footer from './Footer.js'
+import Alert from "@mui/material/Alert";
 
 function StockGridHeader() {
   return (
@@ -65,7 +66,7 @@ function StockRow(props) {
           classNamePrefix="select"
           isDisabled={isDisabled}
           isLoading={isLoading}
-          isClearable={isClearable}
+          isClearable={false}
           isRtl={isRtl}
           isSearchable={isSearchable}
           name="ticker"
@@ -186,7 +187,8 @@ function StockGrid(props) {
             {
                 "tickers" : tickers,
                 "share_amounts" : shares,
-                "length": rows.objects.length
+                "length": rows.objects.length,
+                "construct_date" : date
             }, {
               headers: {
                 Authorization: 'Bearer ' + props.token
@@ -204,16 +206,36 @@ function StockGrid(props) {
 
         window.location.reload(false);
     }
+    const [clickable, setClickable] = useState(true)
+
+
+     useEffect(() => {
+        if (!props.token) {
+            setClickable(false)
+        } else {
+            setClickable(true)
+        }
+        }, []);
+
+    let clickableStyle = {
+        pointerEvents: clickable ? 'auto' : 'none'
+    };
 
     return (
       <>
         <div className="SelectPage">
           <div className="center">
             <div className="page">
-              <Header />
+                {
+                 !props.token && <Alert severity="warning">You must be logged in! Please login</Alert>
+
+                }
+              <Header
+                token={props.token}
+              />
               <br></br>
               <StockGridHeader />
-              <div className="Stocks">
+              <div className="Stocks" style={clickableStyle}>
                   {
                       rows.objects.map(({id}) => {
                           return <StockRow 

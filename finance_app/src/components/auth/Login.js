@@ -4,12 +4,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import Header from "../user/Header";
 import Footer from "../user/Footer"
 import axios from "axios";
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import AlertTitle from '@mui/material/AlertTitle';
+
 
 function Login(props) {
+
+    let nav = useNavigate()
 
     const [loginForm, setloginForm] = useState({
       username: "",
       password: ""
+    })
+    const [error, setError] = useState({
+        "active" : false,
+        "message" : ""
     })
 
     function logMeIn(event) {
@@ -21,7 +31,16 @@ function Login(props) {
                   password: loginForm.password
             }
       }).then((response) => {
-        props.setToken(response.data.access_token)
+          if (response.data.type == "error") {
+              setError({
+                  "active" : true,
+                  "message" : response.data.message
+              })
+          } else {
+              props.setToken(response.data.access_token)
+                nav("/select")
+          }
+
       }).catch((error) => {
         if (error.response) {
           console.log(error.response)
@@ -45,25 +64,37 @@ function Login(props) {
       )}
 
     return (
-      <div>
-        <h1>Login</h1>
-          <form className="login">
-            <input onChange={handleChange}
-                  text={loginForm.username}
-                  name="username"
-                  placeholder="Username"
-                  value={loginForm.username} />
-            <input onChange={handleChange}
-                  type="password"
-                  text={loginForm.password}
-                  name="password"
-                  placeholder="Password"
-                  value={loginForm.password} />
 
-          <button onClick={logMeIn}>Submit</button>
-        </form>
+      <div>
+          <Header />
+          <h1>Login</h1>
+          <center>
+              <form className="login">
+                <input onChange={handleChange}
+                      text={loginForm.username}
+                      name="username"
+                      placeholder="Username"
+                      value={loginForm.username} />
+                <input onChange={handleChange}
+                      type="password"
+                      text={loginForm.password}
+                      name="password"
+                      placeholder="Password"
+                      value={loginForm.password} />
+
+              <button onClick={logMeIn}>Submit</button>
+            </form>
+          </center>
+           <Snackbar open={error.active} autoHideDuration={6000}>
+       <Alert severity="error">
+         <AlertTitle>{error.message}</AlertTitle>
+       </Alert>
+ </Snackbar>
       </div>
     );
 }
 
 export default Login;
+
+// // https://dev.to/nagatodev/how-to-add-login-authentication-to-a-flask-and-react-application-23i7
+

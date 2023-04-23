@@ -20,13 +20,9 @@ import axios from "axios";
 
 // dummy data
 const testUser = {
-    username : "investorJoe", 
+    username : "Login or create an account!",
     positions : [
-        ["AAPL", 1], 
-        ["MSFT", 2], 
-        ["AMZN", 3], 
-        ["NVDA", 4], 
-        ["BRK-B", 10]
+
     ]
 }
 
@@ -69,13 +65,14 @@ function ProfilePage(props) {
     useEffect(() => {
         axios({
       method: "GET",
-      url:"http://127.0.0.1:5000/profile",
+      url:"http://127.0.0.1:5000/get_user",
       headers: {
         Authorization: 'Bearer ' + props.token
       }
     })
     .then((response) => {
-        console.log(response.data)
+        response.data.username = response.data.username + "'s Profile"
+        setProfile(response.data)
     }).catch((error) => {
       if (error.response) {
         console.log(error.response)
@@ -87,12 +84,15 @@ function ProfilePage(props) {
     
     return (
         <>
+            {props.token && (
             <div className="ProfilePage">
-                <Header />
+                <Header
+                    token={props.token}
+                />
                 
                     <div className='Top'>
                         <h1 className='Username'> 
-                            <u>{profile.username}'s Profile</u>
+                            <u>{profile.username}</u>
                         </h1>
                         <button className="AddButton" onClick={navBuildPorfolio}>Add or Edit Positions</button>
 
@@ -111,8 +111,7 @@ function ProfilePage(props) {
                     <br></br>
                 <Footer></Footer>
             </div>
-            <center>
-            </center>
+            )}
         </>
     );
 }
