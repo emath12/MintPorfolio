@@ -3,12 +3,17 @@ import {useNavigate} from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
 import Header from "../user/Header";
 import axios from "axios";
+import useToken from "./useToken";
 
 function Logout() {
+
+    const { token, removeToken, setToken } = useToken();
 
     const nav = useNavigate();
 
     function handleClick() {
+
+        removeToken()
 
         axios.post('http://127.0.0.1:5000/logout', [])
             .then(response => console.log(response))

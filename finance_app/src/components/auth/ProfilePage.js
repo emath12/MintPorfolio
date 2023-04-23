@@ -55,7 +55,7 @@ const PositionCard = (props) => {
     
 }
 
-function ProfilePage() {
+function ProfilePage(props) {
 
     const nav = useNavigate();
 
@@ -67,16 +67,22 @@ function ProfilePage() {
     }
 
     useEffect(() => {
-        async function fetchData() {
-          try {
-            const response = await axios.get('http://127.0.0.1:5000/profile');
-            console.log(response.data);
-          } catch (error) {
-            console.error(error);
-          }
+        axios({
+      method: "GET",
+      url:"http://127.0.0.1:5000/profile",
+      headers: {
+        Authorization: 'Bearer ' + props.token
+      }
+    })
+    .then((response) => {
+        console.log(response.data)
+    }).catch((error) => {
+      if (error.response) {
+        console.log(error.response)
+        console.log(error.response.status)
+        console.log(error.response.headers)
         }
-
-        fetchData();
+    })
   }, []);
     
     return (

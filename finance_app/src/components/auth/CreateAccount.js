@@ -32,6 +32,7 @@ function CreateAccount() {
             .then(error => console.log(error));
 
             nav('/login');
+
         }
         
     }, [equal])

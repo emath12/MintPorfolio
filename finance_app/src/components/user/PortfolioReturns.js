@@ -4,7 +4,7 @@ import Graph from './Graph.js';
 import Header from './Header.js';
 import Footer from './Footer.js'
 
-function PortfolioReturns() {
+function PortfolioReturns(props) {
     return (
         <>
             <div className='ReturnsPage'>
@@ -15,9 +15,10 @@ function PortfolioReturns() {
                             Portfolio Returns
                         </h1>
                     </div>
-                    <Graph />
                 </div>
-                <Footer></Footer>
+                <Graph
+                    token={props.token}
+                />
             </div>
         </>
     );

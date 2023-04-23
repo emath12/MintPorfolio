@@ -21,8 +21,6 @@ function StockGridHeader() {
   );
 }
 
-
-
 function StockRow(props) {
 
   const [company, setCompany] = useState("");
@@ -77,7 +75,7 @@ function StockRow(props) {
       </div>
     );
   }
-  
+
 
   useEffect(() => {
     // https://stackoverflow.com/questions/53446020/how-to-compare-oldvalues-and-newvalues-on-react-hooks-useeffect
@@ -119,7 +117,7 @@ function StockRow(props) {
   );
 }
 
-function StockGrid() {
+function StockGrid(props) {
     const nav = useNavigate();
 
     const [rows, setRows] = useState({
@@ -148,12 +146,11 @@ function StockGrid() {
             updatedRows[i].shares = shares;
           }
       }
-      
+
       setRows({
         objects: updatedRows,
         size: rows.size
       });
-
     }
    
     function createNewBlankPosition() {
@@ -172,22 +169,41 @@ function StockGrid() {
     };
 
     function handleSubmit() { 
+
         console.log("data submitted!");
+
         console.log([rows.objects, date]);
 
-          axios.post('http://127.0.0.1:5000/current_portfolio', [rows.objects, date],
-          {
-            headers: {
-              'Access-Control-Allow-Origin': 'http://localhost:3000',
-            }
-          })
-          .then(response => console.log(response))
-          .then(error => console.log(error));
+        let tickers = []
+        let shares = []
+
+        for (let i = 0; i < rows.objects.length; i++) {
+            tickers.push(rows.objects[i]["company"]);
+            shares.push(rows.objects[i]["shares"])
+        }
+
+        axios.post('http://127.0.0.1:5000/update_portfolio',
+            {
+                "tickers" : tickers,
+                "share_amounts" : shares,
+                "length": rows.objects.length
+            }, {
+              headers: {
+                Authorization: 'Bearer ' + props.token
+              }
+            })
+            .then(response => {
+              // handle the response
+            })
+
+            .catch(error => {
+              console.log(error)
+            });
 
         nav('/returns');
 
         window.location.reload(false);
-    };
+    }
 
     return (
       <>
