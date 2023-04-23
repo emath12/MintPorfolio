@@ -72,7 +72,6 @@ function CreateAccount(props) {
                         equal === false &&
                         <p style={{color: 'red'}}>Passwords don't match!</p>
                     }
-                   
                 </form>
 
                 <div>

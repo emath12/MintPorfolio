@@ -251,7 +251,8 @@ function StockGrid(props) {
               <Container>
               <div className='ButtonRow'>
                 <p className="date">Purchase date: 
-                <input
+                <input min="2016-01-01"
+                    max="2023-01-01"
                   className='date'
                   onChange={updateDate}
                   inline="True"
@@ -263,17 +264,6 @@ function StockGrid(props) {
               </div>
               <button className="toggleSubmit" type="submit" onClick={handleSubmit}>Submit</button>
               </Container>
-            </div>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <div className="Footer Parent">
-              <Footer class="Footer"></Footer>
             </div>
           </div>
         </div>

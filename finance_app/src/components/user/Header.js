@@ -1,13 +1,12 @@
 import './Home.css'
 import axios from "axios"
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavDropdown, Image } from 'react-bootstrap';
 
 import { useNavigate } from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 import useToken from "../auth/useToken";
 
-
-
+import logo from "../user/logo_with_title.png"
 function Header(props) {
     const nav = useNavigate();
 
@@ -57,7 +56,10 @@ function Header(props) {
         <>
         <Navbar >
           <Container>
-            <Navbar.Brand onClick={navHome} >MintPortfolio</Navbar.Brand>
+            <Navbar.Brand onClick={navHome} >
+                MintPortfolio
+                        {/*<Image src={logo} alt="Logo" />*/}
+            </Navbar.Brand>
 
             <Nav>
                 <Nav.Link onClick={navSelect}>Build Porfolio</Nav.Link>

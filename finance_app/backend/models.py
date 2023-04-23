@@ -53,10 +53,10 @@ class DynamicPortfolio:
             mkt_returns = self.market["Vals"].pct_change().dropna()
             model = LinearRegression()
             model.fit(mkt_returns.to_numpy().reshape(-1, 1), returns)
-            self.stats["alpha"] = model.intercept_
-            self.stats["beta"] = model.coef_[0]
-            self.stats["sharpe"] = returns.mean() / returns.std()
-            self.stats["ret"] = (self.df["Vals"].iloc[len(self.df) - 1] - self.df["Vals"][0]) / self.df["Vals"][0]
+            self.stats["alpha"] = round(model.intercept_, 2)
+            self.stats["beta"] = round(model.coef_[0], 2)
+            self.stats["sharpe"] = round((returns.mean() / returns.std()), 2)
+            self.stats["ret"] = round((self.df["Vals"].iloc[len(self.df) - 1] - self.df["Vals"][0]) / self.df["Vals"][0], 2)
             return self.stats
         else:
             return self.stats

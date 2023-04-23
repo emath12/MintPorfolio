@@ -334,7 +334,7 @@ def call_stats():
 
     print(port)
 
-    dyn_port = DynamicPortfolio(date="", port=port)
+    dyn_port = DynamicPortfolio(date=current_user.construct_date, port=port)
 
 
     j_string = json.dumps(dyn_port.get_stats())
