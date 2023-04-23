@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 import useToken from "../auth/useToken";
 
-import logo from "../user/logo_with_title.png"
+import logo from "../user/small_logo_with_text.png"
+
 function Header(props) {
     const nav = useNavigate();
 
@@ -57,8 +58,8 @@ function Header(props) {
         <Navbar >
           <Container>
             <Navbar.Brand onClick={navHome} >
-                MintPortfolio
-                        {/*<Image src={logo} alt="Logo" />*/}
+                {/*MintPortfolio*/}
+                        <Image src={logo} alt="Logo" />
             </Navbar.Brand>
 
             <Nav>
