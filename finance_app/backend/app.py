@@ -277,13 +277,33 @@ def call_market():
     return j_string
 
 @app.route('/stats', methods=['GET', 'POST'])
+@cross_origin()
+@jwt_required()
 def call_stats():
-    # if user is not None:
-    #     j_string = json.dumps(user.get_stats())
-    #
-    #     return j_string
 
-    return "no stats!"
+    print("stats triggered")
+
+    current_user = get_jwt_identity()
+    print(current_user)
+    current_user = User.query.filter_by(user=current_user).first()
+
+    cur_user_ports = current_user.portfolios.split(",")
+    cur_user_shares = current_user.shares.split(",")
+
+    port = {}
+
+    for i, user_port in enumerate(cur_user_ports):
+        if not user_port == "start" and not user_port == "":
+            port[user_port] = cur_user_shares[i]
+
+    print(port)
+
+    dyn_port = DynamicPortfolio(date="", port=port)
+
+
+    j_string = json.dumps(dyn_port.get_stats())
+
+    return j_string
 
 @app.route('/current_portfolio', methods=['GET'])
 @cross_origin()

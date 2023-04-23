@@ -148,17 +148,22 @@ function DisplayData(props) {
       );
   }
 
-function DisplayStats() {
+function DisplayStats(props) {
 
     const [stats, setStats] = useState("");
   
     useEffect(() => {
           
-      axios.get('http://127.0.0.1:5000/stats')
-      .then(response => {
-        console.log("response" + response);
-        setStats(response.data);
-      }).catch(error => console.error(error));
+        axios.get('http://127.0.0.1:5000/stats', {
+          headers: {
+            Authorization: 'Bearer ' + props.token
+          }
+        })
+          .then(response => {
+            console.log("response" + response);
+            setStats(response.data);
+          })
+          .catch(error => console.error(error));
 
     }, []);
 
@@ -186,7 +191,9 @@ function Graph(props) {
       <DisplayData
         token={props.token}
       />
-      <DisplayStats/>
+      <DisplayStats
+        token={props.token}
+      />
     </>
   )
 }
