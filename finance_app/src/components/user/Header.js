@@ -3,11 +3,18 @@ import axios from "axios"
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import useToken from "../auth/useToken";
+
 
 
 function Header(props) {
     const nav = useNavigate();
+
+    const { token, removeToken, setToken } = useToken();
+
+
+    const [loggedIn, setloggedIn] = useState(false)
 
     function navSelect () {
         nav("/select");
@@ -41,6 +48,19 @@ function Header(props) {
         nav("/returns")
     }
 
+    function navLogout() {
+
+        removeToken()
+
+        axios.post('http://127.0.0.1:5000/logout', [])
+            .then(response => console.log(response))
+            .then(error => console.log(error));
+
+            nav('/');
+    }
+
+
+
     return (
         <>
         <Navbar >
@@ -52,11 +72,18 @@ function Header(props) {
                 <Nav.Link onClick={navPortfolio}>View Portfolio</Nav.Link>
             </Nav>
 
-            <NavDropdown title="{}">
-                  <NavDropdown.Item onClick={navProfile}>Account</NavDropdown.Item>
-                  <NavDropdown.Item>Settings</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item >Help</NavDropdown.Item>
+            <NavDropdown title="Account">
+                  {props.token ? (
+                    <>
+                      <NavDropdown.Item onClick={navProfile}>Profile</NavDropdown.Item>
+                      <NavDropdown.Item onClick={navLogout}>Logout</NavDropdown.Item>
+                    </>
+                  ) : (
+                    <>
+                      <NavDropdown.Item onClick={navProfile}>Create Account</NavDropdown.Item>
+                      <NavDropdown.Item onClick={navProfile}>Login</NavDropdown.Item>
+                    </>
+                  )}
             </NavDropdown>
         
           </Container>
