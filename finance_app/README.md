@@ -88,7 +88,7 @@ dynamically, connected and edited the backend to receive and authenticate tokens
 that indicated user login, configured highcharts library to accept backend code, took final
 pass at styling on all pages.
 3. Daphne: Worked on frontend and created profile page for users.
-Designed frontend using React-Bootstrap to style all pages of the site. Specific features of note include the landing page, filter search containing S&P 500 tickers, accordion dropdown of portfolio metrics and profile page. Standardized style across site.
+Designed frontend using React-Bootstrap to style main pages of the site. Specific pages/features of note include the landing page, layout and filter search containing S&P 500 tickers of build page, accordion dropdown for portfolio metrics, and profile page. Standardized style across site.
 4. Kenan: Wrote first pass at authentication. Configured initial database
 to accept the creation of new users.
 
