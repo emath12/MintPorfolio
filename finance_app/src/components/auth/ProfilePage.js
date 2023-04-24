@@ -20,7 +20,7 @@ import axios from "axios";
 
 // dummy data
 const testUser = {
-    username : "Login or create an account!",
+    username : "Build your portfolio, then come back!",
     positions : [
 
     ]
@@ -109,7 +109,6 @@ function ProfilePage(props) {
                         }
                     </div>
                     <br></br>
-                <Footer></Footer>
             </div>
             )}
         </>

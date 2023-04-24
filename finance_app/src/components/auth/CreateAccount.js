@@ -40,6 +40,9 @@ function CreateAccount(props) {
                 if (response.data.type == "success") {
                     setMessage(true)
                     props.setToken(response.data.access_token)
+                    setTimeout(() => {
+                        nav("/select")
+                    }, 1200);
                 } else if (response.data.type == "error") {
                     setError({
                         "active" : true,

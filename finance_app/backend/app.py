@@ -44,17 +44,6 @@ class User(Base, db.Model, UserMixin):
     portfolios = Column(String)
     shares = Column(String)
     construct_date = Column(String)
-    def get_id(self):
-        return self.id
-
-    def get_username(self):
-        return self.username
-
-    # def set_password(self, password):
-    #     self.password = generate_password_hash(password)
-    #
-    # def check_password(self, password):
-    #     return check_password_hash(self.password, password)
 
 with app.app_context():
     db.create_all()
@@ -194,8 +183,6 @@ def the_signup():
 
     return "Error", 404
 
-
-
 @app.route("/update_portfolio", methods=['POST'])
 @jwt_required()
 @cross_origin()
@@ -238,52 +225,6 @@ def update_portfolio():
 
     db.session.commit()
     return "success"
-
-@app.route('/profile')
-@jwt_required(optional=True)
-@cross_origin()
-def my_profile():
-
-    verify_jwt_in_request()
-
-    current_user = get_jwt_identity()
-
-    current_user = User.query.filter_by(user=current_user).first()
-
-    return "success", 200
-
-@app.route("/logged_in_check", methods=['GET', 'POST'])
-@cross_origin()
-@jwt_required(optional=True)
-def log_in_check():
-
-    verify_jwt_in_request()
-
-    print(get_jwt_identity())
-
-    if get_jwt_identity():
-
-        print("true")
-
-        response = jsonify(
-            {
-                "logged_in" : True
-            }
-        )
-
-        return response
-
-    else:
-
-        print("false")
-
-        response = jsonify(
-            {
-                "logged_in": False
-            }
-        )
-
-        return response
 
 @app.route('/market_dataframe')
 @cross_origin()
@@ -379,19 +320,5 @@ def custom_401(error):
     )
 
     return response
-
-# @jwt.expired_token_loader
-# def handle_expired_token_error(expired_token):
-#     print("token expired")
-#     return jsonify({
-#         'logged_in': False,
-#     }), 200
-#
-# @jwt.invalid_token_loader
-# def handle_invalid_token_error(error_string):
-#     print("invalid token")
-#     return jsonify({
-#         'logged_in': False,
-#     }), 200
 
 

@@ -13,9 +13,6 @@ function Header(props) {
 
     const { token, removeToken, setToken } = useToken();
 
-
-    const [loggedIn, setloggedIn] = useState(false)
-
     function navSelect () {
         nav("/select");
     }
@@ -55,15 +52,14 @@ function Header(props) {
 
     return (
         <>
-        <Navbar >
+        <Navbar style={{boxShadow: "0px 2px 4px 0px rgba(0,0,0,.2"}}>
           <Container>
             <Navbar.Brand onClick={navHome} >
-                {/*MintPortfolio*/}
-                        <Image src={logo} alt="Logo" />
+                <Image src={logo} alt="Logo"/>
             </Navbar.Brand>
 
             <Nav>
-                <Nav.Link onClick={navSelect}>Build Porfolio</Nav.Link>
+                <Nav.Link onClick={navSelect}>Build Portfolio</Nav.Link>
                 <Nav.Link onClick={navPortfolio}>View Portfolio</Nav.Link>
             </Nav>
 

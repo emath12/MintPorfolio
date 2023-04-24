@@ -88,7 +88,7 @@ function DisplayData(props) {
           },
 
           {
-            name: 'S&P500',
+            name: 'The Market',
             data: marketData,
             type: 'area',
             threshold: null,
@@ -169,13 +169,17 @@ function DisplayStats(props) {
 
     return (
       <>
-        <h1>Performance Metrics:</h1>
-        <center>
-          <h4>Alpha: {stats.alpha}</h4>
-          <h4>Beta: {stats.beta}</h4>
-          <h4>Sharpe: {stats.sharpe}</h4>
-          <h4>Ret: {stats.ret}</h4>
-        </center>
+          <br/>
+          <div style={{ boxShadow: "5px 5px 50px rgba(0, 0, 0, 0.5)", backgroundColor: "#DEE4D5FF", borderRadius: "20px", margin: "20px"}}>
+                <h1 style={{padding: "10px"}}>Performance Metrics:</h1>
+                <center>
+                  <h4>Alpha: {stats.alpha}</h4>
+                  <h4>Beta: {stats.beta}</h4>
+                  <h4>Sharpe: {stats.sharpe}</h4>
+                  <h4>Ret: {stats.ret}</h4>
+                </center>
+          </div>
+              <br/>
       
       </>
 

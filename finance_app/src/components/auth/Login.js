@@ -2,7 +2,6 @@ import './Login.css'
 import {useNavigate} from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
 import Header from "../user/Header";
-import Footer from "../user/Footer"
 import axios from "axios";
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
@@ -22,6 +21,8 @@ function Login(props) {
         "message" : ""
     })
 
+    const [success, setSuccess] = useState(false)
+
     function logMeIn(event) {
       axios ({
             method: "POST",
@@ -38,7 +39,11 @@ function Login(props) {
               })
           } else {
               props.setToken(response.data.access_token)
-                nav("/select")
+                                  setSuccess(true)
+
+                setTimeout(() => {
+                    nav("/select")
+                }, 2000);
           }
 
       }).catch((error) => {
@@ -82,7 +87,7 @@ function Login(props) {
                       placeholder="Password"
                       value={loginForm.password} />
 
-              <button onClick={logMeIn}>Submit</button>
+              <button onClick={logMeIn}>Login</button>
             </form>
           </center>
            <Snackbar open={error.active} autoHideDuration={6000}>
@@ -90,6 +95,11 @@ function Login(props) {
          <AlertTitle>{error.message}</AlertTitle>
        </Alert>
  </Snackbar>
+          <Snackbar open={success} autoHideDuration={6000}>
+                        <Alert severity="success">
+                          <AlertTitle>User logged in!</AlertTitle>
+                        </Alert>
+                  </Snackbar>
       </div>
     );
 }

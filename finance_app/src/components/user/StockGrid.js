@@ -234,6 +234,8 @@ function StockGrid(props) {
                 token={props.token}
               />
               <br></br>
+                <h1>Build your portfolio!</h1>
+                <br/>
               <StockGridHeader />
               <div className="Stocks" style={clickableStyle}>
                   {
