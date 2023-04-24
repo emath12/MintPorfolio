@@ -70,7 +70,6 @@ function StockRow(props) {
           isRtl={isRtl}
           isSearchable={isSearchable}
           name="ticker"
-          // TO DO: IMPORT FILE CONTAINING ALL TICKER VALUES and reset options
           options={myVariable}
         />
       </div>
