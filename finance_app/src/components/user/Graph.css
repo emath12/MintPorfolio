@@ -1,0 +1,13 @@
+ul { 
+	display: inline-block; 
+	text-align: left; 
+}
+
+div.listparent {
+    text-align: center;
+}
+
+.img {
+    max-width: '200px';
+    max-height:fit-content;
+}

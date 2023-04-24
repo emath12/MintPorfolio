@@ -36,7 +36,7 @@ function Home(props) {
                     </Row>
                     <Row className="my-5">
                         <Col>
-                            <Card style={{ width: '18rem' }}>
+                            <Card style={{ width: '18rem', height: 'h-100' }}>
                                 
                                 <Card.Body>
                                     <Card.Title style={{textAlign: 'center'}}>Build</Card.Title>
@@ -48,7 +48,7 @@ function Home(props) {
                             </Card>
                         </Col>
                         <Col>
-                            <Card style={{ width: '18rem' }}>
+                            <Card style={{ width: '18rem', height: 'h-100' }}>
                                 
                                 <Card.Body>
                                     <Card.Title style={{textAlign: 'center'}}>Track</Card.Title>
@@ -60,7 +60,7 @@ function Home(props) {
                             </Card>
                         </Col>
                         <Col>
-                            <Card style={{ width: '18rem' }}>
+                            <Card style={{ width: '18rem', height: 'h-100'}}>
                                 
                                 <Card.Body>
                                     <Card.Title style={{textAlign: 'center'}}>Refine</Card.Title>

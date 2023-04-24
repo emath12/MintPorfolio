@@ -1,6 +1,7 @@
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import React, { useState, useEffect } from 'react';
+import {Container, Card, Row, Col} from 'react-bootstrap';
 import axios from "axios";
 
 
@@ -171,14 +172,62 @@ function DisplayStats(props) {
       <>
           <br/>
           <div style={{ boxShadow: "5px 5px 50px rgba(0, 0, 0, 0.5)", backgroundColor: "#f9f9e2", borderRadius: "20px", margin: "20px"}}>
-                <h1 style={{padding: "10px"}}>Performance Metrics:</h1>
-                <center>
-                  <h4>Alpha: {stats.alpha}</h4>
-                  <h4>Beta: {stats.beta}</h4>
-                  <h4>Sharpe: {stats.sharpe}</h4>
-                  <h4>Ret: {stats.ret}</h4>
-                </center>
+            <h1 style={{padding: "10px"}}>Performance Metrics</h1>
+            <center>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  Alpha: {stats.alpha}
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body"> 
+                <p align="left">A measure of the return of your investment that <b>is not</b> attributable to the movements of the general stock market. It is the <b>intercept</b> in your linear regression against the returns of the market.</p>
+                
+              </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  Beta: {stats.beta}
+                </button>
+              </h2>
+              <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body"> 
+                <p align="left">A measure of the return of your investment that <b>is</b> attributable to the movements of the general stock market. It is the <b>slope</b> in your linear regression against the returns of the market.</p>
+              </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                  Sharpe Ratio: {stats.sharpe}
+                </button>
+              </h2>
+              <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body"> 
+                <p align="left">Your <b>risk adjusted return,</b> which is equal to your alpha divided by the volatility (standard deviation) of your returns. This gives intuition as to the returns you are generating per unit of riskiness in your portfolio.</p>
+              </div>_
+              </div>
+            </div>
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                Return: {stats.ret}
+              </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body"> 
+                <p align="left">The <b>total percentage return</b> of your portfolio to date.</p>
+              </div>
+            </div>
           </div>
+          </div>
+            </center>
+          </div>
+          
               <br/>
       
       </>
