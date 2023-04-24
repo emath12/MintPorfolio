@@ -1,7 +1,7 @@
-# <span style="color:skyblue"> BULLdog MARKET </span>
+# <span style="color:lightgreen"> Mint Portfolio </span>
 ## Yale CPSC 419
 ### Project Group 14
-* Taimur Moolji
+* Taimur Moolji (Team Lead)
 * Ethan Mathieu
 * Daphne Raskin
 * Kenan Collignon
@@ -71,8 +71,26 @@ we are trying to debug the issue with auth, so are demodularizing some of the co
 Added error-handling for user-inputted tickers. Currently filter-select button contains 503 S&P 500 tickers; the Yahoo Finance API has 100000+ valid tickers (accessible in "user/YahooFinanceTickers.csv"), so future iterations of the project may redesign filter-select to have much greater drop-down menu capacity.
 
 ### Sources of Images Used in Project
-(1) Landing Page
-   (1) Title Image: https://shop.bauhaus-movement.com/phaidon-ezra-stoller
-   (2) "Build" Bootstrap Card: https://architizer.com/blog/inspiration/collections/yellow/
-   (3) "Track" Bootstrap Card: https://www.internationaltaxreview.com/article/2a6aafin5m44msddnn11c/the-quest-for-net-zero-and-the-role-of-the-uk-tax-system
-   (4) "Refine" Bootstrap Card: https://www.homedit.com/modern-houses-in-switzerland/
+1.  Landing Page  
+    1. Title Image: https://shop.bauhaus-movement.com/phaidon-ezra-stoller 
+    2. "Build" Bootstrap Card: https://architizer.com/blog/inspiration/collections/yellow/
+    3. "Track" Bootstrap Card: https://www.internationaltaxreview.com/article/2a6aafin5m44msddnn11c/the-quest-for-net-zero-and-the-role-of-the-uk-tax-system
+    4. "Refine" Bootstrap Card: https://www.homedit.com/modern-houses-in-switzerland/
+
+
+### Breakdown of Work
+1. Taimur: Configured backend flask endpoints to relay data from
+api calls to be displayed by the frontend. Calculated relevant 
+portfolio statistics. Coordinated breakdown of team work. Wrote weekly
+updates. Made logo. Maintained ReadME.
+2. Ethan: Wrote the frontend structures in React that allow users to input positions
+dynamically, connected and edited the backend to receive and authenticate tokens 
+that indicated user login, configured highcharts library to accept backend code, took final
+pass at styling on all pages.
+3. Daphne: Worked on frontend and created profile page for users.
+Used CSS to style various aspects of the frontend. Wrote filter search
+for stock tickers.
+4. Kenan: Wrote first pass at authentication. Configured initial database
+to accept the creation of new users.
+
+
