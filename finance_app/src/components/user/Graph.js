@@ -170,7 +170,7 @@ function DisplayStats(props) {
     return (
       <>
           <br/>
-          <div style={{ boxShadow: "5px 5px 50px rgba(0, 0, 0, 0.5)", backgroundColor: "#DEE4D5FF", borderRadius: "20px", margin: "20px"}}>
+          <div style={{ boxShadow: "5px 5px 50px rgba(0, 0, 0, 0.5)", backgroundColor: "#f9f9e2", borderRadius: "20px", margin: "20px"}}>
                 <h1 style={{padding: "10px"}}>Performance Metrics:</h1>
                 <center>
                   <h4>Alpha: {stats.alpha}</h4>
