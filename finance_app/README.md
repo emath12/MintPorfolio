@@ -1,7 +1,7 @@
 # <span style="color:lightgreen"> Mint Portfolio </span>
 ## Yale CPSC 419
 ### Project Group 14
-* Taimur Moolji (Team Lead)
+* Taimur Moolji
 * Ethan Mathieu
 * Daphne Raskin
 * Kenan Collignon
