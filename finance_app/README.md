@@ -1,11 +1,4 @@
 # <span style="color:lightgreen"> Mint Portfolio </span>
-## Yale CPSC 419
-### Project Group 14
-* Taimur Moolji
-* Ethan Mathieu
-* Daphne Raskin
-* Kenan Collignon
-
 
 ## Project Overview
 Due to lack of subject knowledge, individual investors
@@ -76,21 +69,3 @@ Added error-handling for user-inputted tickers. Currently filter-select button c
     2. "Build" Bootstrap Card: https://architizer.com/blog/inspiration/collections/yellow/
     3. "Track" Bootstrap Card: https://www.internationaltaxreview.com/article/2a6aafin5m44msddnn11c/the-quest-for-net-zero-and-the-role-of-the-uk-tax-system
     4. "Refine" Bootstrap Card: https://www.homedit.com/modern-houses-in-switzerland/
-
-
-### Breakdown of Work
-1. Taimur: Configured backend flask endpoints to relay data from
-api calls to be displayed by the frontend. Calculated relevant 
-portfolio statistics. Coordinated breakdown of team work. Wrote weekly
-updates. Made logo. Maintained ReadME.
-2. Ethan: Wrote the frontend structures in React that allow users to input positions
-dynamically, connected and edited the backend to receive and authenticate tokens 
-that indicated user login, configured highcharts library to accept backend code, took final
-pass at styling on all pages.
-3. Daphne: Worked on frontend and created profile page for users.
-Used CSS to style various aspects of the frontend. Wrote filter search
-for stock tickers.
-4. Kenan: Wrote first pass at authentication. Configured initial database
-to accept the creation of new users.
-
-
